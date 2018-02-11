@@ -1,18 +1,30 @@
 #pragma once
 #include <iostream>
-#define MAX_AMOUNT_DICE 3
+#include <random>
+#define DIE_FACES 6
+#define MAX_DIFF_VALUE 4 //the number of different values that are on the die (0-1-2-3)
 
 class Dice {
+public:
+	Dice();
+	~Dice() {}
+	int roll();
 
 private:
-	int dieSides = 6;
-	int *dieFaces;
+	int dieFaceValues[DIE_FACES];
+};
+
+class DieRoller {
 
 public:
+	DieRoller();
+	void rollDice();
+	bool determineResult();
+	void printDistribution();
 
-	Dice() {};
+private: 
+	Dice dice;
+	unsigned int rollCount;
+	unsigned int valueCount[MAX_DIFF_VALUE];
 
-	Dice(int nbOfFaces);
-
-	int roll();
 };

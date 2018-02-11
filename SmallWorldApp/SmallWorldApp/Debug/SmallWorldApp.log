@@ -1,4 +1,3 @@
-﻿  DieRoller.cpp
-c:\users\jackie.home\documents\github\smallworld\smallworldapp\smallworldapp\dieroller.cpp(3): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-c:\users\jackie.home\documents\github\smallworld\smallworldapp\smallworldapp\dieroller.cpp(15): error C2227: left of '->roll' must point to class/struct/union/generic type
-  c:\users\jackie.home\documents\github\smallworld\smallworldapp\smallworldapp\dieroller.cpp(15): note: type is 'int *'
+﻿  DiceRollerDriver.cpp
+  SmallWorldApp.vcxproj -> C:\Users\Jackie.HOME\Documents\GitHub\SmallWorld\SmallWorldApp\Debug\SmallWorldApp.exe
+  SmallWorldApp.vcxproj -> C:\Users\Jackie.HOME\Documents\GitHub\SmallWorld\SmallWorldApp\Debug\SmallWorldApp.pdb (Partial PDB)

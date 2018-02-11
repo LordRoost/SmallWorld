@@ -1,23 +1,40 @@
-#include <iostream>
-#include <random>
-#include "Dice.h";
+#include "Dice.h"
 
-//using namespace std;
 
-class DieRoller {
-
-	Dice dices[3];
-
-	int rollDice(int *dices) {
-
-		int result1;
-
-		//result1 = dices->roll();
-
+DieRoller::DieRoller() {
+	rollCount = 0;
+	
+	for (int i = 0; i < MAX_DIFF_VALUE; i++) {
+		valueCount[i] = 0;
 	}
 
-	bool determineResult() {
+}
 
+void DieRoller::rollDice() {
+
+	int result = dice.roll();
+	rollCount++;
+	valueCount[result]++;
+
+	std::cout << result << std::endl;
+}
+
+bool DieRoller::determineResult() {
+	return false;
+}
+
+void DieRoller::printDistribution() {
+	
+	int distribution[MAX_DIFF_VALUE];
+
+	if (rollCount == 0) {
+		std::cout << "You haven't rolled the dice yet!" << std::endl;
+		return;
 	}
 
-};
+	for (int i = 0; i < MAX_DIFF_VALUE; i++) {
+		distribution[i] = valueCount[i] * 100 / rollCount;
+		std::cout << distribution[i] << std::endl;
+	}
+
+}
