@@ -1,6 +1,6 @@
 #include "Dice.h"
 
-
+//Initialize the die with the values on each face
 Dice::Dice() {
 
 	dieFaceValues[0] = 0;

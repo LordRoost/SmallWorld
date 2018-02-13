@@ -112,11 +112,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Dice.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="Tokens.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dice.cpp" />
     <ClCompile Include="DiceRollerDriver.cpp" />
     <ClCompile Include="DieRoller.cpp" />
+    <ClCompile Include="GamePiece.cpp" />
+    <ClCompile Include="MapRegion.cpp" />
+    <ClCompile Include="PowerBadge.cpp" />
+    <ClCompile Include="RaceBanner.cpp" />
+    <ClCompile Include="RaceBannerDeck.cpp" />
+    <ClCompile Include="Token.cpp" />
+    <ClCompile Include="TokensDriver.cpp" />
+    <ClCompile Include="VictoryCoin.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

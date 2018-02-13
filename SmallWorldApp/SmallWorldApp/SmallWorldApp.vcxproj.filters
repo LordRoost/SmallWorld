@@ -16,9 +16,21 @@
     <Filter Include="Source Files\Dice">
       <UniqueIdentifier>{4172c4a8-20ac-4005-b8bd-ef94f6d173b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Maps">
+      <UniqueIdentifier>{1c30641b-1c6f-4d02-8b94-95809472c309}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tokens">
+      <UniqueIdentifier>{1cd431c7-176f-4f9e-b085-120870397675}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dice.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tokens.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -31,6 +43,30 @@
     </ClCompile>
     <ClCompile Include="DieRoller.cpp">
       <Filter>Source Files\Dice</Filter>
+    </ClCompile>
+    <ClCompile Include="MapRegion.cpp">
+      <Filter>Source Files\Maps</Filter>
+    </ClCompile>
+    <ClCompile Include="RaceBanner.cpp">
+      <Filter>Source Files\Tokens</Filter>
+    </ClCompile>
+    <ClCompile Include="Token.cpp">
+      <Filter>Source Files\Tokens</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePiece.cpp">
+      <Filter>Source Files\Tokens</Filter>
+    </ClCompile>
+    <ClCompile Include="PowerBadge.cpp">
+      <Filter>Source Files\Tokens</Filter>
+    </ClCompile>
+    <ClCompile Include="VictoryCoin.cpp">
+      <Filter>Source Files\Tokens</Filter>
+    </ClCompile>
+    <ClCompile Include="TokensDriver.cpp">
+      <Filter>Source Files\Tokens</Filter>
+    </ClCompile>
+    <ClCompile Include="RaceBannerDeck.cpp">
+      <Filter>Source Files\Tokens</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
