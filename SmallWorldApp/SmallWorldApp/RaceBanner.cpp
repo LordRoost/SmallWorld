@@ -7,6 +7,7 @@ RaceBanner::RaceBanner() {
 RaceBanner::RaceBanner(races bannerRace) {
 	isActive = true;
 	race = bannerRace;
+	amountOfTokensReceived = raceInfo[race].amountTokensReceived; 
 }
 
 bool RaceBanner::getStatus() {
@@ -29,3 +30,4 @@ void RaceBanner::decline() {
 	isActive = false;
 
 }
+

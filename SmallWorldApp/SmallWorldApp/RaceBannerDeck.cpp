@@ -1,51 +1,32 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 #include "Tokens.h"
 
-
+//Constructor, populating the initial array with raceBanners
 RaceBannerDeck::RaceBannerDeck() {
 	
 	for (int i = 0; i < NUM_OF_RACE_BANNERS; i++) {
-		deckOfBanners[i] = new RaceBanner();
-	}
-}
-
-void swap(int *a, int *b)
-{
-	int temp = *a;
-	*a = *b;
-	*b = temp;
-}
-
-// A utility function to print an array
-void printArray(int arr[], int n)
-{
-	for (int i = 0; i < n; i++)
-		printf("%d ", arr[i]);
-	printf("\n");
-}
-
-// A function to generate a random permutation of arr[]
-void randomize(int arr[], int n)
-{
-	// Use a different seed value so that we don't get same
-	// result each time we run this program
-	srand(time(NULL));
-
-	// Start from the last element and swap one by one. We don't
-	// need to run for the first element that's why i > 0
-	for (int i = n - 1; i > 0; i--)
-	{
-		// Pick a random index from 0 to i
-		int j = rand() % (i + 1);
-
-		// Swap arr[i] with the element at random index
-		swap(&arr[i], &arr[j]);
+		//loop to enumerate through races enum
+		for (unsigned j = RACE_AMAZONS; j != TOTAL_RACES; j++)
+		{
+			banners[i] = new RaceBanner(static_cast<races>(j));
+		}
 	}
 }
 
 void RaceBannerDeck::shuffle() {
-
+	std::random_shuffle(std::begin(banners), std::end(banners)); //last element may not be shuffled?
 }
 
+void RaceBannerDeck::buildDeck() {
+	shuffle();
+	for (int i = 0; i < NUM_OF_RACE_BANNERS; i++) {
+		deck.push(*banners[i]);
+	}
+}
+
+RaceBanner RaceBannerDeck::draw() {
+	deck.pop();
+}
+
+void RaceBannerDeck::putBannerBack(RaceBanner banner) {
+	deck.push(banner);
+}
