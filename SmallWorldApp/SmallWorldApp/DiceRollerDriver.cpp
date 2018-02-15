@@ -1,7 +1,9 @@
 #include "Dice.h"
 
 
-int main(int argc, char*[]) {
+//int main(int argc, char*[]) {
+
+int DiceRollerDriver() {
 
 	DieRoller *roller;
 

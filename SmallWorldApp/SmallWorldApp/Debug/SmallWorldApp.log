@@ -1,14 +1,15 @@
-﻿  RaceBannerDeck.cpp
-c:\users\luoja\documents\github\smallworld\smallworldapp\smallworldapp\racebannerdeck.cpp(41): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+﻿  PowerBadge.cpp
   Generating Code...
   Compiling...
   VictoryCoin.cpp
   TokensDriver.cpp
   Token.cpp
+  RaceToken.cpp
+  RaceBannerDeck.cpp
   RaceBanner.cpp
-  PowerBadge.cpp
+  PowerBadgeDeck.cpp
+  LostTribeToken.cpp
   GamePiece.cpp
   Generating Code...
-  LINK : C:\Users\luoja\Documents\Github\SmallWorld\SmallWorldApp\Debug\SmallWorldApp.exe not found or not built by the last incremental link; performing full link
-TokensDriver.obj : error LNK2005: _main already defined in DiceRollerDriver.obj
-C:\Users\luoja\Documents\Github\SmallWorld\SmallWorldApp\Debug\SmallWorldApp.exe : fatal error LNK1169: one or more multiply defined symbols found
+  SmallWorldApp.vcxproj -> C:\Users\Jackie.HOME\Documents\GitHub\SmallWorld\SmallWorldApp\Debug\SmallWorldApp.exe
+  SmallWorldApp.vcxproj -> C:\Users\Jackie.HOME\Documents\GitHub\SmallWorld\SmallWorldApp\Debug\SmallWorldApp.pdb (Partial PDB)

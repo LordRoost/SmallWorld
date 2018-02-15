@@ -1,4 +1,4 @@
-#pragma once
+//#pragma once
 #ifndef __TOKENS_H__
 #define __TOKENS_H__
 
@@ -11,10 +11,16 @@
 #define NUM_OF_1S 35
 #define TOTAL_NUM_COINS 109
 #define NUM_OF_RACE_BANNERS 14
+#define NUM_OF_POWERS 20
 
 enum races {
 	RACE_AMAZONS, RACE_DWARVES, RACE_ELVES, RACE_GHOULS, RACE_GIANTS, RACE_HALFLINGS, RACE_HUMANS, 
 	RACE_ORCS, RACE_RATMEN, RACE_SKELETONS, RACE_SORCERERS, RACE_TRITONS, RACE_TROLLS, RACE_WIZARDS, TOTAL_RACES //RACE_LOST_TRIBES
+};
+
+enum powers {
+	POWER_ALCHEMIST, POWER_BERSERK, POWER_BIVOUACKING, POWER_COMMANDO, POWER_DIPLOMAT, POWER_DRAGON_MASTER, POWER_FLYING, POWER_FOREST, POWER_FORTIFIED, POWER_HEROIC, 
+	POWER_HILL, POWER_MERCHANT, POWER_MOUNTED, POWER_PILLAGING, POWER_SEAFARING, POWER_SPIRIT, POWER_STOUT, POWER_SWAMP, POWER_UNDERWORLD, POWER_WEALTHY, TOTAL_POWERS
 };
 
 struct RaceInfo {
@@ -24,30 +30,46 @@ struct RaceInfo {
 	//power still needed to be added
 };
 
-RaceInfo raceInfo[TOTAL_RACES] = {{ RACE_AMAZONS, 6, 15 },{ RACE_DWARVES, 3, 8 },{ RACE_ELVES, 6, 11 },{ RACE_GHOULS, 5, 10 },{ RACE_GIANTS, 6, 11 },{ RACE_HALFLINGS, 6, 11 },
-{ RACE_HUMANS, 5, 10 },{ RACE_ORCS, 5, 10 },{ RACE_RATMEN, 8, 13 } ,{ RACE_SKELETONS, 6, 20 } ,{ RACE_SORCERERS, 5, 18 } ,{ RACE_TRITONS, 6, 11 } ,{ RACE_TROLLS, 5, 10 } ,{ RACE_WIZARDS, 5, 10 } };
+struct PowerInfo {
+	powers power;
+	std::string powerName;
+	int amountTokensReceived;
+	//special ability still needed to be added
+};
 
 class Token {
 public:
 	Token();
+	Token(int maxAmount);
 	~Token() {};
+	int getMaxAmount();
+	void setMaxAmount(int amount);
 
 private:
-	unsigned int maxAmount;
+	int maxAmount;
 };
 
 class RaceToken : public Token {
 public:
+	RaceToken(races race);
+	bool getStatus(); //active or not
+	void setStatus(bool status);
+	races getRace();
+	void setRace(races race);
+	void decline();
 
 private:
 	races race;
+	//Player owner;
+	bool isActive;
+
 };
 
 class LostTribeToken : public Token {
 public:
+	LostTribeToken();
 
 private:
-
 };
 
 class VictoryCoin {
@@ -87,26 +109,61 @@ public:
 	void shuffle();
 	void buildDeck();
 	RaceBanner draw();
-	void putBannerBack(RaceBanner banner);
+	void putBannerBack(RaceBanner *banner);
+	void printDeck();
 
 private:
 	RaceBanner *banners[NUM_OF_RACE_BANNERS]; //for initial array
-	std::queue<RaceBanner> deck;
+	std::queue<RaceBanner*> deck;
 
 };
 
-//class RacePower {
-//public:
-//	RacePower(races race);
-//	~RacePower() {};
-//};
-
 class PowerBadge {
+public:
+	PowerBadge(powers power);
+	powers getPower(); 
+	void setPower(powers newPower);
+
+private:
+	powers power;
+	int amountTokensReceived;
+};
+
+class PowerBadgeDeck {
+public:
+	PowerBadgeDeck();
+	~PowerBadgeDeck() {};
+	void shuffle();
+	void buildDeck();
+	PowerBadge draw();
+	void putBadgeBack(PowerBadge *powerBadge);
+	void printDeck();
+
+private:
+	PowerBadge *badges[NUM_OF_POWERS]; //for initial array
+	std::queue<PowerBadge*> deck;
 
 };
 
 class GamePiece {
+public:
+	GamePiece();
+	~GamePiece() {}
+	//mapRegion getLocation();
+	//void setLocation(mapRegion location);
+
+private:
+	//mapRegion currentLocation;
 
 };
+
+class MoveablePiece: public GamePiece{ //encampment, hero, dragon
+public:
+
+private:
+
+};
+
+
 
 #endif //__TOKENS_H__

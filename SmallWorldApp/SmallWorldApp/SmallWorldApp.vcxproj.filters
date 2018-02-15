@@ -68,5 +68,14 @@
     <ClCompile Include="RaceBannerDeck.cpp">
       <Filter>Source Files\Tokens</Filter>
     </ClCompile>
+    <ClCompile Include="RaceToken.cpp">
+      <Filter>Source Files\Tokens</Filter>
+    </ClCompile>
+    <ClCompile Include="PowerBadgeDeck.cpp">
+      <Filter>Source Files\Tokens</Filter>
+    </ClCompile>
+    <ClCompile Include="LostTribeToken.cpp">
+      <Filter>Source Files\Tokens</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

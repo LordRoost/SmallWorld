@@ -28,5 +28,9 @@ int main(int argc, char*[]) {
 	for (int i = 74; i < upperLimit; i++) {
 		coins[i] = new VictoryCoin(1);
 	}
+
+	//this block generates the race banners
+	RaceBannerDeck *raceDeck = new RaceBannerDeck();
+	raceDeck->printDeck();
 }
 
