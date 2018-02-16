@@ -1,6 +1,6 @@
 #include "Players.h"
 
-Player::Player() {
+Player::Player() {		
 
 }
 
@@ -12,16 +12,47 @@ PowerBadge Player::getBadge() {
 	return currentBadge;
 }
 
-RaceToken Player::getToken();
-VictoryCoin Player::getVictoryCoin();
-RaceBanner Player::getRacebanner();
+RaceToken Player::getToken() {
+	return currentRace;
+}
 
-void Player::setBadge(PowerBadge badge);
-void Player::setDieRoller(DieRoller dice);
-void Player::setRaceToken(RaceToken tokens);
-void Player::setVictoryCoin(VictoryCoin coins);
-void Player::setRaceBanner(Racebanner banner);
+VictoryCoin Player::getVictoryCoin() {
+	return ownedCoins;
+}
 
-Player::picks_race();
-Player::conquers();
-Player::scores();
+RaceBanner Player::getRacebanner() {
+	return currentBanner;
+}
+
+void Player::setBadge(PowerBadge badge) {
+	currentBadge = badge;
+}
+
+void Player::setDieRoller(DieRoller die) {
+	dice = die;
+}
+
+void Player::setRaceToken(RaceToken tokens) {
+	currentRace = tokens;
+}
+
+void Player::setVictoryCoin(VictoryCoin coins) {
+	ownedCoins = coins;
+}
+
+void Player::setRaceBanner(RaceBanner banner) {
+	currentBanner = banner;
+}
+
+void Player::picks_race() {
+
+}
+
+void Player::conquers() {
+
+}
+
+void Player::scores() {
+
+}
+

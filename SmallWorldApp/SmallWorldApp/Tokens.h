@@ -53,6 +53,7 @@ private:
 
 class RaceToken : public Token {
 public:
+	RaceToken() {}
 	RaceToken(races race);
 	bool getStatus(); //active or not
 	void setStatus(bool status);
@@ -76,6 +77,7 @@ private:
 
 class VictoryCoin {
 public:
+	VictoryCoin() {}
 	VictoryCoin(int coinValue);
 	~VictoryCoin() {}
 	void printValue();
@@ -125,6 +127,7 @@ private:
 
 class PowerBadge {
 public:
+	PowerBadge() {}
 	PowerBadge(powers power);
 	powers getPower(); 
 	void setPower(powers newPower);

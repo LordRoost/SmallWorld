@@ -1,15 +1,3 @@
-﻿  TokensDriver.cpp
-  RaceBannerDeck.cpp
-c:\users\luoja\documents\github\smallworld\smallworldapp\smallworldapp\racebannerdeck.cpp(16): warning C4244: 'initializing': conversion from 'std::chrono::system_clock::rep' to 'unsigned int', possible loss of data
-  Generating Code...
-  Compiling...
-  VictoryCoin.cpp
-  Token.cpp
-  RaceToken.cpp
-  RaceBanner.cpp
-  PowerBadgeDeck.cpp
-  PowerBadge.cpp
-  LostTribeToken.cpp
-  GamePiece.cpp
-  Generating Code...
-  SmallWorldApp.vcxproj -> C:\Users\luoja\Documents\Github\SmallWorld\SmallWorldApp\Debug\SmallWorldApp.exe
+﻿  Player.cpp
+  SmallWorldApp.vcxproj -> C:\Users\Jackie.HOME\Documents\GitHub\SmallWorld\SmallWorldApp\Debug\SmallWorldApp.exe
+  SmallWorldApp.vcxproj -> C:\Users\Jackie.HOME\Documents\GitHub\SmallWorld\SmallWorldApp\Debug\SmallWorldApp.pdb (Partial PDB)

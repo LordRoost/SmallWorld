@@ -10,7 +10,7 @@ class Player {
 public:	
 	Player();
 	~Player() {}
-	
+
 	DieRoller getDieRoller();
 	PowerBadge getBadge();
 	RaceToken getToken();
@@ -21,11 +21,11 @@ public:
 	void setDieRoller(DieRoller dice);
 	void setRaceToken(RaceToken tokens);
 	void setVictoryCoin(VictoryCoin coins);
-	void setRaceBanner(Racebanner banner);
+	void setRaceBanner(RaceBanner banner);
 
-	picks_race();
-	conquers();
-	scores();
+	void picks_race();
+	void conquers();
+	void scores();
 
 private:
 	//MapRegion ownedRegions;
@@ -35,7 +35,7 @@ private:
 	VictoryCoin ownedCoins;
 	RaceBanner currentBanner;
 	//SummarySheet ownedSummarySheet;
-}
+};
 
 
 #endif //__PLAYERS_H__
