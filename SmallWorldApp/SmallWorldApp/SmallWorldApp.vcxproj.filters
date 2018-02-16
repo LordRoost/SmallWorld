@@ -22,6 +22,9 @@
     <Filter Include="Source Files\Tokens">
       <UniqueIdentifier>{1cd431c7-176f-4f9e-b085-120870397675}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Players">
+      <UniqueIdentifier>{9cf57e60-dcfb-4743-afcb-eaf1a355ddaa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dice.h">
@@ -31,6 +34,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Tokens.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Players.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -76,6 +82,9 @@
     </ClCompile>
     <ClCompile Include="LostTribeToken.cpp">
       <Filter>Source Files\Tokens</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Players</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

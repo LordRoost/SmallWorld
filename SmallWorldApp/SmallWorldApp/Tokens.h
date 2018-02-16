@@ -1,9 +1,10 @@
-//#pragma once
 #ifndef __TOKENS_H__
 #define __TOKENS_H__
+#pragma once
 
 #include <queue>
 #include <iostream>
+#include <string>
 #include <algorithm>
 #define NUM_OF_10S 30
 #define NUM_OF_5S 24
@@ -25,6 +26,7 @@ enum powers {
 
 struct RaceInfo {
 	races race;
+	std::string raceName;
 	int amountTokensReceived;
 	int totalAmount;
 	//power still needed to be added
@@ -41,7 +43,7 @@ class Token {
 public:
 	Token();
 	Token(int maxAmount);
-	~Token() {};
+	~Token() {}
 	int getMaxAmount();
 	void setMaxAmount(int amount);
 
@@ -75,7 +77,7 @@ private:
 class VictoryCoin {
 public:
 	VictoryCoin(int coinValue);
-	~VictoryCoin() {};
+	~VictoryCoin() {}
 	void printValue();
 	int getValue();
 	void setValue(int nb);
@@ -94,10 +96,13 @@ public:
 	void setStatus(bool status);
 	races getRace();
 	void setRace(races race);
+	std::string getName();
+	void setName(std::string newName);
 	void decline();
 
 private:
 	bool isActive;
+	std::string name;
 	int amountOfTokensReceived;
 	races race;
 };
@@ -105,7 +110,7 @@ private:
 class RaceBannerDeck {
 public:
 	RaceBannerDeck();
-	~RaceBannerDeck() {};
+	~RaceBannerDeck() {}
 	void shuffle();
 	void buildDeck();
 	RaceBanner draw();
@@ -132,7 +137,7 @@ private:
 class PowerBadgeDeck {
 public:
 	PowerBadgeDeck();
-	~PowerBadgeDeck() {};
+	~PowerBadgeDeck() {}
 	void shuffle();
 	void buildDeck();
 	PowerBadge draw();

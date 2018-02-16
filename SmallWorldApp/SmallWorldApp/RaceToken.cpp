@@ -4,6 +4,7 @@
 
 RaceToken::RaceToken(races newRace) {
 	race = newRace;
+	isActive = false;
 }
 
 bool RaceToken::getStatus() {
