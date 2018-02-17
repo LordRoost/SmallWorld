@@ -45,6 +45,9 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MapRegion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dice.cpp">
@@ -97,6 +100,15 @@
     </ClCompile>
     <ClCompile Include="PlayerDriver.cpp">
       <Filter>Source Files\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="CoinBank.cpp">
+      <Filter>Source Files\GameField</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files\Maps</Filter>
+    </ClCompile>
+    <ClCompile Include="MapDriver.cpp">
+      <Filter>Source Files\Maps</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,6 +1,4 @@
 #include "Players.h"
-//#include "PowerBadge.cpp"
-//#include "Racebanner.cpp"
 
 Player::Player() {		
 	dice = new DieRoller();
@@ -18,9 +16,13 @@ RaceToken* Player::getToken() {
 	return currentRace;
 }
 
-//VictoryCoin Player::getVictoryCoin() {
-//	//return ownedCoins;
-//}
+std::list<VictoryCoin> Player::getVictoryCoin1s() {
+	return owned1s;
+}
+
+std::list<VictoryCoin> Player::getOtherCoins() {
+	return ownedOtherCoins;
+}
 
 RaceBanner* Player::getRacebanner() {
 	return currentRaceBanner;
@@ -29,6 +31,10 @@ RaceBanner* Player::getRacebanner() {
 int Player::getNbOfUsableTokens() {
 	return nbOfUseableTokens;
 }
+
+//std::vector<MapRegion> Player::getOwnedRegions() {
+//	return *ownedRegions;
+//}
 
 void Player::setPowerBadge(PowerBadge *badge) {
 	currentBadge = badge;
@@ -42,10 +48,6 @@ void Player::setRaceToken(RaceToken *tokens) {
 	currentRace = tokens;
 }
 
-void Player::setVictoryCoin(VictoryCoin coins) {
-	//ownedCoins = coins;
-}
-
 void Player::setRaceBanner(RaceBanner *banner) {
 	currentRaceBanner = banner;
 }
@@ -54,7 +56,19 @@ void Player::setNbOfUsableTokens(int tokenAmount) {
 	nbOfUseableTokens = tokenAmount;
 }
 
-void Player::picks_race(RacePicker *picker) { //doesnt work when its not 1 entered
+void Player::addVictoryCoin(VictoryCoin coins) {
+	ownedOtherCoins.push_back(coins);
+}
+
+void Player::addVictoryCoin1s(VictoryCoin ones) {
+	owned1s.push_back(ones);
+}
+
+//void Player::addOwnedRegion(MapRegion *region) {
+//	ownedRegions->push_back(*region);
+//}
+
+void Player::picks_race(RacePicker *picker) { 
 	
 	picker->printOptions();
 	int answer;
@@ -65,11 +79,8 @@ void Player::picks_race(RacePicker *picker) { //doesnt work when its not 1 enter
 		std::cin >> answer;
 	}
 
-	PowerBadge *temp = picker->getPickablePowers(answer - 1);
-	RaceBanner *temp2 = picker->getPickableRaces(answer - 1);
-
-	setPowerBadge(temp);
-	setRaceBanner(temp2);
+	setPowerBadge(picker->getPickablePowers(answer - 1));
+	setRaceBanner(picker->getPickableRaces(answer - 1));
 	calculateUsableTokens();
 
 	std::cout << "You have chosen: ";
@@ -83,12 +94,15 @@ void Player::picks_race(RacePicker *picker) { //doesnt work when its not 1 enter
 }
 
 void Player::conquers() {
-
+	
 }
 
-void Player::scores() {
-
-}
+//void Player::scores(CoinBank *bank) { //Later need to add how it is affected by powers 
+//	bank->deal1s(this, ownedRegions->size());
+//	std::cout << "You have scored ";
+//	std::cout << ownedRegions->size();
+//	std::cout << " points this turn." << std::endl;
+//}
 
 void Player::calculateUsableTokens() {
 	
@@ -105,7 +119,11 @@ void Player::printAmountTokens() {
 }
 
 void Player::printCurrentMoney() {
-	std::cout << "Money in hand: ";
+	std::cout << "Money in hand: " << std::endl;
+	std::cout << getVictoryCoin1s().size(); 
+	std::cout << " Ones" << std::endl;
+	std::cout << getOtherCoins().size();
+	std::cout << " Others" << std::endl;
 }
 
 void Player::printCurrentBanner() {

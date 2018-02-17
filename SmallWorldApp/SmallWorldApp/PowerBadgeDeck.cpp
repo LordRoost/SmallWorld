@@ -29,13 +29,16 @@ PowerBadge* PowerBadgeDeck::draw() {
 	return drawnCard;
 }
 
-void PowerBadgeDeck::putBadgeBack(PowerBadge *badge) {
-	deck.push(badge);
+//when a player makes a race go into decline, the power gets discarded using this method
+void PowerBadgeDeck::discardBadge(PowerBadge *badge) {
+	discardPile.push_back(*badge);
+	//deck.push(badge);
 }
 
+//prints the contents of the powers deck
 void PowerBadgeDeck::printDeck() {
 	std::cout << "Here is the deck of power badges" << std::endl;
 	for (int i = 0; i < NUM_OF_POWERS; i++) {
-		std::cout << badges[i]->getPower() << std::endl;
+		std::cout << badges[i]->getPowerName() << std::endl;
 	}
 }

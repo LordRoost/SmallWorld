@@ -16,7 +16,7 @@ int DiceRollerDriver() {
 
 	while (true) {
 
-		std::cout << "Do you want to roll a die? (Y/N) or quit (Q)" << std::endl;
+		std::cout << "Do you want to roll a die? (Y/N) or quit (Q) (press R to roll 100 times and press P to print the distribution)" << std::endl;
 		std::cin >> answer;
 		if (answer == 'Y') {
 			roller->rollDice();
@@ -40,7 +40,7 @@ int DiceRollerDriver() {
 			break;
 		}
 		else {
-			std::cout << "Please enter Y or N!" << std::endl;
+			std::cout << "Please enter an appropriate command!" << std::endl;
 		}
 	}
 

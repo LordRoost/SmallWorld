@@ -3,9 +3,11 @@
 #pragma once
 
 #include <iostream>
+#include <list>
 #include "Dice.h"
 #include "Tokens.h"
 #include "Game.h"
+#include "MapRegion.h"
 
 class Player {
 public:	
@@ -15,20 +17,25 @@ public:
 	DieRoller getDieRoller();
 	PowerBadge* getPowerBadge();
 	RaceToken* getToken();
-	//VictoryCoin getVictoryCoin();
+	std::list<VictoryCoin> getVictoryCoin1s(); //change to vectors, they are better
+	std::list<VictoryCoin> getOtherCoins();
 	RaceBanner* getRacebanner();
 	int getNbOfUsableTokens();
+	//std::vector<MapRegion> getOwnedRegions();
 
 	void setPowerBadge(PowerBadge *badge);
 	void setDieRoller(DieRoller *dice);
 	void setRaceToken(RaceToken *tokens);
-	void setVictoryCoin(VictoryCoin coins);
 	void setRaceBanner(RaceBanner *banner);
 	void setNbOfUsableTokens(int tokenAmount);
+	
+	//void addOwnedRegion(MapRegion *region);
+	void addVictoryCoin(VictoryCoin coins);
+	void addVictoryCoin1s(VictoryCoin ones);
 
 	void picks_race(RacePicker *picker);
 	void conquers();
-	void scores();
+	void scores(CoinBank *bank);
 
 	void calculateUsableTokens();
 	void printAmountTokens();
@@ -37,11 +44,12 @@ public:
 	void printCurrentPower();
 
 private:
-	//MapRegion *ownedRegions[];
+	//std::vector<MapRegion> *ownedRegions; //change to mapregions instead of ints
 	DieRoller *dice;
 	PowerBadge *currentBadge;
 	RaceToken *currentRace, declinedRace;
-	VictoryCoin *ownedCoins[3];
+	std::list<VictoryCoin> ownedOtherCoins;
+	std::list<VictoryCoin>  owned1s;
 	RaceBanner *currentRaceBanner, declinedRaceBanner;
 	int nbOfUseableTokens;
 	//SummarySheet ownedSummarySheet;

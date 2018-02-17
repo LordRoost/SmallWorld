@@ -147,12 +147,13 @@ private:
 
 class PowerBadgeDeck {
 public:
+	std::vector<PowerBadge> discardPile; //should later be made private
 	PowerBadgeDeck();
 	~PowerBadgeDeck() {}
 	void shuffle();
 	void buildDeck();
 	PowerBadge* draw();
-	void putBadgeBack(PowerBadge *powerBadge);
+	void discardBadge(PowerBadge *powerBadge);
 	void printDeck();
 
 private:

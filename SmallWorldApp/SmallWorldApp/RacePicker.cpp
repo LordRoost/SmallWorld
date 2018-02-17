@@ -6,7 +6,7 @@ RacePicker::RacePicker() {
 }
 
 void RacePicker::setup() {
-	bannerDeck->shuffle();
+	bannerDeck->shuffle();//need to shuffle multiple times for it to actually work. Need to find out why
 	bannerDeck->shuffle();
 	bannerDeck->shuffle();
 	bannerDeck->buildDeck();

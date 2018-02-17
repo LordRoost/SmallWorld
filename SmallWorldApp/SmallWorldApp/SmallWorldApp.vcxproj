@@ -114,15 +114,19 @@
     <ClInclude Include="Dice.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="MapRegion.h" />
     <ClInclude Include="Players.h" />
     <ClInclude Include="Tokens.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CoinBank.cpp" />
     <ClCompile Include="Dice.cpp" />
     <ClCompile Include="DiceRollerDriver.cpp" />
     <ClCompile Include="DieRoller.cpp" />
     <ClCompile Include="GamePiece.cpp" />
     <ClCompile Include="LostTribeToken.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="MapDriver.cpp" />
     <ClCompile Include="MapRegion.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerDriver.cpp" />
