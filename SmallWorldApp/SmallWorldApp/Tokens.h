@@ -32,6 +32,7 @@ struct RaceInfo {
 	//power still needed to be added
 };
 
+
 struct PowerInfo {
 	powers power;
 	std::string powerName;
@@ -100,6 +101,8 @@ public:
 	void setRace(races race);
 	std::string getName();
 	void setName(std::string newName);
+	int getAmountTokensReceived();
+	void setAmountTokensReceived(int tokens);
 	void decline();
 
 private:
@@ -115,7 +118,7 @@ public:
 	~RaceBannerDeck() {}
 	void shuffle();
 	void buildDeck();
-	RaceBanner draw();
+	RaceBanner* draw();
 	void putBannerBack(RaceBanner *banner);
 	void printDeck();
 
@@ -131,10 +134,15 @@ public:
 	PowerBadge(powers power);
 	powers getPower(); 
 	void setPower(powers newPower);
+	std::string getPowerName();
+	void setPowerName(std::string newName);
+	int getAmountTokensReceived();
+	void setAmountTokensReceived(int tokens);
 
 private:
 	powers power;
 	int amountTokensReceived;
+	std::string powerName;
 };
 
 class PowerBadgeDeck {
@@ -143,7 +151,7 @@ public:
 	~PowerBadgeDeck() {}
 	void shuffle();
 	void buildDeck();
-	PowerBadge draw();
+	PowerBadge* draw();
 	void putBadgeBack(PowerBadge *powerBadge);
 	void printDeck();
 

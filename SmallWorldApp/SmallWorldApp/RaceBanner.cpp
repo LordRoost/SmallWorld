@@ -39,6 +39,14 @@ void RaceBanner::setName(std::string newName) {
 	name = newName;
 }
 
+int RaceBanner::getAmountTokensReceived() {
+	return amountOfTokensReceived;
+}
+
+void RaceBanner::setAmountTokensReceived(int nb) {
+	amountOfTokensReceived = nb;
+}
+
 void RaceBanner::decline() {
 	isActive = false;
 

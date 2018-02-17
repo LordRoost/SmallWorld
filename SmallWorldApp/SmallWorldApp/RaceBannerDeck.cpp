@@ -24,10 +24,10 @@ void RaceBannerDeck::buildDeck() {
 	}
 }
 
-RaceBanner RaceBannerDeck::draw() {
+RaceBanner* RaceBannerDeck::draw() {
 	RaceBanner *drawnCard = deck.front(); //If see this error 'Expression: deque iterator not dereferencable' possible that queue is empty
 	deck.pop();
-	return *drawnCard;
+	return drawnCard;
 }
 
 void RaceBannerDeck::putBannerBack(RaceBanner *banner) {

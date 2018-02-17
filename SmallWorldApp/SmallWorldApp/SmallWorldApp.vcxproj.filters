@@ -25,6 +25,9 @@
     <Filter Include="Source Files\Players">
       <UniqueIdentifier>{9cf57e60-dcfb-4743-afcb-eaf1a355ddaa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GameField">
+      <UniqueIdentifier>{35e63d31-53c2-43e1-b4da-b7235006be9d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dice.h">
@@ -37,6 +40,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Players.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -84,6 +90,12 @@
       <Filter>Source Files\Tokens</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="RacePicker.cpp">
+      <Filter>Source Files\GameField</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerDriver.cpp">
       <Filter>Source Files\Players</Filter>
     </ClCompile>
   </ItemGroup>

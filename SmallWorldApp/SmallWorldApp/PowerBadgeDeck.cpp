@@ -1,18 +1,19 @@
 #include "Tokens.h"
+#include <iterator>
+#include <random>
+#include <chrono>
 
 //Constructor, populating the initial array
 PowerBadgeDeck::PowerBadgeDeck() {
 
-	for (int i = 0; i < NUM_OF_POWERS; i++) {
-		for (unsigned j = RACE_AMAZONS; j != TOTAL_RACES; j++)
-		{
-			badges[i] = new PowerBadge(static_cast<powers>(j));
-		}
+	for (unsigned i = POWER_ALCHEMIST; i != TOTAL_POWERS; i++) {
+		badges[i] = new PowerBadge(static_cast<powers>(i));
 	}
 }
 
 void PowerBadgeDeck::shuffle() {
-	std::random_shuffle(std::begin(badges), std::end(badges)); //last element may not be shuffled?
+	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+	std::shuffle(std::begin(badges), std::end(badges), std::default_random_engine(seed));
 }
 
 void PowerBadgeDeck::buildDeck() {
@@ -22,10 +23,10 @@ void PowerBadgeDeck::buildDeck() {
 	}
 }
 
-PowerBadge PowerBadgeDeck::draw() {
+PowerBadge* PowerBadgeDeck::draw() {
 	PowerBadge *drawnCard = deck.front();
 	deck.pop();
-	return *drawnCard;
+	return drawnCard;
 }
 
 void PowerBadgeDeck::putBadgeBack(PowerBadge *badge) {

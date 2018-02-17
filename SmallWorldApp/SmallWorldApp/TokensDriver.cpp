@@ -1,7 +1,9 @@
 #include "Tokens.h"
 
 
-int main(int argc, char*[]) {
+//int main(int argc, char*[]) {
+
+int TokensDriver(){
 
 	char answer;
 
@@ -72,6 +74,7 @@ int main(int argc, char*[]) {
 		}
 	}
 
+	return 0;
 
 }
 
