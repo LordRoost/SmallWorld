@@ -71,6 +71,7 @@ void Player::addVictoryCoin1s(VictoryCoin ones) {
 void Player::picks_race(RacePicker *picker) { 
 	
 	picker->printOptions();
+	std::cout << "Choose your race: " << std::endl;
 	int answer;
 	std::cin >> answer;
 
@@ -81,6 +82,7 @@ void Player::picks_race(RacePicker *picker) {
 
 	setPowerBadge(picker->getPickablePowers(answer - 1));
 	setRaceBanner(picker->getPickableRaces(answer - 1));
+	picker->replaceChoices(answer - 1);
 	calculateUsableTokens();
 
 	std::cout << "You have chosen: ";
@@ -92,6 +94,7 @@ void Player::picks_race(RacePicker *picker) {
 	std::cout << " received: " << std::endl;
 	std::cout << getNbOfUsableTokens() << std::endl;
 }
+
 
 void Player::conquers() {
 	

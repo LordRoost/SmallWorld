@@ -2,9 +2,9 @@
 #include "Game.h"
 
 
-//int main(int argc, char*[]) {
+int main(int argc, char*[]) {
 
-int PlayerDriver() {
+//int PlayerDriver() {
 
 	char answer;
 	CoinBank *bank = new CoinBank();
@@ -17,13 +17,14 @@ int PlayerDriver() {
 	bank->startingDeal(player1);
 
 	player1->picks_race(picker);
-	player1->printAmountTokens();
+	//player1->printAmountTokens();
 	player1->printCurrentBanner();
 	player1->printCurrentPower();
-	player1->printCurrentMoney();
+	//player1->printCurrentMoney();
+	picker->printOptions();
 
-	std::cout << "You roll your dice, the result is: ";
-	player1->getDieRoller().rollDice();
+	//std::cout << "You roll your dice, the result is: ";
+	//player1->getDieRoller().rollDice();
 
 	//MapRegion *region = new MapRegion();
 	//player1->addOwnedRegion(region);

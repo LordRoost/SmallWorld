@@ -35,7 +35,7 @@ public:
 
 	void picks_race(RacePicker *picker);
 	void conquers();
-	void scores(CoinBank *bank);
+	//void scores(CoinBank *bank);
 
 	void calculateUsableTokens();
 	void printAmountTokens();

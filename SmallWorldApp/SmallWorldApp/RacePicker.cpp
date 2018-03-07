@@ -1,4 +1,5 @@
 #include "Game.h"
+//#include "Players.h"
 
 RacePicker::RacePicker() {
 	bannerDeck = new RaceBannerDeck();
@@ -40,13 +41,20 @@ PowerBadge* RacePicker::getPickablePowers(int index) {
 	return pickablePowers[index];
 }
 
+void RacePicker::replaceChoices(int index) {
+	int maxIndex = MAX_NUMBER_PICKABLE_POWERS - 1;
+	for (int i = index; i < maxIndex; i++) {
+		pickableRaces[i] = pickableRaces[i + 1];
+		pickablePowers[i] = pickablePowers[i + 1];
+	}
+	pickableRaces[maxIndex] = bannerDeck->draw();
+	pickablePowers[maxIndex] = powerDeck->draw();
+}
 
 void RacePicker::printOptions() {
-	std::cout << "Which race would you like to choose?" << std::endl;
+	std::cout << "These are the available races: " << std::endl;
 
 	for (int i = 0; i < MAX_NUMBER_PICKABLE_POWERS; i++) {
-		std::cout << pickablePowers[i]->getPowerName();
-		std::cout << " : ";
-		std::cout << pickableRaces[i]->getName() << std::endl;
+		std::cout << (i+1) << ". " << pickablePowers[i]->getPowerName() << " : " << pickableRaces[i]->getName() << std::endl;
 	}
 }

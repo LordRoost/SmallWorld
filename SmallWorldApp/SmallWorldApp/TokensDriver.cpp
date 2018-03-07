@@ -2,9 +2,9 @@
 #include "Game.h"
 
 
-int main(int argc, char*[]) {
+//int main(int argc, char*[]) {
 
-//int TokensDriver(){
+int TokensDriver(){
 
 	char answer;
 	
