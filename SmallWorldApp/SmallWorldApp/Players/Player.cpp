@@ -32,9 +32,9 @@ int Player::getNbOfUsableTokens() {
 	return nbOfUseableTokens;
 }
 
-//std::vector<MapRegion> Player::getOwnedRegions() {
-//	return *ownedRegions;
-//}
+std::vector<MapRegion> Player::getOwnedRegions() { // ?????
+	return *ownedRegions;
+}
 
 void Player::setPowerBadge(PowerBadge *badge) {
 	currentBadge = badge;
@@ -64,9 +64,9 @@ void Player::addVictoryCoin1s(VictoryCoin ones) {
 	owned1s.push_back(ones);
 }
 
-//void Player::addOwnedRegion(MapRegion *region) {
-//	ownedRegions->push_back(*region);
-//}
+void Player::addOwnedRegion(MapRegion *region) { //????
+	ownedRegions->push_back(*region);
+}
 
 void Player::picks_race(RacePicker *picker) { 
 	
@@ -95,10 +95,44 @@ void Player::picks_race(RacePicker *picker) {
 	std::cout << getNbOfUsableTokens() << std::endl;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/*Conquest related methods*/
 
 void Player::conquers() {
-	
+	//firstConquest();
 }
+
+void Player::firstConquest() {
+	//make sure territory options are only the border ones
+	//player chooses one 
+}
+
+void Player::attackTerritory(MapRegion *region) {
+	
+	if (region->getOwnershipStatus() == false) {
+
+	}
+}
+
+bool Player::finalAttack(MapRegion *region) {
+	int rolled = dice->rollDice();
+
+	if (rolled + nbOfUseableTokens > calculateAttackThreshold(region)) {
+		return true;
+	}
+
+	return false;
+}
+
+void Player::redeploy() {
+
+}
+
+int Player::calculateAttackThreshold(MapRegion *region) {
+	return 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 
 //void Player::scores(CoinBank *bank) { //Later need to add how it is affected by powers 
 //	bank->deal1s(this, ownedRegions->size());

@@ -7,11 +7,15 @@
 using namespace std;
 
 enum regionTypes {
-	REGION_TYPE_FOREST, REGION_TYPE_FARMLAND, REGION_TYPE_MOUNTAIN, REGION_TYPE_HILL, REGION_TYPE_SWAMP//, TOTAL_REGION_TYPE
+	REGION_TYPE_FOREST, REGION_TYPE_FARMLAND, REGION_TYPE_MOUNTAIN, REGION_TYPE_HILL, REGION_TYPE_SWAMP, TOTAL_REGION_TYPE
+};
+
+struct RegionInfo {
+	regionTypes regionType;
+	std::string regionName;
 };
 
 static const char * EnumRegionTypes[] = { "Forest", "Farmland", "Mountain","Hill","Swamp" };
-
 
 
 enum regionBonus {
@@ -23,13 +27,19 @@ public:
 	MapRegion();
 	MapRegion(string s);
 	MapRegion(regionTypes regionType);
-	static const char * getTextForEnumRegionTypes(int enumVal);
+	//static const char * getTextForEnumRegionTypes(int enumVal);
 	void setType(regionTypes regionType);
-	string getType();
+	void setName(string newName);
+	void setOwnershipStatus(bool status);
+	regionTypes getType();
+	string getName();
+	bool getOwnershipStatus();
+
 
 private:
-
+	string typeName;
 	regionTypes type;
+	bool isOwned;
 
 
 };

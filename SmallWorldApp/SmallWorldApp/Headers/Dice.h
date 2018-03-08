@@ -18,8 +18,9 @@ class DieRoller {
 
 public:
 	DieRoller();
-	void rollDice();
-	bool determineResult();
+	int rollDice();
+	//void rollDice();
+	//bool determineResult();
 	void printDistribution();
 
 private: 

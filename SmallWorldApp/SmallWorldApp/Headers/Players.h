@@ -21,7 +21,7 @@ public:
 	std::list<VictoryCoin> getOtherCoins();
 	RaceBanner* getRacebanner();
 	int getNbOfUsableTokens();
-	//std::vector<MapRegion> getOwnedRegions();
+	std::vector<MapRegion> getOwnedRegions();
 
 	void setPowerBadge(PowerBadge *badge);
 	void setDieRoller(DieRoller *dice);
@@ -29,13 +29,20 @@ public:
 	void setRaceBanner(RaceBanner *banner);
 	void setNbOfUsableTokens(int tokenAmount);
 	
-	//void addOwnedRegion(MapRegion *region);
+	void addOwnedRegion(MapRegion *region);
 	void addVictoryCoin(VictoryCoin coins);
 	void addVictoryCoin1s(VictoryCoin ones);
 
 	void picks_race(RacePicker *picker);
 	void conquers();
 	//void scores(CoinBank *bank);
+
+	//void isRegionOwned();
+	void firstConquest();
+	void attackTerritory(MapRegion *region);
+	bool finalAttack(MapRegion *region);
+	void redeploy();
+	int calculateAttackThreshold(MapRegion *region);
 
 	void calculateUsableTokens();
 	void printAmountTokens();
@@ -44,14 +51,14 @@ public:
 	void printCurrentPower();
 
 private:
-	//std::vector<MapRegion> *ownedRegions; //change to mapregions instead of ints
+	std::vector<MapRegion> *ownedRegions; 
 	DieRoller *dice;
 	PowerBadge *currentBadge;
 	RaceToken *currentRace, declinedRace;
 	std::list<VictoryCoin> ownedOtherCoins;
 	std::list<VictoryCoin>  owned1s;
 	RaceBanner *currentRaceBanner, declinedRaceBanner;
-	int nbOfUseableTokens;
+	int nbOfUseableTokens; //number of tokens of a race that the user has in hand
 	//SummarySheet ownedSummarySheet;
 };
 
