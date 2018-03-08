@@ -43,6 +43,22 @@ bool MapRegion::getOwnershipStatus() {
 	return isOwned;
 }
 
+//RaceToken MapRegion::getRaceToken() {
+//	return tokens.front();
+//}
+//
+//int MapRegion::getNbTokens() {
+//	return tokens.size();
+//}
+
+RaceToken MapRegion::getRaceToken() {
+	return tokens;
+}
+
+int MapRegion::getNbTokens() {
+	return nbOfTokens;
+}
+
 void MapRegion::setName(string newName) {
 	typeName = newName;
 }
@@ -53,5 +69,15 @@ void MapRegion::setType(regionTypes regionType) {
 
 void MapRegion::setOwnershipStatus(bool status) {
 	isOwned = status;
+}
+
+void MapRegion::setNbTokens(int amount) {
+	nbOfTokens = amount;
+}
+
+void MapRegion::addRaceTokens(RaceToken race, int amount) {
+	tokens = race;
+	nbOfTokens = amount;
+
 }
 

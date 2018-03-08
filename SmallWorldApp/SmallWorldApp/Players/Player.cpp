@@ -114,6 +114,7 @@ void Player::attackTerritory(MapRegion *region) {
 	}
 }
 
+//method for the dice roll attack of the conquering phase
 bool Player::finalAttack(MapRegion *region) {
 	int rolled = dice->rollDice();
 
@@ -128,8 +129,11 @@ void Player::redeploy() {
 
 }
 
+//method to determine how many tokens a user needs to succesfully conquer a region
 int Player::calculateAttackThreshold(MapRegion *region) {
-	return 0;
+	
+	int threshold = region->getNbTokens() + 1; // + region bonus from mountain or forteress 
+	return threshold;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
