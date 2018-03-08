@@ -30,85 +30,85 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Dice.h">
+    <ClInclude Include="Headers\Dice.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Map.h">
+    <ClInclude Include="Headers\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Tokens.h">
+    <ClInclude Include="Headers\Map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Players.h">
+    <ClInclude Include="Headers\MapRegion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
+    <ClInclude Include="Headers\Players.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MapRegion.h">
+    <ClInclude Include="Headers\Tokens.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Dice.cpp">
+    <ClCompile Include="Dice\Dice.cpp">
       <Filter>Source Files\Dice</Filter>
     </ClCompile>
-    <ClCompile Include="DiceRollerDriver.cpp">
+    <ClCompile Include="Dice\DiceRollerDriver.cpp">
       <Filter>Source Files\Dice</Filter>
     </ClCompile>
-    <ClCompile Include="DieRoller.cpp">
+    <ClCompile Include="Dice\DieRoller.cpp">
       <Filter>Source Files\Dice</Filter>
     </ClCompile>
-    <ClCompile Include="MapRegion.cpp">
-      <Filter>Source Files\Maps</Filter>
-    </ClCompile>
-    <ClCompile Include="RaceBanner.cpp">
-      <Filter>Source Files\Tokens</Filter>
-    </ClCompile>
-    <ClCompile Include="Token.cpp">
-      <Filter>Source Files\Tokens</Filter>
-    </ClCompile>
-    <ClCompile Include="GamePiece.cpp">
-      <Filter>Source Files\Tokens</Filter>
-    </ClCompile>
-    <ClCompile Include="PowerBadge.cpp">
-      <Filter>Source Files\Tokens</Filter>
-    </ClCompile>
-    <ClCompile Include="VictoryCoin.cpp">
-      <Filter>Source Files\Tokens</Filter>
-    </ClCompile>
-    <ClCompile Include="TokensDriver.cpp">
-      <Filter>Source Files\Tokens</Filter>
-    </ClCompile>
-    <ClCompile Include="RaceBannerDeck.cpp">
-      <Filter>Source Files\Tokens</Filter>
-    </ClCompile>
-    <ClCompile Include="RaceToken.cpp">
-      <Filter>Source Files\Tokens</Filter>
-    </ClCompile>
-    <ClCompile Include="PowerBadgeDeck.cpp">
-      <Filter>Source Files\Tokens</Filter>
-    </ClCompile>
-    <ClCompile Include="LostTribeToken.cpp">
-      <Filter>Source Files\Tokens</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files\Players</Filter>
-    </ClCompile>
-    <ClCompile Include="RacePicker.cpp">
+    <ClCompile Include="Gamefield\CoinBank.cpp">
       <Filter>Source Files\GameField</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerDriver.cpp">
-      <Filter>Source Files\Players</Filter>
-    </ClCompile>
-    <ClCompile Include="CoinBank.cpp">
+    <ClCompile Include="Gamefield\RacePicker.cpp">
       <Filter>Source Files\GameField</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp">
+    <ClCompile Include="Map\Map.cpp">
       <Filter>Source Files\Maps</Filter>
     </ClCompile>
-    <ClCompile Include="MapDriver.cpp">
+    <ClCompile Include="Map\MapDriver.cpp">
       <Filter>Source Files\Maps</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\MapRegion.cpp">
+      <Filter>Source Files\Maps</Filter>
+    </ClCompile>
+    <ClCompile Include="Players\Player.cpp">
+      <Filter>Source Files\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="Players\PlayerDriver.cpp">
+      <Filter>Source Files\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="Tokens\GamePiece.cpp">
+      <Filter>Source Files\Tokens</Filter>
+    </ClCompile>
+    <ClCompile Include="Tokens\LostTribeToken.cpp">
+      <Filter>Source Files\Tokens</Filter>
+    </ClCompile>
+    <ClCompile Include="Tokens\PowerBadge.cpp">
+      <Filter>Source Files\Tokens</Filter>
+    </ClCompile>
+    <ClCompile Include="Tokens\PowerBadgeDeck.cpp">
+      <Filter>Source Files\Tokens</Filter>
+    </ClCompile>
+    <ClCompile Include="Tokens\RaceBanner.cpp">
+      <Filter>Source Files\Tokens</Filter>
+    </ClCompile>
+    <ClCompile Include="Tokens\RaceBannerDeck.cpp">
+      <Filter>Source Files\Tokens</Filter>
+    </ClCompile>
+    <ClCompile Include="Tokens\RaceToken.cpp">
+      <Filter>Source Files\Tokens</Filter>
+    </ClCompile>
+    <ClCompile Include="Tokens\Token.cpp">
+      <Filter>Source Files\Tokens</Filter>
+    </ClCompile>
+    <ClCompile Include="Tokens\TokensDriver.cpp">
+      <Filter>Source Files\Tokens</Filter>
+    </ClCompile>
+    <ClCompile Include="Tokens\VictoryCoin.cpp">
+      <Filter>Source Files\Tokens</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

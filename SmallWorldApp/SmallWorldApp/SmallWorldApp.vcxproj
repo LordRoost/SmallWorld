@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{CB27F2DC-5BC7-4B7C-9551-E48F2D190A21}</ProjectGuid>
     <RootNamespace>SmallWorldApp</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -75,8 +75,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Program Files\boost\boost_1_66_0;C:\Program Files\boost\boost_1_62_0</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Program Files %28x86%29\Boost\boost_1_66_0;C:\Program Files\boost\boost_1_66_0;C:\Program Files\boost\boost_1_62_0</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <FullProgramDatabaseFile>true</FullProgramDatabaseFile>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -112,34 +115,34 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Dice.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="Map.h" />
-    <ClInclude Include="MapRegion.h" />
-    <ClInclude Include="Players.h" />
-    <ClInclude Include="Tokens.h" />
+    <ClInclude Include="Headers\Dice.h" />
+    <ClInclude Include="Headers\Game.h" />
+    <ClInclude Include="Headers\Map.h" />
+    <ClInclude Include="Headers\MapRegion.h" />
+    <ClInclude Include="Headers\Players.h" />
+    <ClInclude Include="Headers\Tokens.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CoinBank.cpp" />
-    <ClCompile Include="Dice.cpp" />
-    <ClCompile Include="DiceRollerDriver.cpp" />
-    <ClCompile Include="DieRoller.cpp" />
-    <ClCompile Include="GamePiece.cpp" />
-    <ClCompile Include="LostTribeToken.cpp" />
-    <ClCompile Include="Map.cpp" />
-    <ClCompile Include="MapDriver.cpp" />
-    <ClCompile Include="MapRegion.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerDriver.cpp" />
-    <ClCompile Include="PowerBadge.cpp" />
-    <ClCompile Include="PowerBadgeDeck.cpp" />
-    <ClCompile Include="RaceBanner.cpp" />
-    <ClCompile Include="RaceBannerDeck.cpp" />
-    <ClCompile Include="RacePicker.cpp" />
-    <ClCompile Include="RaceToken.cpp" />
-    <ClCompile Include="Token.cpp" />
-    <ClCompile Include="TokensDriver.cpp" />
-    <ClCompile Include="VictoryCoin.cpp" />
+    <ClCompile Include="Dice\Dice.cpp" />
+    <ClCompile Include="Dice\DiceRollerDriver.cpp" />
+    <ClCompile Include="Dice\DieRoller.cpp" />
+    <ClCompile Include="Gamefield\CoinBank.cpp" />
+    <ClCompile Include="Gamefield\RacePicker.cpp" />
+    <ClCompile Include="Map\Map.cpp" />
+    <ClCompile Include="Map\MapDriver.cpp" />
+    <ClCompile Include="Map\MapRegion.cpp" />
+    <ClCompile Include="Players\Player.cpp" />
+    <ClCompile Include="Players\PlayerDriver.cpp" />
+    <ClCompile Include="Tokens\GamePiece.cpp" />
+    <ClCompile Include="Tokens\LostTribeToken.cpp" />
+    <ClCompile Include="Tokens\PowerBadge.cpp" />
+    <ClCompile Include="Tokens\PowerBadgeDeck.cpp" />
+    <ClCompile Include="Tokens\RaceBanner.cpp" />
+    <ClCompile Include="Tokens\RaceBannerDeck.cpp" />
+    <ClCompile Include="Tokens\RaceToken.cpp" />
+    <ClCompile Include="Tokens\Token.cpp" />
+    <ClCompile Include="Tokens\TokensDriver.cpp" />
+    <ClCompile Include="Tokens\VictoryCoin.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
