@@ -2,9 +2,9 @@
 #include "../Headers/Game.h"
 
 
-int main(int argc, char*[]) {
+//int main(int argc, char*[]) {
 
-//int PlayerDriver() {
+int PlayerDriver() {
 
 	char answer;
 	CoinBank *bank = new CoinBank();

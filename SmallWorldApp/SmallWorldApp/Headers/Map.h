@@ -8,6 +8,12 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <iostream>
+#include <boost/graph/graphviz.hpp>
+#include <boost/graph/graph_traits.hpp>
+#include <boost/graph/connected_components.hpp>
+#include <boost/filesystem.hpp>
+#include <boost/lexical_cast.hpp>
 
 using namespace boost;
 using namespace std;
@@ -20,6 +26,8 @@ public:
 	void loadMap(string file);
 	bool graphIsConnected();
 	Graph getMap();
+    static void getListOfMaps(const string& path);
+    void selectMap(string path);
 
 private:
 	Graph g;

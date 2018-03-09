@@ -1,14 +1,5 @@
-#include <boost/graph/graphviz.hpp>
-#include <boost/graph/graph_traits.hpp>
-#include <boost/graph/connected_components.hpp>
-//#include <boost/filesystem.hpp>
-#include <boost/lexical_cast.hpp>
 #include "../Headers/MapRegion.h"
 #include "../Headers/Map.h"
-#include <fstream>
-#include <string>
-#include <sstream>
-#include <iostream>
 
 using namespace std;
 using namespace boost;
@@ -184,4 +175,66 @@ bool Map::graphIsConnected() {
 		return false;
 	}
 
+}
+
+void Map::getListOfMaps(const string& path)
+{
+
+     //vector <string> m_file_list;
+     if (!path.empty())
+     {
+     
+         cout<< "\n--------------------------"<<endl;
+         
+         namespace fs = boost::filesystem;
+         
+         fs::path apk_path(path);
+         fs::recursive_directory_iterator end;
+         
+         for (fs::recursive_directory_iterator i(apk_path); i != end; ++i)
+         {
+             fs::path cp = (*i);
+             //m_file_list.push_back(cp.string());
+             cout<<cp.string()<<endl;
+         
+         }
+         cout<< "--------------------------\n"<<endl;
+     }
+     
+     else{
+     cout<< "Path not found"<<endl;
+     }
+   
+}
+
+void Map::selectMap(string path){
+    bool isNotValidMap=true;
+    
+    while (isNotValidMap)
+    {
+        //Display Map files in directory
+        cout<< "Let's start a Smallworld game"<<endl;
+        getListOfMaps(path);
+        cout<< "Choose the map you want to play on by entering the name of one of the text files above."<<endl;
+        
+        //Take input for the map the player wants to play
+        string textFile;
+        string fullPath="/Users/ericpayettereformed/Documents/Smallworld/MapFiles/";
+        cin>> textFile;
+        fullPath.append(textFile);
+        fullPath.append(".txt");
+        
+        loadMap(fullPath);
+        
+        isNotValidMap=!graphIsConnected();
+        
+        if(num_vertices(g)==0){
+            isNotValidMap=true;
+        }
+        
+        if(isNotValidMap){
+            cout<<"Map is not valid, choose a valid map"<<endl;
+            g.clear();
+        }
+    }
 }
