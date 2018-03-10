@@ -1,11 +1,14 @@
 #include "../Headers/PlayGame.h"
 
-int mainer(){
+//int main(){
+
+int GameDriver(){
+
     PlayGame game1;
     
     game1.startGame();
 
-	return 0;
     
+    return 0;
 }
 
