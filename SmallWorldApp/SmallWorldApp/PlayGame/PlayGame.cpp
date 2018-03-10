@@ -1,9 +1,9 @@
 #include "../Headers/PlayGame.h"
-#include "../Headers/Players.h"
 
 Map PlayGame::getMap(){
     return map;
 }
+
 string getMapFilesPath(){
     return mapFilesPath;
 }
@@ -12,7 +12,7 @@ void PlayGame::startGame(){
     
     map.selectMap(mapFilesPath);
     setNumberOfPlayers();
-    //make game pieces
+    addPiecesToWells();
     
     
 }
@@ -40,6 +40,23 @@ void PlayGame::setNumberOfPlayers(){
         Player player=Player();
         players.push_back(player);
     }
+}
+
+void PlayGame::addPiecesToWells(){
     
+    raceBannerDeck=RaceBannerDeck();
+    raceBannerDeck.buildDeck();
+    raceBannerDeck.shuffle();
+    raceBannerDeck.printDeck();
+    
+    powerBadgeDeck=PowerBadgeDeck();
+    powerBadgeDeck.buildDeck();
+    powerBadgeDeck.shuffle();
+    powerBadgeDeck.printDeck();
+    
+    
+    //Mountains and fortresses dragon etc
+    //lost tribes
+    //to be made as child classes of gamepiece
 }
 
