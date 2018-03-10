@@ -86,13 +86,8 @@ void Player::picks_race(RacePicker *picker) {
 	picker->replaceChoices(answer - 1);
 	calculateUsableTokens();
 
-	std::cout << "You have chosen: ";
-	std::cout << getPowerBadge()->getPowerName();
-	std::cout << " : ";
-	std::cout << getRacebanner()->getName() << std::endl;
-	std::cout << "Amount of tokens of ";
-	std::cout << getRacebanner()->getName();
-	std::cout << " received: " << std::endl;
+	std::cout << "You have chosen: " << getPowerBadge()->getPowerName() << " : " << getRacebanner()->getName() << std::endl;
+	std::cout << "Amount of tokens of " << getRacebanner()->getName() << " received: " << std::endl;
 	std::cout << getNbOfUsableTokens() << std::endl;
 }
 
@@ -105,21 +100,25 @@ void Player::conquers() {
 
 void Player::firstConquest() {
 	//make sure territory options are only the border ones
-	//player chooses one 
+	//player chooses one
+	MapRegion *chosenForAttack = NULL; //= choice that player picked above
+
+	attackTerritory(chosenForAttack);
 }
 
 void Player::attackTerritory(MapRegion *region) {
 	
-	if (region->getOwnershipStatus() == false) {
+	int tokensNeeded = calculateAttackThreshold(region);
+	region->setOwner(this);
+	std::cout << "You have " << calculateCurrentNbUsableTokens(tokensNeeded) << " " << getRacebanner() <<" tokens left to attack with." << std::endl;
 
-	}
 }
 
 //method for the dice roll attack of the conquering phase
 bool Player::finalAttack(MapRegion *region) {
-	int rolled = dice->rollDice();
+	//int rolled = dice->rollDice();
 
-	if (rolled + nbOfUseableTokens > calculateAttackThreshold(region)) {
+	if (dice->rollDice() + nbOfUseableTokens > calculateAttackThreshold(region)) {
 		return true;
 	}
 
@@ -133,17 +132,40 @@ void Player::redeploy() {
 //method to determine how many tokens a user needs to succesfully conquer a region
 int Player::calculateAttackThreshold(MapRegion *region) {
 	
-	int threshold = region->getNbTokens() + 1 + region->getDefensiveStructures().size(); 
-	return threshold;
+	if (region->hasLostTribe()) {
+		int threshold = 3 + region->getDefensiveStructures().size(); 
+		return threshold;
+	}
+	else
+	{
+		int threshold = region->getNbTokens() + 2 + region->getDefensiveStructures().size(); 
+		return threshold;
+	}
+}
+
+//to be called after a successful attack
+void Player::removeEnemyTokens(MapRegion *region) {
+	
+	if (region->hasLostTribe()) {
+		region->setLostTribeToken(NULL); //need to properly remove the piece
+	}
+	else if (region->getOwnershipStatus() == true) {
+		region->getOwner(); //get player, give them back token and remove 1
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 void Player::scores(CoinBank *bank) { //Later need to add how it is affected by powers 
 	bank->deal1s(this, ownedRegions->size());
-	std::cout << "You have scored ";
-	std::cout << ownedRegions->size();
-	std::cout << " points this turn." << std::endl;
+	std::cout << "You have scored " << ownedRegions->size() << " points this turn." << std::endl;
+	//std::cout << ownedRegions->size();
+	//std::cout << " points this turn." << std::endl;
+}
+
+int Player::calculateCurrentNbUsableTokens(int subtracted) {
+	setNbOfUsableTokens(nbOfUseableTokens - subtracted);
+	return nbOfUseableTokens;
 }
 
 void Player::calculateUsableTokens() {
@@ -156,24 +178,19 @@ void Player::calculateUsableTokens() {
 }
 
 void Player::printAmountTokens() {
-	std::cout << "Tokens in hand: ";
-	std::cout << getNbOfUsableTokens() << std::endl;
+	std::cout << "Tokens in hand: " << getNbOfUsableTokens() << std::endl;
 }
 
 void Player::printCurrentMoney() {
 	std::cout << "Money in hand: " << std::endl;
-	std::cout << getVictoryCoin1s().size(); 
-	std::cout << " Ones" << std::endl;
-	std::cout << getOtherCoins().size();
-	std::cout << " Others" << std::endl;
+	std::cout << getVictoryCoin1s().size() << " Ones" << std::endl;
+	std::cout << getOtherCoins().size() << " Others" << std::endl;
 }
 
 void Player::printCurrentBanner() {
-	std::cout << "Current Race: ";
-	std::cout << getRacebanner()->getName() << std::endl;
+	std::cout << "Current Race: " << getRacebanner()->getName() << std::endl;
 }
 
 void Player::printCurrentPower() {
-	std::cout << "Current Power: ";
-	std::cout << getPowerBadge()->getPowerName() << std::endl;
+	std::cout << "Current Power: " << getPowerBadge()->getPowerName() << std::endl;
 }

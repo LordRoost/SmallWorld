@@ -43,7 +43,9 @@ public:
 	bool finalAttack(MapRegion *region);
 	void redeploy();
 	int calculateAttackThreshold(MapRegion *region);
+	void removeEnemyTokens(MapRegion *region);
 
+	int calculateCurrentNbUsableTokens(int subtracted);
 	void calculateUsableTokens();
 	void printAmountTokens();
 	void printCurrentMoney();

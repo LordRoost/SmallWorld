@@ -28,6 +28,9 @@
     <Filter Include="Source Files\GameField">
       <UniqueIdentifier>{35e63d31-53c2-43e1-b4da-b7235006be9d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\PlayGame">
+      <UniqueIdentifier>{f3d86f05-2548-4937-b883-611439e92dae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Dice.h">
@@ -46,6 +49,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\Tokens.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\PlayGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -109,6 +115,12 @@
     </ClCompile>
     <ClCompile Include="Tokens\VictoryCoin.cpp">
       <Filter>Source Files\Tokens</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayGame\PlayGame.cpp">
+      <Filter>Source Files\PlayGame</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayGame\PlayGameDriver.cpp">
+      <Filter>Source Files\PlayGame</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
