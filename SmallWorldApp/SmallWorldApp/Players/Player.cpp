@@ -68,6 +68,7 @@ void Player::addOwnedRegion(MapRegion *region) { //????
 	ownedRegions->push_back(*region);
 }
 
+//Need to add fact that one must spend tokens to get further combos
 void Player::picks_race(RacePicker *picker) { 
 	
 	picker->printOptions();
@@ -132,18 +133,18 @@ void Player::redeploy() {
 //method to determine how many tokens a user needs to succesfully conquer a region
 int Player::calculateAttackThreshold(MapRegion *region) {
 	
-	int threshold = region->getNbTokens() + 1; // + region bonus from mountain or forteress 
+	int threshold = region->getNbTokens() + 1 + region->getDefensiveStructures().size(); 
 	return threshold;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-//void Player::scores(CoinBank *bank) { //Later need to add how it is affected by powers 
-//	bank->deal1s(this, ownedRegions->size());
-//	std::cout << "You have scored ";
-//	std::cout << ownedRegions->size();
-//	std::cout << " points this turn." << std::endl;
-//}
+void Player::scores(CoinBank *bank) { //Later need to add how it is affected by powers 
+	bank->deal1s(this, ownedRegions->size());
+	std::cout << "You have scored ";
+	std::cout << ownedRegions->size();
+	std::cout << " points this turn." << std::endl;
+}
 
 void Player::calculateUsableTokens() {
 	

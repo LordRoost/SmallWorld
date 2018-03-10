@@ -59,6 +59,10 @@ int MapRegion::getNbTokens() {
 	return nbOfTokens;
 }
 
+vector<GamePiece> MapRegion::getDefensiveStructures() {
+	return *defensiveStructures;
+}
+
 void MapRegion::setName(string newName) {
 	typeName = newName;
 }
@@ -81,3 +85,6 @@ void MapRegion::addRaceTokens(RaceToken race, int amount) {
 
 }
 
+void MapRegion::adddefensiveStructure(GamePiece *piece) {
+	defensiveStructures->push_back(*piece);
+}

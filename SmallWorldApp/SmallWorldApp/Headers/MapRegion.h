@@ -37,19 +37,23 @@ public:
 	void setNbTokens(int amount);
 	void addRaceTokens(RaceToken race, int amount);
 	//void addRaceToken(RaceToken *race);
+	void adddefensiveStructure(GamePiece *piece);
 	regionTypes getType();
 	string getName();
 	bool getOwnershipStatus();
 	RaceToken getRaceToken();
 	int getNbTokens();
+	vector<GamePiece> getDefensiveStructures();
 
 private:
 	string typeName;
 	regionTypes type;
 	bool isOwned;
-	//std::vector <RaceToken> *tokens;
+	//std::vector <Token> *tokens;
 	RaceToken tokens;
 	int nbOfTokens;
+	LostTribeToken lostTribes;
+	std::vector<GamePiece> *defensiveStructures; //holds game pieces that offer defensive abilities to regions (Mountain, Forteress, Troll Lair and Encampments)
 
 };
 
