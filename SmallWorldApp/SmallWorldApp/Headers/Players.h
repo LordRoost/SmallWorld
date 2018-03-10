@@ -44,6 +44,8 @@ public:
 	void redeploy();
 	int calculateAttackThreshold(MapRegion *region);
 	void removeEnemyTokens(MapRegion *region);
+	void adjacentTerritories(MapRegion *region);
+
 
 	int calculateCurrentNbUsableTokens(int subtracted);
 	void calculateUsableTokens();
@@ -62,6 +64,7 @@ private:
 	RaceBanner *currentRaceBanner, declinedRaceBanner;
 	int nbOfUseableTokens; //number of tokens of a race that the user has in hand
 	//SummarySheet ownedSummarySheet;
+	bool lastAttack;
 };
 
 

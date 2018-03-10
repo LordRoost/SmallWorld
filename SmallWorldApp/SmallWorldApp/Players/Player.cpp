@@ -4,6 +4,7 @@ Player::Player() {
 	dice = new DieRoller();
 }
 
+//Getters-------------------------------------------------------------------------
 DieRoller Player::getDieRoller() {
 	return *dice;
 }
@@ -35,6 +36,8 @@ int Player::getNbOfUsableTokens() {
 std::vector<MapRegion> Player::getOwnedRegions() { // ?????
 	return *ownedRegions;
 }
+
+//setters ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 void Player::setPowerBadge(PowerBadge *badge) {
 	currentBadge = badge;
@@ -92,32 +95,55 @@ void Player::picks_race(RacePicker *picker) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-/*Conquest related methods*/
+//Conquest related methods
 
 void Player::conquers() {
-	//firstConquest();
+	MapRegion *chosenForAttack = NULL;
+	
+	firstConquest();
+	while (nbOfUseableTokens > 0 && lastAttack == false) {
+		std::cout << "Choose a territory to attack: " << std::endl;
+		//List territories that they can attack
+		 //chosenForAttack = choice that player picked above
+
+		attackTerritory(chosenForAttack);
+	}
+
+	redeploy();
 }
 
 void Player::firstConquest() {
+	std::cout << "Select a territory to attack. Your first attack must be on a region that is a border: " << std::endl;
 	//make sure territory options are only the border ones
 	//player chooses one
-	MapRegion *chosenForAttack = NULL; //= choice that player picked above
+	MapRegion *borderTerritory = NULL; //= choice that player picked above
 
-	attackTerritory(chosenForAttack);
+	attackTerritory(borderTerritory);
 }
 
-void Player::attackTerritory(MapRegion *region) {
+void Player::attackTerritory(MapRegion *region) { //should have user confirm attacks or something somewhere
 	
-	int tokensNeeded = calculateAttackThreshold(region);
-	region->setOwner(this);
-	std::cout << "You have " << calculateCurrentNbUsableTokens(tokensNeeded) << " " << getRacebanner() <<" tokens left to attack with." << std::endl;
+	if (nbOfUseableTokens == 0) {
+		std::cout << "Something went wrong, you shouldn't be here, you can't attack with no tokens" << std::endl;
+		return;
+	}
+	else if (nbOfUseableTokens < calculateAttackThreshold(region)) {
+		if (finalAttack(region) == false) {
+			std::cout << "You have failed your attack on this region." << std::endl;
+			return;
+		}
+	}
 
+	std::cout << "You have succeeded in your attack!" << std::endl;
+	region->setOwner(this);
+	removeEnemyTokens(region);
+	std::cout << "You have " << calculateCurrentNbUsableTokens(calculateAttackThreshold(region)) << " " << getRacebanner() << " tokens left to attack with." << std::endl;	
 }
 
 //method for the dice roll attack of the conquering phase
 bool Player::finalAttack(MapRegion *region) {
-	//int rolled = dice->rollDice();
 
+	lastAttack = true;
 	if (dice->rollDice() + nbOfUseableTokens > calculateAttackThreshold(region)) {
 		return true;
 	}
@@ -143,7 +169,7 @@ int Player::calculateAttackThreshold(MapRegion *region) {
 	}
 }
 
-//to be called after a successful attack
+//to be called after a successful attack NOT FINISHED STILL NEEDS WORK
 void Player::removeEnemyTokens(MapRegion *region) {
 	
 	if (region->hasLostTribe()) {
@@ -162,6 +188,9 @@ void Player::scores(CoinBank *bank) { //Later need to add how it is affected by 
 	//std::cout << ownedRegions->size();
 	//std::cout << " points this turn." << std::endl;
 }
+
+
+//utility functions ------------------------------------------------------------------------------------
 
 int Player::calculateCurrentNbUsableTokens(int subtracted) {
 	setNbOfUsableTokens(nbOfUseableTokens - subtracted);
