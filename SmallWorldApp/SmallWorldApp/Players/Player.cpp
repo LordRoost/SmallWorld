@@ -218,6 +218,11 @@ void Player::removeEnemyTokens(MapRegion *region) {
 	else if (region->getOwnershipStatus() == true) {
 		Player *formerOwner = region->getOwner(); 
 		formerOwner->returnTokensToHand(region->getNbTokens()-1);
+		for (int i = 0; i < formerOwner->getOwnedRegions().size(); i++) {
+			if (region == formerOwner->getOwnedRegions()[i]) {
+				formerOwner->getOwnedRegions().erase(formerOwner->getOwnedRegions().begin()+i); //remove the region from former owner's owned
+			}
+		}
 	}
 }
 
