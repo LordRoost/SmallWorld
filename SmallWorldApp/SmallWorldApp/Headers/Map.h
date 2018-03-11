@@ -30,7 +30,8 @@ public:
     static void getListOfMaps(const string& path);
     void selectMap(string path);
     bool addMountainorLostTribe(string regionType);
-    vector<MapRegion> getAdgacentTerritories(MapRegion *region);
+    vector<MapRegion*> getAdgacentTerritories(MapRegion *region);
+    vector<MapRegion*> getAllBorders();
 
 private:
 	Graph g;

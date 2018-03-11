@@ -42,6 +42,7 @@ public:
 	void setOwnershipStatus(bool status);
 	void setNbTokens(int amount);
 	void setLostTribeToken(LostTribeToken *tribe);
+    void setIsBorder(bool _isBorder);
 	void addRaceTokens(RaceToken race, int amount);
 	//void addRaceToken(RaceToken *race);
 	void adddefensiveStructure(GamePiece *piece);
@@ -54,6 +55,7 @@ public:
 	int getNbTokens();
 	LostTribeToken* getLostTribeToken();
 	vector<GamePiece> getDefensiveStructures();
+    bool getIsBorder();
 
 	bool hasLostTribe();
     int getIndexOfVertex();
@@ -70,6 +72,7 @@ private:
 	std::vector<GamePiece> *defensiveStructures; //holds game pieces that offer defensive abilities to regions (Mountain, Forteress, Troll Lair and Encampments)
 
     int indexOfVertex;
+    bool isBorder;
 };
 
 #endif

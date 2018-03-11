@@ -101,7 +101,6 @@ void Map::loadMap(string filename) {
                     LostTribeToken* pointer=&LostTribe;
                     g[tile].setLostTribeToken(pointer);
                 }
-                
 			}
 			else {
 
@@ -131,6 +130,11 @@ void Map::loadMap(string filename) {
 		if (lineNb == 0) {
 			vertex_t tile = add_vertex(g);
 			g[tile] = MapRegion(token,tile);
+            if(addMountainorLostTribe(token)){
+                LostTribeToken LostTribe= LostTribeToken();
+                LostTribeToken* pointer=&LostTribe;
+                g[tile].setLostTribeToken(pointer);
+            }
 		}
 		else {
 
@@ -264,19 +268,37 @@ bool Map::addMountainorLostTribe(string regionType){
     
 }
 
-vector<MapRegion> Map::getAdgacentTerritories(MapRegion *region){
+vector<MapRegion*> Map::getAdgacentTerritories(MapRegion *region){
     
     
     AdjacencyIterator ai, a_end;
-    vector<MapRegion> adgacentMapRegions;
+    vector<MapRegion*> adgacentMapRegions;
+    MapRegion *pointer;
     
     int index=region->getIndexOfVertex();
 
     boost::tie(ai, a_end) = boost::adjacent_vertices(index, g);
     for (; ai != a_end; ai++) {
         std::cout << *ai << "\t";
-        adgacentMapRegions.push_back(g[*ai]);
+        pointer=&g[*ai];
+        adgacentMapRegions.push_back(pointer);
     }
+    
+    cout<<endl;
+    
     return adgacentMapRegions;
+}
+
+vector<MapRegion*> Map::getAllBorders(){
+   
+    vector<MapRegion*> borderRegions;
+    MapRegion *pointer;
+    for(int i=0;i<num_vertices(g);i++){
+        if(g[i].getIsBorder()){
+            pointer=&g[i];
+            borderRegions.push_back(pointer);
+        }
+    }
+    return borderRegions;
 }
 

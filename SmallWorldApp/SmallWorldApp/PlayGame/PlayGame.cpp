@@ -18,6 +18,9 @@ void PlayGame::startGame(){
     map.getAdgacentTerritories(m);
     
     
+    vector<MapRegion*>asd=map.getAllBorders();
+    
+    
     
 }
 
