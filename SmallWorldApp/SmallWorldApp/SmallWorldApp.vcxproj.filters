@@ -31,6 +31,9 @@
     <Filter Include="Source Files\PlayGame">
       <UniqueIdentifier>{f3d86f05-2548-4937-b883-611439e92dae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\TurnMarker">
+      <UniqueIdentifier>{3bdb20d5-d3d8-496a-b112-cfe2fb6e2286}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Dice.h">
@@ -52,6 +55,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\PlayGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\TurnMarker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -121,6 +127,9 @@
     </ClCompile>
     <ClCompile Include="PlayGame\PlayGameDriver.cpp">
       <Filter>Source Files\PlayGame</Filter>
+    </ClCompile>
+    <ClCompile Include="TurnMarker\TurnMarker.cpp">
+      <Filter>Source Files\TurnMarker</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

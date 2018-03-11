@@ -123,6 +123,7 @@
     <ClInclude Include="Headers\Players.h" />
     <ClInclude Include="Headers\PlayGame.h" />
     <ClInclude Include="Headers\Tokens.h" />
+    <ClInclude Include="Headers\TurnMarker.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dice\Dice.cpp" />
@@ -147,6 +148,7 @@
     <ClCompile Include="Tokens\Token.cpp" />
     <ClCompile Include="Tokens\TokensDriver.cpp" />
     <ClCompile Include="Tokens\VictoryCoin.cpp" />
+    <ClCompile Include="TurnMarker\TurnMarker.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

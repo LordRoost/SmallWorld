@@ -94,7 +94,8 @@ void Map::loadMap(string filename) {
 
 			if (lineNb == 0) {
 				vertex_t tile = add_vertex(g);
-				g[tile] = MapRegion(token,tile);
+				int index = tile & INT_MAX;
+				g[tile] = MapRegion(token, index);
                 
                 if(addMountainorLostTribe(token)){
                     LostTribeToken LostTribe= LostTribeToken();
@@ -129,7 +130,8 @@ void Map::loadMap(string filename) {
 
 		if (lineNb == 0) {
 			vertex_t tile = add_vertex(g);
-			g[tile] = MapRegion(token,tile);
+			int index = tile & INT_MAX;
+			g[tile] = MapRegion(token, index);
             if(addMountainorLostTribe(token)){
                 LostTribeToken LostTribe= LostTribeToken();
                 LostTribeToken* pointer=&LostTribe;

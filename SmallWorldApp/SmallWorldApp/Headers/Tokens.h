@@ -174,6 +174,13 @@ private:
 
 };
 
+class MountainPiece :public GamePiece {
+public:
+	MountainPiece();
+				
+};
+
+
 class MoveablePiece: public GamePiece{ //encampment, hero, dragon
 public:
 
