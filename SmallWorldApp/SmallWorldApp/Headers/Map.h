@@ -19,6 +19,7 @@ using namespace boost;
 using namespace std;
 
 typedef adjacency_list<listS, vecS, undirectedS, MapRegion> Graph;
+typedef boost::graph_traits<Graph>::adjacency_iterator AdjacencyIterator;
 
 class Map {
 public:
@@ -28,6 +29,9 @@ public:
 	Graph getMap();
     static void getListOfMaps(const string& path);
     void selectMap(string path);
+    bool addMountainorLostTribe(string regionType);
+    vector<MapRegion*> getAdgacentTerritories(MapRegion *region);
+    vector<MapRegion*> getAllBorders();
 
 private:
 	Graph g;

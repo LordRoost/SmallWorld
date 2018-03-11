@@ -12,10 +12,10 @@ MapRegion::MapRegion() {
 	lostTribes = NULL;
 	owner = NULL;
 	isOwned = false;
-	//defensiveStructures 
+    isBorder=false;
 }
 
-MapRegion::MapRegion(string s) {
+MapRegion::MapRegion(string s, int _indexOfVertex) {
 
 	int x = std::distance(EnumRegionTypes, std::find(EnumRegionTypes, EnumRegionTypes + 5, s));
 
@@ -23,6 +23,14 @@ MapRegion::MapRegion(string s) {
 	lostTribes = NULL;
 	owner = NULL;
 	isOwned = false;
+    indexOfVertex=_indexOfVertex;
+    
+    if((rand() % 100) < 40){
+        isBorder=true;
+    }
+    else{
+        isBorder=false;
+    }
 }
 
 MapRegion::MapRegion(regionTypes _type) {
@@ -32,6 +40,7 @@ MapRegion::MapRegion(regionTypes _type) {
 	lostTribes = NULL;
 	owner = NULL;
 	isOwned = false;
+    isBorder=false;
 }
 
 
@@ -42,6 +51,10 @@ MapRegion::MapRegion(regionTypes _type) {
 
 Player* MapRegion::getOwner() {
 	return owner;
+}
+
+bool MapRegion::getIsBorder(){
+    return isBorder;
 }
 
 string MapRegion::getName() {
@@ -79,6 +92,9 @@ LostTribeToken* MapRegion::getLostTribeToken() {
 vector<GamePiece> MapRegion::getDefensiveStructures() {
 	return defensiveStructures;
 }
+int MapRegion::getIndexOfVertex(){
+    return indexOfVertex;
+}
 
 
 void MapRegion::setOwner(Player *newOwner) {
@@ -104,6 +120,10 @@ void MapRegion::setNbTokens(int amount) {
 
 void MapRegion::setLostTribeToken(LostTribeToken *tribe) {
 	lostTribes = tribe;
+}
+
+void MapRegion::setIsBorder(bool _isBorder){
+    isBorder=_isBorder;
 }
 
 void MapRegion::addRaceTokens(RaceToken race, int amount) {
