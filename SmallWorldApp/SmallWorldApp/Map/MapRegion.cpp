@@ -13,7 +13,6 @@ MapRegion::MapRegion() {
 	owner = NULL;
 	isOwned = false;
     isBorder=false;
-    mountainPiece=NULL;
 }
 
 MapRegion::MapRegion(string s, int _indexOfVertex) {
@@ -32,16 +31,6 @@ MapRegion::MapRegion(string s, int _indexOfVertex) {
     else{
         isBorder=false;
     }
-    
-    if(s=="Mountain"){
-        MountainPiece m= MountainPiece();
-        MountainPiece* pointer=&m;
-        mountainPiece=pointer;
-    }
-    else{
-        mountainPiece=NULL;
-    }
-    
 }
 
 MapRegion::MapRegion(regionTypes _type) {
@@ -107,9 +96,6 @@ int MapRegion::getIndexOfVertex(){
     return indexOfVertex;
 }
 
-void MapRegion::setMountainPiece(MountainPiece *m){
-    mountainPiece=m;
-}
 
 void MapRegion::setOwner(Player *newOwner) {
 	owner = newOwner;

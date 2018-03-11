@@ -7,7 +7,8 @@
 #include "Dice.h"
 #include "Tokens.h"
 #include "Game.h"
-#include "MapRegion.h"
+#include "Map.h"
+#include "PlayGame.h"
 
 class Player {
 public:	
@@ -21,7 +22,7 @@ public:
 	std::list<VictoryCoin> getOtherCoins();
 	RaceBanner* getRacebanner();
 	int getNbOfUsableTokens();
-	std::vector<MapRegion> getOwnedRegions();
+	std::vector<MapRegion*> getOwnedRegions();
 
 	void setPowerBadge(PowerBadge *badge);
 	void setDieRoller(DieRoller *dice);
@@ -43,7 +44,7 @@ public:
 	void redeploy();
 	int calculateAttackThreshold(MapRegion *region);
 	void removeEnemyTokens(MapRegion *region);
-	void adjacentTerritories(MapRegion *region);
+	//void adjacentTerritories(MapRegion *region);
 
 	void returnTokensToHand(int returnedTokens);
 	int calculateCurrentNbUsableTokens(int subtracted);
@@ -54,8 +55,10 @@ public:
 	void printCurrentBanner();
 	void printCurrentPower();
 
+	MapRegion *choiceOfRegion;
+
 private:
-	std::vector<MapRegion> *ownedRegions; 
+	std::vector<MapRegion*> ownedRegions;
 	DieRoller *dice;
 	PowerBadge *currentBadge;
 	RaceToken currentRace, declinedRace;
@@ -63,7 +66,6 @@ private:
 	std::list<VictoryCoin>  owned1s;
 	RaceBanner *currentRaceBanner, declinedRaceBanner;
 	int nbOfUseableTokens; //number of tokens of a race that the user has in hand
-	//SummarySheet ownedSummarySheet;
 	bool lastAttack;
 };
 

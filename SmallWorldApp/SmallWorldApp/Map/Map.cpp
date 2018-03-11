@@ -94,15 +94,13 @@ void Map::loadMap(string filename) {
 
 			if (lineNb == 0) {
 				vertex_t tile = add_vertex(g);
-                int index = tile & INT_MAX;
-				g[tile] = MapRegion(token,index);
+				g[tile] = MapRegion(token,tile);
                 
                 if(addMountainorLostTribe(token)){
                     LostTribeToken LostTribe= LostTribeToken();
                     LostTribeToken* pointer=&LostTribe;
                     g[tile].setLostTribeToken(pointer);
                 }
-            
 			}
 			else {
 
@@ -130,9 +128,8 @@ void Map::loadMap(string filename) {
 		}
 
 		if (lineNb == 0) {
-            vertex_t tile = add_vertex(g);
-            int index = tile & INT_MAX;
-            g[tile] = MapRegion(token,index);
+			vertex_t tile = add_vertex(g);
+			g[tile] = MapRegion(token,tile);
             if(addMountainorLostTribe(token)){
                 LostTribeToken LostTribe= LostTribeToken();
                 LostTribeToken* pointer=&LostTribe;
@@ -237,8 +234,8 @@ void Map::selectMap(string path){
         
         //Take input for the map the player wants to play
         string textFile;
-		//string fullPath = "C:/Users/luoja/Documents/Github/SmallWorld/MapFiles/";
-        string fullPath="/Users/ericpayettereformed/Documents/Smallworld/MapFiles/";
+		string fullPath = "C:/Users/luoja/Documents/Github/SmallWorld/MapFiles/";
+        //string fullPath="/Users/ericpayettereformed/Documents/Smallworld/MapFiles/";
         cin>> textFile;
         fullPath.append(textFile);
         fullPath.append(".txt");
@@ -271,11 +268,10 @@ bool Map::addMountainorLostTribe(string regionType){
     
 }
 
-vector<MapRegion*> Map::getAdgacentTerritories(MapRegion *region){
-    
+void Map::getAdgacentTerritories(MapRegion *region){
     
     AdjacencyIterator ai, a_end;
-    vector<MapRegion*> adgacentMapRegions;
+
     MapRegion *pointer;
     
     int index=region->getIndexOfVertex();
@@ -289,19 +285,29 @@ vector<MapRegion*> Map::getAdgacentTerritories(MapRegion *region){
     
     cout<<endl;
     
-    return adgacentMapRegions;
 }
 
-vector<MapRegion*> Map::getAllBorders(){
-   
-    vector<MapRegion*> borderRegions;
-    MapRegion *pointer;
-    for(int i=0;i<num_vertices(g);i++){
-        if(g[i].getIsBorder()){
-            pointer=&g[i];
-            borderRegions.push_back(pointer);
-        }
-    }
-    return borderRegions;
-}
+//vector<MapRegion*> Map::getAllBorders(){
+//   
+//    MapRegion *pointer;
+//    for(int i=0;i<num_vertices(g);i++){
+//        if(g[i].getIsBorder()){
+//            pointer=&g[i];
+//            borderRegions.push_back(pointer);
+//			cout << "hi" << endl;
+//			cout << pointer->getName() << endl;
+//        }
+//    }
+//    return borderRegions;
+//}
 
+void Map::getAllBorders() {
+
+	MapRegion *pointer;
+	for (int i = 0; i<num_vertices(g); i++) {
+		if (g[i].getIsBorder()) {
+			pointer = &g[i];
+			borderRegions.push_back(pointer);
+		}
+	}
+}

@@ -33,8 +33,8 @@ int Player::getNbOfUsableTokens() {
 	return nbOfUseableTokens;
 }
 
-std::vector<MapRegion> Player::getOwnedRegions() { // ?????
-	return *ownedRegions;
+std::vector<MapRegion*> Player::getOwnedRegions() { // ?????
+	return ownedRegions;
 }
 
 //setters ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -68,7 +68,7 @@ void Player::addVictoryCoin1s(VictoryCoin ones) {
 }
 
 void Player::addOwnedRegion(MapRegion *region) { //????
-	ownedRegions->push_back(*region);
+	ownedRegions.push_back(region);
 }
 
 //Need to add fact that one must spend tokens to get further combos
@@ -97,26 +97,51 @@ void Player::picks_race(RacePicker *picker) {
 ///////////////////////////////////////////////////////////////////////////////
 //Conquest related methods
 
-void Player::conquers() { //UNFINISHED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+extern Map gameMap;
+
+void Player::conquers() { //Need to make sure cant attack previously attacked territories
 	MapRegion *chosenForAttack = NULL;
+	int theChoice;
 	
 	firstConquest();
 	while (nbOfUseableTokens > 0 && lastAttack == false) {
 		std::cout << "Choose a territory to attack: " << std::endl;
-		//List territories that they can attack
-		 //chosenForAttack = choice that player picked above
+		
+		gameMap.getAdgacentTerritories(choiceOfRegion);
+		vector<MapRegion*> adjacent = gameMap.adgacentMapRegions;
 
-		attackTerritory(chosenForAttack);
+		for (int i = 0; i < adjacent.size(); i++) {
+			std::cout << i << " ";
+		}
+
+		std::cout << std::endl;
+		std::cin >> theChoice;
+		MapRegion *adjTerritory = adjacent[theChoice];
+		choiceOfRegion = adjTerritory; 
+
+		attackTerritory(adjTerritory);
 	}
 
 	redeploy();
 }
 
-void Player::firstConquest() {//UNFINISHED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	std::cout << "Select a territory to attack. Your first attack must be on a region that is a border: " << std::endl;
-	//make sure territory options are only the border ones
-	//player chooses one
-	MapRegion *borderTerritory = NULL; //= choice that player picked above
+//First attack of the user, which must be on a border region
+void Player::firstConquest() {
+
+	int playerChoice;
+	std::cout << "Select a territory to attack. Your first attack must be on a region that is a border: (Enter the number)" << std::endl;
+
+	gameMap.getAllBorders();
+	vector<MapRegion*> borders = gameMap.borderRegions;
+
+	for (int i = 0; i < borders.size(); i++) {
+		std::cout << i << " ";
+	}
+	
+	std::cout << std::endl;
+	std::cin >> playerChoice;
+	MapRegion *borderTerritory = borders[playerChoice]; 
+	choiceOfRegion = borderTerritory;
 
 	attackTerritory(borderTerritory);
 }
@@ -140,6 +165,7 @@ void Player::attackTerritory(MapRegion *region) { //should have user confirm att
 	removeEnemyTokens(region);
 	region->setOwner(this);
 	region->addRaceTokens(this->getToken(), attackingAmount);
+	addOwnedRegion(region);
 
 	std::cout << "You have " << calculateCurrentNbUsableTokens(attackingAmount) << " " << getRacebanner()->getName() << " tokens left to attack with." << std::endl;	
 }
@@ -156,6 +182,7 @@ bool Player::finalAttack(MapRegion *region) {
 }
 
 void Player::redeploy() {
+	std::cout << "Redeployment phase" << endl;
 	//pick a region
 	//pick add or remove
 	//pick how many tokens you wanna move (have to at least leave 1)
@@ -193,8 +220,8 @@ void Player::removeEnemyTokens(MapRegion *region) {
 ////////////////////////////////////////////////////////////////////////////////
 
 void Player::scores(CoinBank *bank) { //Later need to add how it is affected by powers 
-	bank->deal1s(this, ownedRegions->size());
-	std::cout << "You have scored " << ownedRegions->size() << " points this turn." << std::endl;
+	bank->deal1s(this, ownedRegions.size());
+	std::cout << "You have scored " << ownedRegions.size() << " points this turn." << std::endl;
 	//std::cout << ownedRegions->size();
 	//std::cout << " points this turn." << std::endl;
 }

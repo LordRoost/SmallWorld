@@ -1,32 +1,30 @@
 #include "../Headers/PlayGame.h"
 
+Map gameMap;
+
+
 Map PlayGame::getMap(){
-    return map;
+    return gameMap;
 }
 
-
+string getMapFilesPath(){
+    return mapFilesPath;
+}
 
 void PlayGame::startGame(){
     
-    //display map files
-    map.selectMap(mapFilesPath);
-
+    gameMap.selectMap(mapFilesPath);
     setNumberOfPlayers();
     addPiecesToWells();
     
-    //Make victory coins in bank
-    coinBank=CoinBank();
+    //MapRegion *m=&gameMap.getMap()[0];
+    //gameMap.getAdgacentTerritories(m);
     
-    MapRegion* m=&map.getMap()[0];
-    map.getAdgacentTerritories(m);
-
-    //Give players 5 victory coins of value 1
-    for(std::vector<int>::size_type i = 0; i != players.size(); i++) {
-        Player *pointer=&players[i];
-        coinBank.startingDeal(pointer);
-    }
-    //Turn 1
-    turnMarker=TurnMarker();
+    
+   // vector<MapRegion*>asd=gameMap.getAllBorders();
+    
+    
+    
 }
 
 void PlayGame::setNumberOfPlayers(){

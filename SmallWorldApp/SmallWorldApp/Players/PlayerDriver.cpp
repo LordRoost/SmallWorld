@@ -7,6 +7,10 @@ int main(int argc, char*[]) {
 //int PlayerDriver() {
 
 	char answer;
+	PlayGame game1;
+
+	game1.startGame();
+
 	CoinBank *bank = new CoinBank();
 
 	RaceToken *enemy = new RaceToken(RACE_AMAZONS);
@@ -25,12 +29,14 @@ int main(int argc, char*[]) {
 	//player2->picks_race(picker);
 
 
-	MapRegion *region = new MapRegion();
-	region->addRaceTokens(*enemy, 9);
+	//MapRegion *region = new MapRegion();
+	//region->addRaceTokens(*enemy, 9);
 	//player1->addOwnedRegion(region);
+	player1->conquers();
+	//player1->firstConquest();
 
-	player1->attackTerritory(region);
-	//player1->scores(bank);
+	//player1->attackTerritory(region);
+	player1->scores(bank);
 
 	std::cin >> answer;
 
