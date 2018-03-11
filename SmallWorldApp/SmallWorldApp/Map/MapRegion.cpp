@@ -12,6 +12,7 @@ MapRegion::MapRegion() {
 	lostTribes = NULL;
 	owner = NULL;
 	isOwned = false;
+	//defensiveStructures 
 }
 
 MapRegion::MapRegion(string s) {
@@ -76,7 +77,7 @@ LostTribeToken* MapRegion::getLostTribeToken() {
 }
 
 vector<GamePiece> MapRegion::getDefensiveStructures() {
-	return *defensiveStructures;
+	return defensiveStructures;
 }
 
 
@@ -111,8 +112,8 @@ void MapRegion::addRaceTokens(RaceToken race, int amount) {
 
 }
 
-void MapRegion::adddefensiveStructure(GamePiece *piece) {
-	defensiveStructures->push_back(*piece);
+void MapRegion::addDefensiveStructure(GamePiece piece) {
+	defensiveStructures.push_back(piece);
 }
 
 bool MapRegion::hasLostTribe() {

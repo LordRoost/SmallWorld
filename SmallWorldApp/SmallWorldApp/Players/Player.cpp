@@ -13,7 +13,7 @@ PowerBadge* Player::getPowerBadge() {
 	return currentBadge;
 }
 
-RaceToken* Player::getToken() {
+RaceToken Player::getToken() {
 	return currentRace;
 }
 
@@ -47,7 +47,7 @@ void Player::setDieRoller(DieRoller *die) {
 	dice = die;
 }
 
-void Player::setRaceToken(RaceToken *tokens) {
+void Player::setRaceToken(RaceToken tokens) {
 	currentRace = tokens;
 }
 
@@ -97,7 +97,7 @@ void Player::picks_race(RacePicker *picker) {
 ///////////////////////////////////////////////////////////////////////////////
 //Conquest related methods
 
-void Player::conquers() {
+void Player::conquers() { //UNFINISHED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	MapRegion *chosenForAttack = NULL;
 	
 	firstConquest();
@@ -112,7 +112,7 @@ void Player::conquers() {
 	redeploy();
 }
 
-void Player::firstConquest() {
+void Player::firstConquest() {//UNFINISHED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	std::cout << "Select a territory to attack. Your first attack must be on a region that is a border: " << std::endl;
 	//make sure territory options are only the border ones
 	//player chooses one
@@ -123,11 +123,13 @@ void Player::firstConquest() {
 
 void Player::attackTerritory(MapRegion *region) { //should have user confirm attacks or something somewhere
 	
+	int attackingAmount = calculateAttackThreshold(region);
+
 	if (nbOfUseableTokens == 0) {
 		std::cout << "Something went wrong, you shouldn't be here, you can't attack with no tokens" << std::endl;
 		return;
 	}
-	else if (nbOfUseableTokens < calculateAttackThreshold(region)) {
+	else if (nbOfUseableTokens < attackingAmount) {
 		if (finalAttack(region) == false) {
 			std::cout << "You have failed your attack on this region." << std::endl;
 			return;
@@ -135,9 +137,11 @@ void Player::attackTerritory(MapRegion *region) { //should have user confirm att
 	}
 
 	std::cout << "You have succeeded in your attack!" << std::endl;
-	region->setOwner(this);
 	removeEnemyTokens(region);
-	std::cout << "You have " << calculateCurrentNbUsableTokens(calculateAttackThreshold(region)) << " " << getRacebanner() << " tokens left to attack with." << std::endl;	
+	region->setOwner(this);
+	region->addRaceTokens(this->getToken(), attackingAmount);
+
+	std::cout << "You have " << calculateCurrentNbUsableTokens(attackingAmount) << " " << getRacebanner()->getName() << " tokens left to attack with." << std::endl;	
 }
 
 //method for the dice roll attack of the conquering phase
@@ -152,31 +156,37 @@ bool Player::finalAttack(MapRegion *region) {
 }
 
 void Player::redeploy() {
-
+	//pick a region
+	//pick add or remove
+	//pick how many tokens you wanna move (have to at least leave 1)
+	//keep doing until satisfied
 }
 
 //method to determine how many tokens a user needs to succesfully conquer a region
 int Player::calculateAttackThreshold(MapRegion *region) {
-	
+
 	if (region->hasLostTribe()) {
 		int threshold = 3 + region->getDefensiveStructures().size(); 
+		//cout << threshold << " tribes"<<endl; //debugging methods
 		return threshold;
 	}
 	else
 	{
 		int threshold = region->getNbTokens() + 2 + region->getDefensiveStructures().size(); 
+		//cout << threshold << " not tribes" <<endl; //debugging methods
 		return threshold;
 	}
 }
 
-//to be called after a successful attack NOT FINISHED STILL NEEDS WORK
+//to be called after a successful attack CHECK CORRECTNESS IN ALL CASES
 void Player::removeEnemyTokens(MapRegion *region) {
 	
 	if (region->hasLostTribe()) {
 		region->setLostTribeToken(NULL); //need to properly remove the piece
 	}
 	else if (region->getOwnershipStatus() == true) {
-		region->getOwner(); //get player, give them back token and remove 1
+		Player *formerOwner = region->getOwner(); 
+		formerOwner->returnTokensToHand(region->getNbTokens()-1);
 	}
 }
 
@@ -192,6 +202,10 @@ void Player::scores(CoinBank *bank) { //Later need to add how it is affected by 
 
 //utility functions ------------------------------------------------------------------------------------
 
+void Player::returnTokensToHand(int returnedTokens) {
+	setNbOfUsableTokens(nbOfUseableTokens + returnedTokens);
+}
+
 int Player::calculateCurrentNbUsableTokens(int subtracted) {
 	setNbOfUsableTokens(nbOfUseableTokens - subtracted);
 	return nbOfUseableTokens;
@@ -205,6 +219,15 @@ void Player::calculateUsableTokens() {
 
 	setNbOfUsableTokens(amountFromPower + amountFromRace);
 }
+
+//void Player::calculateUsableTokens(PowerBadge power, RaceBanner banner) {
+//
+//	int amountFromPower, amountFromRace;
+//	amountFromPower = power.getAmountTokensReceived();
+//	amountFromRace = banner.getAmountTokensReceived();
+//
+//	setNbOfUsableTokens(amountFromPower + amountFromRace);
+//}
 
 void Player::printAmountTokens() {
 	std::cout << "Tokens in hand: " << getNbOfUsableTokens() << std::endl;

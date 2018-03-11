@@ -16,6 +16,7 @@ public:
 	PowerBadge* getPickablePowers(int index);
 	void printOptions();
 	void replaceChoices(int index);
+	int calculateTotalTokens(int index);
 
 private:
 	RaceBannerDeck *bannerDeck;

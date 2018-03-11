@@ -16,8 +16,8 @@ public:
 
 	DieRoller getDieRoller();
 	PowerBadge* getPowerBadge();
-	RaceToken* getToken();
-	std::list<VictoryCoin> getVictoryCoin1s(); //change to vectors, they are better
+	RaceToken getToken();
+	std::list<VictoryCoin> getVictoryCoin1s(); 
 	std::list<VictoryCoin> getOtherCoins();
 	RaceBanner* getRacebanner();
 	int getNbOfUsableTokens();
@@ -25,7 +25,7 @@ public:
 
 	void setPowerBadge(PowerBadge *badge);
 	void setDieRoller(DieRoller *dice);
-	void setRaceToken(RaceToken *tokens);
+	void setRaceToken(RaceToken tokens);
 	void setRaceBanner(RaceBanner *banner);
 	void setNbOfUsableTokens(int tokenAmount);
 	
@@ -37,7 +37,6 @@ public:
 	void conquers();
 	void scores(CoinBank *bank);
 
-	//void isRegionOwned();
 	void firstConquest();
 	void attackTerritory(MapRegion *region);
 	bool finalAttack(MapRegion *region);
@@ -46,9 +45,10 @@ public:
 	void removeEnemyTokens(MapRegion *region);
 	void adjacentTerritories(MapRegion *region);
 
-
+	void returnTokensToHand(int returnedTokens);
 	int calculateCurrentNbUsableTokens(int subtracted);
 	void calculateUsableTokens();
+	//void calculateUsableTokens(PowerBadge power, RaceBanner banner);
 	void printAmountTokens();
 	void printCurrentMoney();
 	void printCurrentBanner();
@@ -58,7 +58,7 @@ private:
 	std::vector<MapRegion> *ownedRegions; 
 	DieRoller *dice;
 	PowerBadge *currentBadge;
-	RaceToken *currentRace, declinedRace;
+	RaceToken currentRace, declinedRace;
 	std::list<VictoryCoin> ownedOtherCoins;
 	std::list<VictoryCoin>  owned1s;
 	RaceBanner *currentRaceBanner, declinedRaceBanner;

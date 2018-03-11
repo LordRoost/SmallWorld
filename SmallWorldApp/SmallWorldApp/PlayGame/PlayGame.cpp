@@ -44,15 +44,19 @@ void PlayGame::setNumberOfPlayers(){
 
 void PlayGame::addPiecesToWells(){
     
-    raceBannerDeck=RaceBannerDeck();
-    raceBannerDeck.buildDeck();
-    raceBannerDeck.shuffle();
-    raceBannerDeck.printDeck();
-    
-    powerBadgeDeck=PowerBadgeDeck();
-    powerBadgeDeck.buildDeck();
-    powerBadgeDeck.shuffle();
-    powerBadgeDeck.printDeck();
+    //raceBannerDeck=RaceBannerDeck();
+    //raceBannerDeck.buildDeck();
+    //raceBannerDeck.shuffle();
+    //raceBannerDeck.printDeck();
+    //
+    //powerBadgeDeck=PowerBadgeDeck();
+    //powerBadgeDeck.buildDeck();
+    //powerBadgeDeck.shuffle();
+    //powerBadgeDeck.printDeck();
+
+	decks = new RacePicker();
+	decks->setup();
+	decks->printOptions();
     
     
     //Mountains and fortresses dragon etc
