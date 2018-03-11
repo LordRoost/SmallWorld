@@ -1,3 +1,9 @@
 #include "../Headers/Tokens.h"
 
-GamePiece::GamePiece() {}
+GamePiece::GamePiece() {
+    
+}
+
+MountainPiece::MountainPiece(){
+    
+}

@@ -94,13 +94,15 @@ void Map::loadMap(string filename) {
 
 			if (lineNb == 0) {
 				vertex_t tile = add_vertex(g);
-				g[tile] = MapRegion(token,tile);
+                int index = tile & INT_MAX;
+				g[tile] = MapRegion(token,index);
                 
                 if(addMountainorLostTribe(token)){
                     LostTribeToken LostTribe= LostTribeToken();
                     LostTribeToken* pointer=&LostTribe;
                     g[tile].setLostTribeToken(pointer);
                 }
+            
 			}
 			else {
 
@@ -128,8 +130,9 @@ void Map::loadMap(string filename) {
 		}
 
 		if (lineNb == 0) {
-			vertex_t tile = add_vertex(g);
-			g[tile] = MapRegion(token,tile);
+            vertex_t tile = add_vertex(g);
+            int index = tile & INT_MAX;
+            g[tile] = MapRegion(token,index);
             if(addMountainorLostTribe(token)){
                 LostTribeToken LostTribe= LostTribeToken();
                 LostTribeToken* pointer=&LostTribe;
@@ -234,8 +237,8 @@ void Map::selectMap(string path){
         
         //Take input for the map the player wants to play
         string textFile;
-		string fullPath = "C:/Users/luoja/Documents/Github/SmallWorld/MapFiles/";
-        //string fullPath="/Users/ericpayettereformed/Documents/Smallworld/MapFiles/";
+		//string fullPath = "C:/Users/luoja/Documents/Github/SmallWorld/MapFiles/";
+        string fullPath="/Users/ericpayettereformed/Documents/Smallworld/MapFiles/";
         cin>> textFile;
         fullPath.append(textFile);
         fullPath.append(".txt");

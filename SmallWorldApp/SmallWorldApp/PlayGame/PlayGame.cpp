@@ -4,24 +4,29 @@ Map PlayGame::getMap(){
     return map;
 }
 
-string getMapFilesPath(){
-    return mapFilesPath;
-}
+
 
 void PlayGame::startGame(){
     
+    //display map files
     map.selectMap(mapFilesPath);
+
     setNumberOfPlayers();
     addPiecesToWells();
     
-    MapRegion *m=&map.getMap()[0];
+    //Make victory coins in bank
+    coinBank=CoinBank();
+    
+    MapRegion* m=&map.getMap()[0];
     map.getAdgacentTerritories(m);
-    
-    
-    vector<MapRegion*>asd=map.getAllBorders();
-    
-    
-    
+
+    //Give players 5 victory coins of value 1
+    for(std::vector<int>::size_type i = 0; i != players.size(); i++) {
+        Player *pointer=&players[i];
+        coinBank.startingDeal(pointer);
+    }
+    //Turn 1
+    turnMarker=TurnMarker();
 }
 
 void PlayGame::setNumberOfPlayers(){

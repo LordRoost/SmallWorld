@@ -46,6 +46,7 @@ public:
 	void addRaceTokens(RaceToken race, int amount);
 	//void addRaceToken(RaceToken *race);
 	void addDefensiveStructure(GamePiece piece);
+    void setMountainPiece(MountainPiece *m);
 
 	Player* getOwner();
 	regionTypes getType();
@@ -73,6 +74,7 @@ private:
 
     int indexOfVertex;
     bool isBorder;
+    MountainPiece *mountainPiece;
 };
 
 #endif
