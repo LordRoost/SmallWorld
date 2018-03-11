@@ -8,9 +8,11 @@
 #include <list>
 #include "Tokens.h"
 
+
 class Player;
 
 using namespace std;
+
 
 enum regionTypes {
 	REGION_TYPE_FOREST, REGION_TYPE_FARMLAND, REGION_TYPE_MOUNTAIN, REGION_TYPE_HILL, REGION_TYPE_SWAMP, TOTAL_REGION_TYPE
@@ -31,7 +33,7 @@ enum regionBonus {
 class MapRegion {
 public:
 	MapRegion();
-	MapRegion(string s);
+	MapRegion(string s,int indexOfVertex);
 	MapRegion(regionTypes regionType);
 	//static const char * getTextForEnumRegionTypes(int enumVal);
 	void setOwner(Player *newOwner);
@@ -54,6 +56,7 @@ public:
 	vector<GamePiece> getDefensiveStructures();
 
 	bool hasLostTribe();
+    int getIndexOfVertex();
 
 private:
 	string typeName;
@@ -66,6 +69,7 @@ private:
 	LostTribeToken *lostTribes; 
 	std::vector<GamePiece> *defensiveStructures; //holds game pieces that offer defensive abilities to regions (Mountain, Forteress, Troll Lair and Encampments)
 
+    int indexOfVertex;
 };
 
 #endif

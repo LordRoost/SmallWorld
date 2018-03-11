@@ -6,6 +6,10 @@ using namespace boost;
 
 typedef graph_traits<Graph>::vertex_descriptor vertex_t;
 
+Graph Map::getMap(){
+    return g;
+}
+
 void Map::createMap() {
 
 	// Create vertices in that graph
@@ -90,7 +94,14 @@ void Map::loadMap(string filename) {
 
 			if (lineNb == 0) {
 				vertex_t tile = add_vertex(g);
-				g[tile] = MapRegion(token);
+				g[tile] = MapRegion(token,tile);
+                
+                if(addMountainorLostTribe(token)){
+                    LostTribeToken LostTribe= LostTribeToken();
+                    LostTribeToken* pointer=&LostTribe;
+                    g[tile].setLostTribeToken(pointer);
+                }
+                
 			}
 			else {
 
@@ -119,7 +130,7 @@ void Map::loadMap(string filename) {
 
 		if (lineNb == 0) {
 			vertex_t tile = add_vertex(g);
-			g[tile] = MapRegion(token);
+			g[tile] = MapRegion(token,tile);
 		}
 		else {
 
@@ -239,3 +250,33 @@ void Map::selectMap(string path){
         }
     }
 }
+
+bool Map::addMountainorLostTribe(string regionType){
+    if(regionType=="Mountain"){
+        //add moutain piece
+        return false;
+    }
+    else{
+        //75% chance to put a lost tribe token
+        return (rand() % 100) < 75;
+    }
+    
+    
+}
+
+vector<MapRegion> Map::getAdgacentTerritories(MapRegion *region){
+    
+    
+    AdjacencyIterator ai, a_end;
+    vector<MapRegion> adgacentMapRegions;
+    
+    int index=region->getIndexOfVertex();
+
+    boost::tie(ai, a_end) = boost::adjacent_vertices(index, g);
+    for (; ai != a_end; ai++) {
+        std::cout << *ai << "\t";
+        adgacentMapRegions.push_back(g[*ai]);
+    }
+    return adgacentMapRegions;
+}
+

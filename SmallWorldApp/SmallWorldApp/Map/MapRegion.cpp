@@ -14,7 +14,7 @@ MapRegion::MapRegion() {
 	isOwned = false;
 }
 
-MapRegion::MapRegion(string s) {
+MapRegion::MapRegion(string s, int _indexOfVertex) {
 
 	int x = std::distance(EnumRegionTypes, std::find(EnumRegionTypes, EnumRegionTypes + 5, s));
 
@@ -22,6 +22,7 @@ MapRegion::MapRegion(string s) {
 	lostTribes = NULL;
 	owner = NULL;
 	isOwned = false;
+    indexOfVertex=_indexOfVertex;
 }
 
 MapRegion::MapRegion(regionTypes _type) {
@@ -77,6 +78,9 @@ LostTribeToken* MapRegion::getLostTribeToken() {
 
 vector<GamePiece> MapRegion::getDefensiveStructures() {
 	return *defensiveStructures;
+}
+int MapRegion::getIndexOfVertex(){
+    return indexOfVertex;
 }
 
 

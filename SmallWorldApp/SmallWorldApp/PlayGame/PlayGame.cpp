@@ -14,6 +14,10 @@ void PlayGame::startGame(){
     setNumberOfPlayers();
     addPiecesToWells();
     
+    MapRegion *m=&map.getMap()[0];
+    map.getAdgacentTerritories(m);
+    
+    
     
 }
 
