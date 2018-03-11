@@ -44,7 +44,6 @@ public:
 	void redeploy();
 	int calculateAttackThreshold(MapRegion *region);
 	void removeEnemyTokens(MapRegion *region);
-	//void adjacentTerritories(MapRegion *region);
 
 	void returnTokensToHand(int returnedTokens);
 	int calculateCurrentNbUsableTokens(int subtracted);
@@ -64,7 +63,7 @@ private:
 	RaceToken currentRace, declinedRace;
 	std::list<VictoryCoin> ownedOtherCoins;
 	std::list<VictoryCoin>  owned1s;
-	RaceBanner *currentRaceBanner, declinedRaceBanner;
+	RaceBanner *currentRaceBanner, *declinedRaceBanner;
 	int nbOfUseableTokens; //number of tokens of a race that the user has in hand
 	bool lastAttack;
 };

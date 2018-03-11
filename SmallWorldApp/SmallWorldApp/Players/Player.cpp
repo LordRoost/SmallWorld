@@ -2,6 +2,7 @@
 
 Player::Player() {		
 	dice = new DieRoller();
+	declinedRaceBanner = NULL;
 }
 
 //Getters-------------------------------------------------------------------------
@@ -100,10 +101,13 @@ void Player::picks_race(RacePicker *picker) {
 extern Map gameMap;
 
 void Player::conquers() { //Need to make sure cant attack previously attacked territories
-	MapRegion *chosenForAttack = NULL;
+	//MapRegion *chosenForAttack = NULL;
 	int theChoice;
+
+	if (this->getOwnedRegions().size() == 0 || declinedRaceBanner!=NULL) {
+		firstConquest();
+	}
 	
-	firstConquest();
 	while (nbOfUseableTokens > 0 && lastAttack == false) {
 		std::cout << "Choose a territory to attack: " << std::endl;
 		
