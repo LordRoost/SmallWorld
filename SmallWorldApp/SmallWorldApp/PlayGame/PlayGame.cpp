@@ -1,6 +1,6 @@
 #include "../Headers/PlayGame.h"
 
-Map gameMap;
+extern Map gameMap;
 
 Map PlayGame::getMap(){
     return gameMap;
@@ -9,20 +9,18 @@ Map PlayGame::getMap(){
 void PlayGame::startGame(){
     
     gameMap.selectMap(mapFilesPath);
+    gameMap.getAllBorders();
     setNumberOfPlayers();
     addPiecesToWells();
     
-    //MapRegion *m=&gameMap.getMap()[0];
-    //gameMap.getAdgacentTerritories(m);
+    MapRegion *m=&gameMap.getMap()[1];
+    gameMap.getAdgacentTerritories(m);
     
     
    // vector<MapRegion*>asd=gameMap.getAllBorders();
 
 	//Make victory coins in bank
 	coinBank = CoinBank();
-
-	//MapRegion * m = &gameMap.getMap()[0];
-	//gameMap.getAdgacentTerritories(m);
 	
 	//Give players 5 victory coins of value 1
 	for (std::vector<int>::size_type i = 0; i != players.size(); i++) {
@@ -32,6 +30,19 @@ void PlayGame::startGame(){
 	}
 	//Turn 1
 	turnMarker = TurnMarker();
+}
+
+void PlayGame::turn(){
+    
+    for (std::vector<int>::size_type i = 0; i != players.size(); i++) {
+        Player * pointer = &players[i];
+        pointer->picks_race(decks);
+        pointer->conquers();
+        //score victory points
+        
+    }
+    
+    
 }
 
 void PlayGame::setNumberOfPlayers(){

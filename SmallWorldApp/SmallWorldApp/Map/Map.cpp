@@ -236,8 +236,8 @@ void Map::selectMap(string path){
         
         //Take input for the map the player wants to play
         string textFile;
-		string fullPath = "C:/Users/luoja/Documents/Github/SmallWorld/MapFiles/";
-        //string fullPath="/Users/ericpayettereformed/Documents/Smallworld/MapFiles/";
+		//string fullPath = "C:/Users/luoja/Documents/Github/SmallWorld/MapFiles/";
+        string fullPath="/Users/ericpayettereformed/Documents/Smallworld/MapFiles/";
         cin>> textFile;
         fullPath.append(textFile);
         fullPath.append(".txt");
@@ -282,7 +282,7 @@ void Map::getAdgacentTerritories(MapRegion *region){
     for (; ai != a_end; ai++) {
         std::cout << *ai << "\t";
         pointer=&g[*ai];
-        adgacentMapRegions.push_back(pointer);
+        //adgacentMapRegions.push_back(pointer);
     }
     
     cout<<endl;
