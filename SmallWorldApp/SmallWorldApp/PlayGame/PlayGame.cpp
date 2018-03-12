@@ -6,6 +6,10 @@ Map PlayGame::getMap(){
     return gameMap;
 }
 
+TurnMarker PlayGame::getTurnMarker(){
+    return turnMarker;
+}
+
 void PlayGame::startGame(){
     
     gameMap.selectMap(mapFilesPath);
@@ -15,9 +19,6 @@ void PlayGame::startGame(){
     
     MapRegion *m=&gameMap.getMap()[1];
     gameMap.getAdgacentTerritories(m);
-    
-    
-   // vector<MapRegion*>asd=gameMap.getAllBorders();
 
 	//Make victory coins in bank
 	coinBank = CoinBank();
@@ -32,17 +33,41 @@ void PlayGame::startGame(){
 	turnMarker = TurnMarker();
 }
 
-void PlayGame::turn(){
+void PlayGame::firstTurn(){
     
     for (std::vector<int>::size_type i = 0; i != players.size(); i++) {
         Player * pointer = &players[i];
         pointer->picks_race(decks);
         pointer->conquers();
-        //score victory points
+        pointer->scores(&coinBank);
         
     }
     
     
+}
+
+void PlayGame::followingTurns(){
+    
+    while(turnMarker.getTurnNumber()<=TOTAL_NUM_TURNS){
+        for (std::vector<int>::size_type i = 0; i != players.size(); i++) {
+            Player * pointer = &players[i];
+            
+            cout<<"Do you want to decline your race?(y or n)"<<endl;
+            string yorn;
+            cin>>yorn;
+            if(yorn=="y"){
+                pointer->declineRace();
+            }
+            else{
+                pointer->conquers();
+            }
+        
+            pointer->scores(&coinBank);
+            
+        }
+        
+        turnMarker.nextTurn();
+    }
 }
 
 void PlayGame::setNumberOfPlayers(){

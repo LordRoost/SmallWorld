@@ -4,9 +4,18 @@
 Player::Player() {		
 	dice = new DieRoller();
 	declinedRaceBanner = NULL;
-  lastAttack=false
+    lastAttack=false;
 	wealthyClaimed = false;
 	occupiedRegionCounter = 0;
+    inDecline=true;
+}
+
+bool Player::getInDecline(){
+    return inDecline;
+}
+
+void Player::setInDecline(bool _inDecline){
+    inDecline=_inDecline;
 }
 
 //Getters-------------------------------------------------------------------------
@@ -124,7 +133,8 @@ void Player::conquers() { //Need to make sure cant attack previously attacked te
 	occupiedRegionCounter = 0;
 	int theChoice;
 
-	if (this->getOwnedRegions().size() == 0 || declinedRaceBanner!=NULL) {
+	if (this->getOwnedRegions().size() == 0 || inDecline) {
+        inDecline=false;
 		firstConquest();
 	}
 	
@@ -289,6 +299,29 @@ void Player::removeEnemyTokens(MapRegion *region) {
 			}
 		}
 	}
+}
+
+void Player::declineRace(){
+    
+    inDecline=true;
+    declinedRace=currentRace;
+    declinedRaceBanner=currentRaceBanner;
+    currentBadge=NULL;
+    setRaceBanner(NULL);
+    
+    for (std::vector<int>::size_type i = 0; i != ownedRegions.size(); i++) {
+        MapRegion* pointer = ownedRegions[i];
+        
+        //Take out previous declined race
+        if(declinedRace.getRace()==pointer->getRaceToken().getRace()){
+            pointer->setOwnershipStatus(false);
+            pointer->setOwner(NULL);
+            pointer->setNbTokens(0);
+            ownedRegions.erase(ownedRegions.begin()+i);
+        }
+        pointer->setNbTokens(1);
+    
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

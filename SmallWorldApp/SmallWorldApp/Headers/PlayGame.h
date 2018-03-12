@@ -15,6 +15,8 @@ static int victoryPointBank=515;
 
 class PlayGame {
 public:
+    TurnMarker getTurnMarker();
+    
     //Start game methods
     Map getMap();
     string getMapFilesPath();
@@ -23,7 +25,8 @@ public:
     void addPiecesToWells();
     
     //First turn methods
-    void turn();
+    void firstTurn();
+    void followingTurns();
     
     
 private:

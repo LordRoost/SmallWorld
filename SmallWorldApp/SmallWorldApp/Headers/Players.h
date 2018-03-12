@@ -35,6 +35,8 @@ public:
 	void setNbOfUsableTokens(int tokenAmount);
 	void setRedeployableTokens(int amount);
 	void setIfClaimedWealthy(bool claim);
+    void setInDecline(bool InDecline);
+    bool getInDecline();
 	
 	void addOwnedRegion(MapRegion *region);
 	void addVictoryCoin(VictoryCoin coins);
@@ -45,13 +47,13 @@ public:
 	void conquers(); //allows a player to conquer regions until they do not have any tokens in hand
 	void scores(CoinBank *bank); //allows a player to get points for their turn
 
-	//helper methods for conquers
-	void firstConquest(); //the first conquest, when one must attack a border region
-	void attackTerritory(MapRegion *region); //actually capturing a region
-	bool finalAttack(MapRegion *region); //the attack in which a player must roll a dice because they do not have enough tokens in hand for a normal attack
-	void redeploy(); //redeploy phase, after conquest, when the player moves their tokens around their owned regions
-	int calculateAttackThreshold(MapRegion *region); //method to determine how many tokens a player needs to conquer a region
-	void removeEnemyTokens(MapRegion *region); //method that cleans up the area, removing the former owner and their pieces
+	void firstConquest();
+	void attackTerritory(MapRegion *region);
+	bool finalAttack(MapRegion *region);
+	void redeploy();
+	int calculateAttackThreshold(MapRegion *region);
+	void removeEnemyTokens(MapRegion *region);
+    void declineRace();
 
 	//various utility methods
 	void returnTokensToHand(int returnedTokens); //
@@ -76,8 +78,9 @@ private:
 	RaceBanner *currentRaceBanner, *declinedRaceBanner;
 	int nbOfUseableTokens; //number of tokens of a race that the user has in hand
 	bool lastAttack;
-	int redeployableTokens;
-	bool wealthyClaimed;
+    int redeployableTokens;
+    bool wealthyClaimed;
+    bool inDecline;
 };
 
 
