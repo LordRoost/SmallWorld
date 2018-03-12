@@ -3,6 +3,7 @@
 Player::Player() {		
 	dice = new DieRoller();
 	declinedRaceBanner = NULL;
+  lastAttack=false
 	wealthyClaimed = false;
 	occupiedRegionCounter = 0;
 }
@@ -114,20 +115,16 @@ void Player::conquers() { //Need to make sure cant attack previously attacked te
 		std::cout << "Choose a territory to attack: " << std::endl;
 		
 		gameMap.getAdgacentTerritories(choiceOfRegion);
-		vector<MapRegion*> adjacent = gameMap.adgacentMapRegions;
-
-		for (int i = 0; i < adjacent.size(); i++) {
-			std::cout << i << " ";
-		}
 
 		std::cout << std::endl;
 		std::cin >> theChoice;
-		MapRegion *adjTerritory = adjacent[theChoice];
+		MapRegion *adjTerritory = &gameMap.getMap()[theChoice];
+        
 		choiceOfRegion = adjTerritory; 
 
 		attackTerritory(adjTerritory);
 	}
-
+    
 	redeploy();
 }
 
@@ -137,16 +134,13 @@ void Player::firstConquest() {
 	int playerChoice;
 	std::cout << "Select a territory to attack. Your first attack must be on a region that is a border: (Enter the number)" << std::endl;
 
-	gameMap.getAllBorders();
-	vector<MapRegion*> borders = gameMap.borderRegions;
-
-	for (int i = 0; i < borders.size(); i++) {
+	for (int i = 0; i < gameMap.borderRegions.size(); i++) {
 		std::cout << i << " ";
 	}
 	
 	std::cout << std::endl;
 	std::cin >> playerChoice;
-	MapRegion *borderTerritory = borders[playerChoice]; 
+    MapRegion *borderTerritory = &gameMap.getMap()[playerChoice];
 	choiceOfRegion = borderTerritory;
 
 	attackTerritory(borderTerritory);
@@ -192,6 +186,16 @@ bool Player::finalAttack(MapRegion *region) {
 
 void Player::redeploy() {
 	std::cout << "Redeployment phase" << endl;
+    
+    for (std::vector<int>::size_type i = 0; i != ownedRegions.size(); i++) {
+        MapRegion* pointer = ownedRegions[i];
+        cout<<pointer->getOwner()<<endl;
+        cout<<pointer->getName()<<endl;
+        cout<<pointer->getIndexOfVertex()<<endl;
+        cout<<pointer->getIsBorder()<<endl;
+        cout<<pointer->getNbTokens()<<endl;
+    }
+    
 	//pick a region
 	//pick add or remove
 	//pick how many tokens you wanna move (have to at least leave 1)
