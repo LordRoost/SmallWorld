@@ -3,6 +3,8 @@
 Player::Player() {		
 	dice = new DieRoller();
 	declinedRaceBanner = NULL;
+	wealthyClaimed = false;
+	occupiedRegionCounter = 0;
 }
 
 //Getters-------------------------------------------------------------------------
@@ -101,7 +103,7 @@ void Player::picks_race(RacePicker *picker) {
 extern Map gameMap;
 
 void Player::conquers() { //Need to make sure cant attack previously attacked territories
-	//MapRegion *chosenForAttack = NULL;
+	occupiedRegionCounter = 0;
 	int theChoice;
 
 	if (this->getOwnedRegions().size() == 0 || declinedRaceBanner!=NULL) {
@@ -166,6 +168,9 @@ void Player::attackTerritory(MapRegion *region) { //should have user confirm att
 	}
 
 	std::cout << "You have succeeded in your attack!" << std::endl;
+	if (region->getOwner() != NULL || region->hasLostTribe()) {
+		occupiedRegionCounter++;
+	}
 	removeEnemyTokens(region);
 	region->setOwner(this);
 	region->addRaceTokens(this->getToken(), attackingAmount);
@@ -230,9 +235,71 @@ void Player::removeEnemyTokens(MapRegion *region) {
 
 void Player::scores(CoinBank *bank) { //Later need to add how it is affected by powers 
 	bank->deal1s(this, ownedRegions.size());
-	std::cout << "You have scored " << ownedRegions.size() << " points this turn." << std::endl;
-	//std::cout << ownedRegions->size();
-	//std::cout << " points this turn." << std::endl;
+	std::cout << "You have scored " << ownedRegions.size() << " points from your regions this turn." << std::endl;
+
+	int bonusCoins;
+
+	switch (getPowerBadge()->getPower()) {
+		case POWER_ALCHEMIST:
+			bank->deal1s(this, ALCHEMIST_NUM_COINS);
+			std::cout << "You have scored " << ALCHEMIST_NUM_COINS << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+			break;
+
+		case POWER_FOREST:
+			bonusCoins = 0;
+			for (int i = 0; i < getOwnedRegions().size(); i++) {
+				if (getOwnedRegions()[i]->getType() == REGION_TYPE_FOREST) {
+					bonusCoins++;
+				}
+			}
+			bank->deal1s(this, bonusCoins);
+			std::cout << "You have scored " << bonusCoins<< " extra coins from your " << getPowerBadge()->getPowerName() <<" power!" << endl;
+			break;
+
+		case POWER_HILL:
+			bonusCoins = 0;
+			for (int i = 0; i < getOwnedRegions().size(); i++) {
+				if (getOwnedRegions()[i]->getType() == REGION_TYPE_HILL) {
+					bonusCoins++;
+				}
+			}
+			bank->deal1s(this, bonusCoins);
+			std::cout << "You have scored " << bonusCoins << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+			break;
+
+		case POWER_MERCHANT:
+			bank->deal1s(this, ownedRegions.size());
+			std::cout << "You have scored " << ownedRegions.size() << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+			break;
+
+		case POWER_PILLAGING:
+			bank->deal1s(this, occupiedRegionCounter);
+			std::cout << "You have scored " << occupiedRegionCounter << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+			break;
+
+		case POWER_SWAMP:
+			bonusCoins = 0;
+			for (int i = 0; i < getOwnedRegions().size(); i++) {
+				if (getOwnedRegions()[i]->getType() == REGION_TYPE_SWAMP) {
+					bonusCoins++;
+				}
+			}
+			bank->deal1s(this, bonusCoins);
+			std::cout << "You have scored " << bonusCoins << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+			break;
+
+		case POWER_WEALTHY:
+			if (wealthyClaimed == false) {
+				bank->deal1s(this, WEALTHY_NUM_COINS);
+				std::cout << "You have scored " << WEALTHY_NUM_COINS << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+				wealthyClaimed = true; //must set back to false after geting rid of power
+			}
+			break;
+		default:
+			break;
+	}
+		
+	std::cout << "You have " << this->getVictoryCoin1s().size() << " total coins" << std::endl;
 }
 
 

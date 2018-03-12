@@ -131,5 +131,8 @@
     <ClCompile Include="TurnMarker\TurnMarker.cpp">
       <Filter>Source Files\TurnMarker</Filter>
     </ClCompile>
+    <ClCompile Include="Players\ScoringDriver.cpp">
+      <Filter>Source Files\Players</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

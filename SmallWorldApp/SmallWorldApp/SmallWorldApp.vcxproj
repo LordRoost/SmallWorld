@@ -136,6 +136,7 @@
     <ClCompile Include="Map\MapRegion.cpp" />
     <ClCompile Include="Players\Player.cpp" />
     <ClCompile Include="Players\PlayerDriver.cpp" />
+    <ClCompile Include="Players\ScoringDriver.cpp" />
     <ClCompile Include="PlayGame\PlayGame.cpp" />
     <ClCompile Include="PlayGame\PlayGameDriver.cpp" />
     <ClCompile Include="Tokens\GamePiece.cpp" />

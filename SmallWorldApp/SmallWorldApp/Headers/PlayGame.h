@@ -1,4 +1,5 @@
 #pragma once
+#define BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE //this is just to not have the boost outdated message everytime code is run
 
 #include "Map.h"
 #include "Players.h"

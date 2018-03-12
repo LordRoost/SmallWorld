@@ -55,6 +55,8 @@ public:
 	void printCurrentPower();
 
 	MapRegion *choiceOfRegion;
+	bool wealthyClaimed;
+	int occupiedRegionCounter;
 
 private:
 	std::vector<MapRegion*> ownedRegions;
@@ -62,10 +64,11 @@ private:
 	PowerBadge *currentBadge;
 	RaceToken currentRace, declinedRace;
 	std::list<VictoryCoin> ownedOtherCoins;
-	std::list<VictoryCoin>  owned1s;
+	std::list<VictoryCoin> owned1s;
 	RaceBanner *currentRaceBanner, *declinedRaceBanner;
 	int nbOfUseableTokens; //number of tokens of a race that the user has in hand
 	bool lastAttack;
+	//bool wealthyClaimed;
 };
 
 

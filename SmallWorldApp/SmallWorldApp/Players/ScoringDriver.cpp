@@ -2,9 +2,9 @@
 #include "../Headers/Game.h"
 
 
-//int main(int argc, char*[]) {
+int main(int argc, char*[]) {
 
-int PlayerDriver() {
+	//int ScoringDriver() {
 
 	char answer;
 	PlayGame game1;
@@ -34,6 +34,11 @@ int PlayerDriver() {
 	//player1->addOwnedRegion(region);
 	player1->conquers();
 	//player1->firstConquest();
+	for (int i = 0; i < player1->getOwnedRegions().size(); i++) {
+		cout << player1->getOwnedRegions()[i]->getNbTokens() << endl;
+		cout << player1->getOwnedRegions()[i]->getOwnershipStatus() << endl;
+		cout << player1->getOwnedRegions()[i]->getOwner() << endl;
+	}
 
 	//player1->attackTerritory(region);
 	player1->scores(bank);

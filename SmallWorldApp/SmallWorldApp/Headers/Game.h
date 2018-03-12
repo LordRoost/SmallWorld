@@ -3,6 +3,7 @@
 #include "Tokens.h"
 #define MAX_NUMBER_PICKABLE_RACES 6
 #define MAX_NUMBER_PICKABLE_POWERS 6
+#define BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE //this is just to not have the boost outdated message everytime code is run
 
 class Player;
 
