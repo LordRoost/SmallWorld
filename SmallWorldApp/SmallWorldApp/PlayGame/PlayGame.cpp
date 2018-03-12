@@ -16,6 +16,20 @@ void PlayGame::startGame(){
     gameMap.getAllBorders();
     setNumberOfPlayers();
     addPiecesToWells();
+	//vertices(*gameMap.getGraph());
+	//MapRegion *n;
+
+	//std::pair<VertexIterator, VertexIterator> vp;
+	//for (vp = vertices(*gameMap.getGraph()); vp.first != vp.second; ++vp.first) {
+	//	std::cout << *vp.first << std::endl;
+	//	n = *vp.first;
+	//}
+
+	
+	std::cout << std::endl;
+
+	//MapRegion *m = &gameMap.getGraph()[0];
+	//gameMap.getAdgacentTerritories(m);
 
 	//Make victory coins in bank
 	coinBank = CoinBank();

@@ -1,5 +1,7 @@
 #include "../Headers/Players.h"
 
+typedef graph_traits<Graph>::vertex_descriptor vertex_t;
+
 //Player constructor
 Player::Player() {		
 	dice = new DieRoller();
@@ -131,7 +133,7 @@ extern Map gameMap;
 
 void Player::conquers() { //Need to make sure cant attack previously attacked territories
 	occupiedRegionCounter = 0;
-	int theChoice;
+	vertex_t theChoice;
 
 	if (this->getOwnedRegions().size() == 0 || inDecline) {
         inDecline=false;
@@ -141,7 +143,7 @@ void Player::conquers() { //Need to make sure cant attack previously attacked te
 	while (nbOfUseableTokens > 0 && lastAttack == false) {
 		std::cout << "Choose a territory to attack: " << std::endl;
 
-		gameMap.getAdgacentTerritories(choiceOfRegion);
+	/*	gameMap.getAdgacentTerritories(choiceOfRegion);
 		vector<MapRegion*> adjacent = gameMap.adgacentMapRegions;
 		
 		for (int i = 0; i < adjacent.size(); i++) {
@@ -154,17 +156,18 @@ void Player::conquers() { //Need to make sure cant attack previously attacked te
 		MapRegion * adjTerritory = adjacent[theChoice];
 		choiceOfRegion = adjTerritory;
 			
-		attackTerritory(adjTerritory);
+		attackTerritory(adjTerritory);*/
 
-		/*gameMap.getAdgacentTerritories(choiceOfRegion);
+		gameMap.getAdgacentTerritories(choiceOfRegion);
 
 		std::cout << std::endl;
 		std::cin >> theChoice;
-		MapRegion *adjTerritory = &gameMap.getMap()[theChoice];
+		Graph tempGraph = *gameMap.getGraph();
+		MapRegion *adjTerritory = tempGraph[theChoice];
         
 		choiceOfRegion = adjTerritory; 
 
-		attackTerritory(adjTerritory);*/
+		attackTerritory(adjTerritory);
 	}
     
 	redeploy();

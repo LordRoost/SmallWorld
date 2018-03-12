@@ -6,8 +6,8 @@ using namespace boost;
 
 typedef graph_traits<Graph>::vertex_descriptor vertex_t;
 
-Graph Map::getMap(){
-    return g;
+Graph* Map::getGraph(){
+    return &g;
 }
 
 void Map::createMap() {
@@ -29,22 +29,38 @@ void Map::createMap() {
 	vertex_t tile14 = add_vertex(g);
 	vertex_t tile15 = add_vertex(g);
 
+	g[tile1] = new MapRegion();
+	g[tile2] = new MapRegion();
+	g[tile3] = new MapRegion();
+	g[tile4] = new MapRegion();
+	g[tile5] = new MapRegion();
+	g[tile6] = new MapRegion();
+	g[tile7] = new MapRegion();
+	g[tile8] = new MapRegion();
+	g[tile9] = new MapRegion();
+	g[tile10] = new MapRegion();
+	g[tile11] = new MapRegion();
+	g[tile12] = new MapRegion();
+	g[tile13] = new MapRegion();
+	g[tile14] = new MapRegion();
+	g[tile15] = new MapRegion();
+
 	// Set regiontype
-	g[tile1].setType(REGION_TYPE_FARMLAND);
-	g[tile2].setType(REGION_TYPE_FARMLAND);
-	g[tile3].setType(REGION_TYPE_FARMLAND);
-	g[tile4].setType(REGION_TYPE_HILL);
-	g[tile5].setType(REGION_TYPE_HILL);
-	g[tile6].setType(REGION_TYPE_HILL);
-	g[tile7].setType(REGION_TYPE_MOUNTAIN);
-	g[tile8].setType(REGION_TYPE_MOUNTAIN);
-	g[tile9].setType(REGION_TYPE_MOUNTAIN);
-	g[tile10].setType(REGION_TYPE_FOREST);
-	g[tile11].setType(REGION_TYPE_FOREST);
-	g[tile12].setType(REGION_TYPE_FOREST);
-	g[tile13].setType(REGION_TYPE_SWAMP);
-	g[tile14].setType(REGION_TYPE_SWAMP);
-	g[tile15].setType(REGION_TYPE_SWAMP);
+	g[tile1]->setType(REGION_TYPE_FARMLAND);
+	g[tile2]->setType(REGION_TYPE_FARMLAND);
+	g[tile3]->setType(REGION_TYPE_FARMLAND);
+	g[tile4]->setType(REGION_TYPE_HILL);
+	g[tile5]->setType(REGION_TYPE_HILL);
+	g[tile6]->setType(REGION_TYPE_HILL);
+	g[tile7]->setType(REGION_TYPE_MOUNTAIN);
+	g[tile8]->setType(REGION_TYPE_MOUNTAIN);
+	g[tile9]->setType(REGION_TYPE_MOUNTAIN);
+	g[tile10]->setType(REGION_TYPE_FOREST);
+	g[tile11]->setType(REGION_TYPE_FOREST);
+	g[tile12]->setType(REGION_TYPE_FOREST);
+	g[tile13]->setType(REGION_TYPE_SWAMP);
+	g[tile14]->setType(REGION_TYPE_SWAMP);
+	g[tile15]->setType(REGION_TYPE_SWAMP);
 
 	// Create edges to vertices
 	add_edge(tile1, tile2, g);
@@ -95,12 +111,12 @@ void Map::loadMap(string filename) {
 			if (lineNb == 0) {
 				vertex_t tile = add_vertex(g);
 				int index = tile & INT_MAX;
-				g[tile] = MapRegion(token, index);
+				g[tile] = new MapRegion(token, index);
                 
                 if(addMountainorLostTribe(token)){
                     LostTribeToken LostTribe= LostTribeToken();
                     LostTribeToken* pointer=&LostTribe;
-                    g[tile].setLostTribeToken(pointer);
+                    g[tile]->setLostTribeToken(pointer);
                 }
 			}
 			else {
@@ -131,11 +147,11 @@ void Map::loadMap(string filename) {
 		if (lineNb == 0) {
 			vertex_t tile = add_vertex(g);
 			int index = tile & INT_MAX;
-			g[tile] = MapRegion(token, index);
+			g[tile] = new MapRegion(token, index);
             if(addMountainorLostTribe(token)){
                 LostTribeToken LostTribe= LostTribeToken();
                 LostTribeToken* pointer=&LostTribe;
-                g[tile].setLostTribeToken(pointer);
+                g[tile]->setLostTribeToken(pointer);
             }
 		}
 		else {
@@ -236,8 +252,8 @@ void Map::selectMap(string path){
         
         //Take input for the map the player wants to play
         string textFile;
-		//string fullPath = "C:/Users/luoja/Documents/Github/SmallWorld/MapFiles/";
-        string fullPath="/Users/ericpayettereformed/Documents/Smallworld/MapFiles/";
+		string fullPath = "C:/Users/luoja/Documents/Github/SmallWorld/MapFiles/";
+        //string fullPath="/Users/ericpayettereformed/Documents/Smallworld/MapFiles/";
         cin>> textFile;
         fullPath.append(textFile);
         fullPath.append(".txt");
@@ -281,7 +297,7 @@ void Map::getAdgacentTerritories(MapRegion *region){
     boost::tie(ai, a_end) = boost::adjacent_vertices(index, g);
     for (; ai != a_end; ai++) {
         std::cout << *ai << "\t";
-        pointer=&g[*ai];
+        pointer=g[*ai];
         adgacentMapRegions.push_back(pointer);
     }
     
@@ -307,8 +323,8 @@ void Map::getAllBorders() {
 
 	MapRegion *pointer;
 	for (int i = 0; i<num_vertices(g); i++) {
-		if (g[i].getIsBorder()) {
-			pointer = &g[i];
+		if (g[i]->getIsBorder()) {
+			pointer = g[i];
 			borderRegions.push_back(pointer);
 		}
 	}

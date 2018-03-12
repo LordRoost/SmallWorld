@@ -18,15 +18,16 @@
 using namespace boost;
 using namespace std;
 
-typedef adjacency_list<listS, vecS, undirectedS, MapRegion> Graph;
+typedef adjacency_list<listS, vecS, undirectedS, MapRegion*> Graph;
 typedef boost::graph_traits<Graph>::adjacency_iterator AdjacencyIterator;
+typedef boost::graph_traits<Graph>::vertex_iterator VertexIterator;
 
 class Map {
 public:
 	void createMap();
 	void loadMap(string file);
 	bool graphIsConnected();
-	Graph getMap();
+	Graph* getGraph();
     static void getListOfMaps(const string& path);
     void selectMap(string path);
     bool addMountainorLostTribe(string regionType);
