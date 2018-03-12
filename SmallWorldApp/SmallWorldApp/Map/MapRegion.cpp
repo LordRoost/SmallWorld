@@ -14,6 +14,7 @@ MapRegion::MapRegion() {
 	isOwned = false;
     isBorder=false;
 	mountainPiece = NULL;
+	nbOfTokens = 0;
 }
 
 MapRegion::MapRegion(string s, int _indexOfVertex) {
@@ -25,6 +26,7 @@ MapRegion::MapRegion(string s, int _indexOfVertex) {
 	owner = NULL;
 	isOwned = false;
     indexOfVertex=_indexOfVertex;
+	nbOfTokens = 0;
     
     if((rand() % 100) < 40){
         isBorder=true;
@@ -54,6 +56,7 @@ MapRegion::MapRegion(regionTypes _type) {
 	owner = NULL;
 	isOwned = false;
     isBorder=false;
+	nbOfTokens = 0;
 }
 
 
@@ -145,7 +148,7 @@ void MapRegion::setIsBorder(bool _isBorder){
 
 void MapRegion::addRaceTokens(RaceToken race, int amount) {
 	tokens = race;
-	nbOfTokens = amount;
+	nbOfTokens += amount;
 
 }
 

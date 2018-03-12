@@ -298,26 +298,13 @@ void Map::getAdgacentTerritories(MapRegion *region){
     for (; ai != a_end; ai++) {
         std::cout << *ai << "\t";
         pointer=g[*ai];
-        adgacentMapRegions.push_back(pointer);
+        //adgacentMapRegions.push_back(pointer);
     }
     
     cout<<endl;
     
 }
 
-//vector<MapRegion*> Map::getAllBorders(){
-//   
-//    MapRegion *pointer;
-//    for(int i=0;i<num_vertices(g);i++){
-//        if(g[i].getIsBorder()){
-//            pointer=&g[i];
-//            borderRegions.push_back(pointer);
-//			cout << "hi" << endl;
-//			cout << pointer->getName() << endl;
-//        }
-//    }
-//    return borderRegions;
-//}
 
 void Map::getAllBorders() {
 

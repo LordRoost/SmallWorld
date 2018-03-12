@@ -174,22 +174,22 @@ void Player::conquers() { //Need to make sure cant attack previously attacked te
 }
 
 //First attack of the user, which must be on a border region
-void Player::firstConquest() {
+void Player::firstConquest() { //what if firstconquest is also last??
 
 	int playerChoice;
 	std::cout << "Select a territory to attack. Your first attack must be on a region that is a border: (Enter the number)" << std::endl;
 
-	gameMap.getAllBorders();
-	vector<MapRegion*> borders = gameMap.borderRegions;
-
 	for (size_t i = 0; i < gameMap.borderRegions.size(); i++) {
-		std::cout << i << " ";
+
+		std::cout << gameMap.borderRegions[i]->getIndexOfVertex() << " ";
 	}
 	
 	std::cout << std::endl;
 	std::cin >> playerChoice;
+	Graph tempGraph = *gameMap.getGraph();
+	MapRegion *borderTerritory = tempGraph[playerChoice];
     //MapRegion *borderTerritory = &gameMap.getMap()[playerChoice];
-	MapRegion *borderTerritory = borders[playerChoice];
+	//MapRegion *borderTerritory = borders[playerChoice];
 	choiceOfRegion = borderTerritory;
 
 	attackTerritory(borderTerritory);
@@ -219,6 +219,8 @@ void Player::attackTerritory(MapRegion *region) { //should have user confirm att
 	region->addRaceTokens(this->getToken(), attackingAmount);
 	addOwnedRegion(region);
 
+	//cout << "NbOfTokens: " << region->getNbTokens() << endl;
+
 	std::cout << "You have " << calculateCurrentNbUsableTokens(attackingAmount) << " " << getRacebanner()->getName() << " tokens left to attack with." << std::endl;	
 }
 
@@ -233,7 +235,7 @@ bool Player::finalAttack(MapRegion *region) {
 	return false;
 }
 
-//Lets a user redeploy his tokens
+//Lets a player redeploy their tokens
 void Player::redeploy() {
 	std::cout << "Redeployment phase" << endl;
 	int temp = 0;
@@ -245,6 +247,7 @@ void Player::redeploy() {
 		redeployableTokens += temp;
 	}
 	redeployableTokens += getNbOfUsableTokens();
+	setNbOfUsableTokens(0);
 
 	while (redeployableTokens > 0) {
 		std::cout << "You have " << redeployableTokens << " tokens to redeploy" << std::endl;
@@ -276,7 +279,7 @@ void Player::redeploy() {
 						else
 							bogusInputs = false;
 					}
-					getOwnedRegions()[i]->addRaceTokens(this->getToken(), responseAdd);
+					getOwnedRegions()[i]->addRaceTokens(this->getToken(), responseAdd); 
 					redeployableTokens -= responseAdd;
 					breakFree = true;
 					stuffHappened = true;
@@ -315,11 +318,24 @@ void Player::removeEnemyTokens(MapRegion *region) {
 	else if (region->getOwnershipStatus() == true) {
 		Player *formerOwner = region->getOwner(); 
 		formerOwner->returnTokensToHand(region->getNbTokens()-1);
-		for (size_t i = 0; i < formerOwner->getOwnedRegions().size(); i++) {
-			if (region == formerOwner->getOwnedRegions()[i]) {
-				formerOwner->getOwnedRegions().erase(formerOwner->getOwnedRegions().begin()+i); //remove the region from former owner's owned
+		region->setNbTokens(0);
+
+		std::vector<MapRegion*> *tempVector = &formerOwner->getOwnedRegions();
+		
+		cout << formerOwner->getOwnedRegions().size() << endl;
+
+		for (size_t i = 0; i < (*tempVector).size(); i++) {
+			if (region == (*tempVector)[i]) {
+
+				tempVector->erase(tempVector->begin() + i); //remove the region from former owner's owned
 			}
 		}
+		for (int i = 0; i < formerOwner->getOwnedRegions().size(); i++) {
+			cout << "Vertexes: " << formerOwner->getOwnedRegions()[i]->getIndexOfVertex() << endl;
+			cout << "Nb Tokens: " << formerOwner->getOwnedRegions()[i]->getNbTokens() << endl;
+			cout << "Border? " << formerOwner->getOwnedRegions()[i]->getIsBorder() << endl;
+		}
+		
 	}
 }
 
@@ -425,7 +441,10 @@ void Player::returnTokensToHand(int returnedTokens) {
 }
 
 int Player::calculateCurrentNbUsableTokens(int subtracted) {
-	setNbOfUsableTokens(nbOfUseableTokens - subtracted);
+	if(nbOfUseableTokens - subtracted >= 0)
+		setNbOfUsableTokens(nbOfUseableTokens - subtracted);
+	else
+		setNbOfUsableTokens(0);
 	return nbOfUseableTokens;
 }
 
