@@ -15,6 +15,7 @@ public:
 	Player();
 	~Player() {}
 
+	//getters
 	DieRoller getDieRoller();
 	PowerBadge* getPowerBadge();
 	RaceToken getToken();
@@ -23,29 +24,37 @@ public:
 	RaceBanner* getRacebanner();
 	int getNbOfUsableTokens();
 	std::vector<MapRegion*> getOwnedRegions();
+	int getRedeployableTokens();
+	bool getIfClaimedWealthy();
 
+	//setters
 	void setPowerBadge(PowerBadge *badge);
 	void setDieRoller(DieRoller *dice);
 	void setRaceToken(RaceToken tokens);
 	void setRaceBanner(RaceBanner *banner);
 	void setNbOfUsableTokens(int tokenAmount);
+	void setRedeployableTokens(int amount);
+	void setIfClaimedWealthy(bool claim);
 	
 	void addOwnedRegion(MapRegion *region);
 	void addVictoryCoin(VictoryCoin coins);
 	void addVictoryCoin1s(VictoryCoin ones);
 
-	void picks_race(RacePicker *picker);
-	void conquers();
-	void scores(CoinBank *bank);
+	//3 main methods
+	void picks_race(RacePicker *picker); //allows player to choose a racebanner and a powerbadge from the choice of 6
+	void conquers(); //allows a player to conquer regions until they do not have any tokens in hand
+	void scores(CoinBank *bank); //allows a player to get points for their turn
 
-	void firstConquest();
-	void attackTerritory(MapRegion *region);
-	bool finalAttack(MapRegion *region);
-	void redeploy();
-	int calculateAttackThreshold(MapRegion *region);
-	void removeEnemyTokens(MapRegion *region);
+	//helper methods for conquers
+	void firstConquest(); //the first conquest, when one must attack a border region
+	void attackTerritory(MapRegion *region); //actually capturing a region
+	bool finalAttack(MapRegion *region); //the attack in which a player must roll a dice because they do not have enough tokens in hand for a normal attack
+	void redeploy(); //redeploy phase, after conquest, when the player moves their tokens around their owned regions
+	int calculateAttackThreshold(MapRegion *region); //method to determine how many tokens a player needs to conquer a region
+	void removeEnemyTokens(MapRegion *region); //method that cleans up the area, removing the former owner and their pieces
 
-	void returnTokensToHand(int returnedTokens);
+	//various utility methods
+	void returnTokensToHand(int returnedTokens); //
 	int calculateCurrentNbUsableTokens(int subtracted);
 	void calculateUsableTokens();
 	//void calculateUsableTokens(PowerBadge power, RaceBanner banner);
@@ -55,7 +64,6 @@ public:
 	void printCurrentPower();
 
 	MapRegion *choiceOfRegion;
-	bool wealthyClaimed;
 	int occupiedRegionCounter;
 
 private:
@@ -68,7 +76,8 @@ private:
 	RaceBanner *currentRaceBanner, *declinedRaceBanner;
 	int nbOfUseableTokens; //number of tokens of a race that the user has in hand
 	bool lastAttack;
-	//bool wealthyClaimed;
+	int redeployableTokens;
+	bool wealthyClaimed;
 };
 
 

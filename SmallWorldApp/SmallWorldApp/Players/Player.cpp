@@ -1,5 +1,6 @@
 #include "../Headers/Players.h"
 
+//Player constructor
 Player::Player() {		
 	dice = new DieRoller();
 	declinedRaceBanner = NULL;
@@ -40,6 +41,14 @@ std::vector<MapRegion*> Player::getOwnedRegions() { // ?????
 	return ownedRegions;
 }
 
+int Player::getRedeployableTokens() {
+	return redeployableTokens;
+}
+
+bool Player::getIfClaimedWealthy() {
+	return wealthyClaimed;
+}
+
 //setters ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 void Player::setPowerBadge(PowerBadge *badge) {
@@ -60,6 +69,14 @@ void Player::setRaceBanner(RaceBanner *banner) {
 
 void Player::setNbOfUsableTokens(int tokenAmount) {
 	nbOfUseableTokens = tokenAmount;
+}
+
+void Player::setRedeployableTokens(int amount) {
+	redeployableTokens = amount;
+}
+
+void Player::setIfClaimedWealthy(bool claim) {
+	wealthyClaimed = claim;
 }
 
 void Player::addVictoryCoin(VictoryCoin coins) {
@@ -190,12 +207,61 @@ bool Player::finalAttack(MapRegion *region) {
 	return false;
 }
 
+//Lets a user redeploy his tokens
 void Player::redeploy() {
 	std::cout << "Redeployment phase" << endl;
-	//pick a region
-	//pick add or remove
-	//pick how many tokens you wanna move (have to at least leave 1)
-	//keep doing until satisfied
+	int temp = 0;
+	int responseRegion, responseAdd;
+
+	for (int i = 0; i < getOwnedRegions().size(); i++) {
+		temp = (getOwnedRegions()[i]->getNbTokens())-1;
+		getOwnedRegions()[i]->setNbTokens(1);
+		redeployableTokens += temp;
+	}
+	redeployableTokens += getNbOfUsableTokens();
+
+	while (redeployableTokens > 0) {
+		std::cout << "You have " << redeployableTokens << " tokens to redeploy" << std::endl;
+		std::cout << "Choose a region to add tokens to: " << std::endl;
+		for (int i = 0; i < getOwnedRegions().size(); i++) {
+			std::cout << getOwnedRegions()[i]->getIndexOfVertex() << std::endl;
+		}
+
+		bool breakFree = false;
+		bool bogusInputs = true;
+		bool stuffHappened = false;
+
+		while (breakFree == false) {
+			std::cin >> responseRegion;
+			for (int i = 0; i < getOwnedRegions().size(); i++) {
+				if (responseRegion == getOwnedRegions()[i]->getIndexOfVertex()) {
+					std::cout << "Enter the number of tokens that you want to add here: " << std::endl;
+					std::cin >> responseAdd;
+
+					while (bogusInputs) {
+						if (responseAdd > redeployableTokens) {
+							std::cout << "Please enter a number that isn't bigger than the amount of tokens you have to redistribute!" << std::endl;
+							std::cin >> responseAdd;
+						}
+						else if (responseAdd < 0) {
+							std::cout << "Oh no!! What is you doing! Do not enter negative numbers!" << std::endl;
+							std::cin >> responseAdd;
+						}
+						else
+							bogusInputs = false;
+					}
+					getOwnedRegions()[i]->addRaceTokens(this->getToken(), responseAdd);
+					redeployableTokens -= responseAdd;
+					breakFree = true;
+					stuffHappened = true;
+					break;
+				}
+			}
+			if(stuffHappened == false)
+				std::cout << "Please enter a correct region." << std::endl;
+		}
+		
+	}
 }
 
 //method to determine how many tokens a user needs to succesfully conquer a region
