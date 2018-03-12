@@ -2,9 +2,9 @@
 #include "../Headers/Game.h"
 
 
-int main(int argc, char*[]) {
+//int main(int argc, char*[]) {
 
-	//int ScoringDriver() {
+int ScoringDriver() {
 
 	char answer;
 	PlayGame game1;

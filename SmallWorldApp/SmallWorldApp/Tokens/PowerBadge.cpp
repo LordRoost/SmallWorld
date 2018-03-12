@@ -1,5 +1,6 @@
 #include "../Headers/Tokens.h"
 
+//Instance of PowerInfo struct, contains information related to the various powerBadges
 PowerInfo powerInfo[TOTAL_POWERS] = { { POWER_ALCHEMIST, "Alchemist", 4 },{ POWER_BERSERK, "Berserk", 4 },{ POWER_BIVOUACKING, "Bivouacking", 5 },
 { POWER_COMMANDO, "Commando", 4 },{ POWER_DIPLOMAT, "Diplomat", 5 },{ POWER_DRAGON_MASTER, "Dragon Master", 5 },{ POWER_FLYING, "Flying", 5 },
 { POWER_FOREST, "Forest", 4 },{ POWER_FORTIFIED, "Fortified", 3 },{ POWER_HEROIC, "Heroic", 5 },{ POWER_HILL, "Hill", 4 },
@@ -12,6 +13,7 @@ PowerBadge::PowerBadge(powers newPower) {
 	amountTokensReceived = powerInfo[power].amountTokensReceived;
 }
 
+//getters and setters
 powers PowerBadge::getPower() {
 	return power;
 }

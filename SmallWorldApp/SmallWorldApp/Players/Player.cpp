@@ -4,7 +4,7 @@
 Player::Player() {		
 	dice = new DieRoller();
 	declinedRaceBanner = NULL;
-    lastAttack=false;
+	lastAttack = false;
 	wealthyClaimed = false;
 	occupiedRegionCounter = 0;
     inDecline=true;
@@ -161,7 +161,7 @@ void Player::firstConquest() {
 	int playerChoice;
 	std::cout << "Select a territory to attack. Your first attack must be on a region that is a border: (Enter the number)" << std::endl;
 
-	for (int i = 0; i < gameMap.borderRegions.size(); i++) {
+	for (size_t i = 0; i < gameMap.borderRegions.size(); i++) {
 		std::cout << i << " ";
 	}
 	
@@ -217,7 +217,7 @@ void Player::redeploy() {
 	int temp = 0;
 	int responseRegion, responseAdd;
 
-	for (int i = 0; i < getOwnedRegions().size(); i++) {
+	for (size_t i = 0; i < getOwnedRegions().size(); i++) {
 		temp = (getOwnedRegions()[i]->getNbTokens())-1;
 		getOwnedRegions()[i]->setNbTokens(1);
 		redeployableTokens += temp;
@@ -227,7 +227,7 @@ void Player::redeploy() {
 	while (redeployableTokens > 0) {
 		std::cout << "You have " << redeployableTokens << " tokens to redeploy" << std::endl;
 		std::cout << "Choose a region to add tokens to: " << std::endl;
-		for (int i = 0; i < getOwnedRegions().size(); i++) {
+		for (size_t i = 0; i < getOwnedRegions().size(); i++) {
 			std::cout << getOwnedRegions()[i]->getIndexOfVertex() << std::endl;
 		}
 
@@ -237,7 +237,7 @@ void Player::redeploy() {
 
 		while (breakFree == false) {
 			std::cin >> responseRegion;
-			for (int i = 0; i < getOwnedRegions().size(); i++) {
+			for (size_t i = 0; i < getOwnedRegions().size(); i++) {
 				if (responseRegion == getOwnedRegions()[i]->getIndexOfVertex()) {
 					std::cout << "Enter the number of tokens that you want to add here: " << std::endl;
 					std::cin >> responseAdd;
@@ -293,7 +293,7 @@ void Player::removeEnemyTokens(MapRegion *region) {
 	else if (region->getOwnershipStatus() == true) {
 		Player *formerOwner = region->getOwner(); 
 		formerOwner->returnTokensToHand(region->getNbTokens()-1);
-		for (int i = 0; i < formerOwner->getOwnedRegions().size(); i++) {
+		for (size_t i = 0; i < formerOwner->getOwnedRegions().size(); i++) {
 			if (region == formerOwner->getOwnedRegions()[i]) {
 				formerOwner->getOwnedRegions().erase(formerOwner->getOwnedRegions().begin()+i); //remove the region from former owner's owned
 			}
@@ -340,7 +340,7 @@ void Player::scores(CoinBank *bank) { //Later need to add how it is affected by 
 
 		case POWER_FOREST:
 			bonusCoins = 0;
-			for (int i = 0; i < getOwnedRegions().size(); i++) {
+			for (size_t i = 0; i < getOwnedRegions().size(); i++) {
 				if (getOwnedRegions()[i]->getType() == REGION_TYPE_FOREST) {
 					bonusCoins++;
 				}
@@ -351,7 +351,7 @@ void Player::scores(CoinBank *bank) { //Later need to add how it is affected by 
 
 		case POWER_HILL:
 			bonusCoins = 0;
-			for (int i = 0; i < getOwnedRegions().size(); i++) {
+			for (size_t i = 0; i < getOwnedRegions().size(); i++) {
 				if (getOwnedRegions()[i]->getType() == REGION_TYPE_HILL) {
 					bonusCoins++;
 				}
@@ -372,7 +372,7 @@ void Player::scores(CoinBank *bank) { //Later need to add how it is affected by 
 
 		case POWER_SWAMP:
 			bonusCoins = 0;
-			for (int i = 0; i < getOwnedRegions().size(); i++) {
+			for (size_t i = 0; i < getOwnedRegions().size(); i++) {
 				if (getOwnedRegions()[i]->getType() == REGION_TYPE_SWAMP) {
 					bonusCoins++;
 				}
