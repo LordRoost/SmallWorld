@@ -140,8 +140,23 @@ void Player::conquers() { //Need to make sure cant attack previously attacked te
 	
 	while (nbOfUseableTokens > 0 && lastAttack == false) {
 		std::cout << "Choose a territory to attack: " << std::endl;
-		
+
 		gameMap.getAdgacentTerritories(choiceOfRegion);
+		vector<MapRegion*> adjacent = gameMap.adgacentMapRegions;
+		
+		for (int i = 0; i < adjacent.size(); i++) {
+			std::cout << i << " ";
+			
+		}
+		
+		std::cout << std::endl;
+		std::cin >> theChoice;
+		MapRegion * adjTerritory = adjacent[theChoice];
+		choiceOfRegion = adjTerritory;
+			
+		attackTerritory(adjTerritory);
+
+		/*gameMap.getAdgacentTerritories(choiceOfRegion);
 
 		std::cout << std::endl;
 		std::cin >> theChoice;
@@ -149,7 +164,7 @@ void Player::conquers() { //Need to make sure cant attack previously attacked te
         
 		choiceOfRegion = adjTerritory; 
 
-		attackTerritory(adjTerritory);
+		attackTerritory(adjTerritory);*/
 	}
     
 	redeploy();
@@ -161,13 +176,17 @@ void Player::firstConquest() {
 	int playerChoice;
 	std::cout << "Select a territory to attack. Your first attack must be on a region that is a border: (Enter the number)" << std::endl;
 
+	gameMap.getAllBorders();
+	vector<MapRegion*> borders = gameMap.borderRegions;
+
 	for (size_t i = 0; i < gameMap.borderRegions.size(); i++) {
 		std::cout << i << " ";
 	}
 	
 	std::cout << std::endl;
 	std::cin >> playerChoice;
-    MapRegion *borderTerritory = &gameMap.getMap()[playerChoice];
+    //MapRegion *borderTerritory = &gameMap.getMap()[playerChoice];
+	MapRegion *borderTerritory = borders[playerChoice];
 	choiceOfRegion = borderTerritory;
 
 	attackTerritory(borderTerritory);

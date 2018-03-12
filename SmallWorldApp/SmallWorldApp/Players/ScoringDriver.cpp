@@ -36,8 +36,8 @@ int ScoringDriver() {
 	//player1->firstConquest();
 	for (int i = 0; i < player1->getOwnedRegions().size(); i++) {
 		cout << player1->getOwnedRegions()[i]->getNbTokens() << endl;
-		cout << player1->getOwnedRegions()[i]->getOwnershipStatus() << endl;
-		cout << player1->getOwnedRegions()[i]->getOwner() << endl;
+	//	cout << player1->getOwnedRegions()[i]->getOwnershipStatus() << endl;
+	//	cout << player1->getOwnedRegions()[i]->getOwner() << endl;
 	}
 
 	//player1->attackTerritory(region);
