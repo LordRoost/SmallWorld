@@ -16,9 +16,6 @@ void PlayGame::startGame(){
     gameMap.getAllBorders();
     setNumberOfPlayers();
     addPiecesToWells();
-    
-    MapRegion *m=&gameMap.getMap()[1];
-    gameMap.getAdgacentTerritories(m);
 
 	//Make victory coins in bank
 	coinBank = CoinBank();
