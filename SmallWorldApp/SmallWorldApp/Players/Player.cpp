@@ -320,9 +320,15 @@ void Player::removeEnemyTokens(MapRegion *region) {
 		formerOwner->returnTokensToHand(region->getNbTokens()-1);
 		region->setNbTokens(0);
 
-		std::vector<MapRegion*> *tempVector = &formerOwner->getOwnedRegions();
+		std::vector<MapRegion*> *tempVector = &formerOwner->getOwnedRegions(); //???????
 		
-		cout << formerOwner->getOwnedRegions().size() << endl;
+		cout << "Number of regions owned " << formerOwner->getOwnedRegions().size() << endl;
+		for (int i = 0; i < formerOwner->getOwnedRegions().size(); i++) {
+			cout << "tempVector type " << (*tempVector)[i]->getType() << endl;
+			cout << "formerowner type " << formerOwner->getOwnedRegions()[i]->getType() << endl;
+			cout << "tempVector vertex " << (*tempVector)[i]->getIndexOfVertex() << endl;
+			cout << "formerowner vertex " << formerOwner->getOwnedRegions()[i]->getIndexOfVertex() << endl;
+		}
 
 		for (size_t i = 0; i < (*tempVector).size(); i++) {
 			if (region == (*tempVector)[i]) {
@@ -334,6 +340,7 @@ void Player::removeEnemyTokens(MapRegion *region) {
 			cout << "Vertexes: " << formerOwner->getOwnedRegions()[i]->getIndexOfVertex() << endl;
 			cout << "Nb Tokens: " << formerOwner->getOwnedRegions()[i]->getNbTokens() << endl;
 			cout << "Border? " << formerOwner->getOwnedRegions()[i]->getIsBorder() << endl;
+			cout << "Tokens in hand: " << formerOwner->getNbOfUsableTokens() << endl;
 		}
 		
 	}
