@@ -309,7 +309,7 @@ int Player::calculateAttackThreshold(MapRegion *region) {
 	}
 }
 
-//to be called after a successful attack CHECK CORRECTNESS IN ALL CASES
+//to be called after a successful attack
 void Player::removeEnemyTokens(MapRegion *region) {
 	
 	if (region->hasLostTribe()) {
@@ -320,29 +320,33 @@ void Player::removeEnemyTokens(MapRegion *region) {
 		formerOwner->returnTokensToHand(region->getNbTokens()-1);
 		region->setNbTokens(0);
 
-		std::vector<MapRegion*> *tempVector = &formerOwner->getOwnedRegions(); //???????
-		
-		cout << "Number of regions owned " << formerOwner->getOwnedRegions().size() << endl;
-		for (int i = 0; i < formerOwner->getOwnedRegions().size(); i++) {
-			cout << "tempVector type " << (*tempVector)[i]->getType() << endl;
-			cout << "formerowner type " << formerOwner->getOwnedRegions()[i]->getType() << endl;
-			cout << "tempVector vertex " << (*tempVector)[i]->getIndexOfVertex() << endl;
-			cout << "formerowner vertex " << formerOwner->getOwnedRegions()[i]->getIndexOfVertex() << endl;
-		}
+		//debugging methods
+		//for (int i = 0; i < formerOwner->getOwnedRegions().size(); i++) {
+		//	cout << "formerowner type " << formerOwner->getOwnedRegions()[i]->getType() << endl;
+		//	cout << "formerowner vertex " << formerOwner->getOwnedRegions()[i]->getIndexOfVertex() << endl;
+		//}
 
-		for (size_t i = 0; i < (*tempVector).size(); i++) {
-			if (region == (*tempVector)[i]) {
+		formerOwner->removeOwnedRegion(region);
 
-				tempVector->erase(tempVector->begin() + i); //remove the region from former owner's owned
-			}
-		}
+		//debugging methods
+		/*cout << "Number of regions owned by former owner " << formerOwner->getOwnedRegions().size() << endl;
 		for (int i = 0; i < formerOwner->getOwnedRegions().size(); i++) {
 			cout << "Vertexes: " << formerOwner->getOwnedRegions()[i]->getIndexOfVertex() << endl;
 			cout << "Nb Tokens: " << formerOwner->getOwnedRegions()[i]->getNbTokens() << endl;
 			cout << "Border? " << formerOwner->getOwnedRegions()[i]->getIsBorder() << endl;
-			cout << "Tokens in hand: " << formerOwner->getNbOfUsableTokens() << endl;
-		}
+		}*/
 		
+	}
+}
+
+void Player::removeOwnedRegion(MapRegion *region) {
+	
+	for (size_t i = 0; i < ownedRegions.size(); i++) {
+		if (region == ownedRegions[i]) {
+
+			ownedRegions.erase(ownedRegions.begin() + i); //remove the region from former owner's owned
+			//cout << "I am erasing at " << i << endl;
+		}
 	}
 }
 

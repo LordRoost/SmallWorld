@@ -53,6 +53,7 @@ public:
 	void redeploy();
 	int calculateAttackThreshold(MapRegion *region);
 	void removeEnemyTokens(MapRegion *region);
+	void removeOwnedRegion(MapRegion *region);
     void declineRace();
 
 	//various utility methods
