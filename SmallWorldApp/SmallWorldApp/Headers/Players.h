@@ -18,7 +18,10 @@ public:
 	//getters
 	DieRoller getDieRoller();
 	PowerBadge* getPowerBadge();
-	RaceToken getToken();
+	RaceToken getRaceToken();
+	races getCurrentRace();
+	races getDeclinedRace();
+	races getPreviouslyDeclinedRace();
 	std::list<VictoryCoin> getVictoryCoin1s(); 
 	std::list<VictoryCoin> getOtherCoins();
 	RaceBanner* getRacebanner();
@@ -26,17 +29,21 @@ public:
 	std::vector<MapRegion*> getOwnedRegions();
 	int getRedeployableTokens();
 	bool getIfClaimedWealthy();
+	bool getInDecline();
 
 	//setters
 	void setPowerBadge(PowerBadge *badge);
 	void setDieRoller(DieRoller *dice);
 	void setRaceToken(RaceToken tokens);
+	void setCurrentRace(races race);
+	void setDeclinedRace(races race);
+	void setPreviouslyDeclinedRace(races race);
 	void setRaceBanner(RaceBanner *banner);
 	void setNbOfUsableTokens(int tokenAmount);
 	void setRedeployableTokens(int amount);
 	void setIfClaimedWealthy(bool claim);
     void setInDecline(bool InDecline);
-    bool getInDecline();
+
 	
 	void addOwnedRegion(MapRegion *region);
 	void addVictoryCoin(VictoryCoin coins);
@@ -51,6 +58,7 @@ public:
 	void attackTerritory(MapRegion *region);
 	bool finalAttack(MapRegion *region);
 	void redeploy();
+	void readyTroops();
 	int calculateAttackThreshold(MapRegion *region);
 	void removeEnemyTokens(MapRegion *region);
 	void removeOwnedRegion(MapRegion *region);
@@ -73,7 +81,8 @@ private:
 	std::vector<MapRegion*> ownedRegions;
 	DieRoller *dice;
 	PowerBadge *currentBadge;
-	RaceToken currentRace, declinedRace;
+	RaceToken currentRaceToken, declinedRaceToken, previousDeclinedRaceToken;
+	races currentRace, declinedRace, previousDeclinedRace;
 	std::list<VictoryCoin> ownedOtherCoins;
 	std::list<VictoryCoin> owned1s;
 	RaceBanner *currentRaceBanner, *declinedRaceBanner;

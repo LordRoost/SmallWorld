@@ -9,7 +9,11 @@ Player::Player() {
 	lastAttack = false;
 	wealthyClaimed = false;
 	occupiedRegionCounter = 0;
-    inDecline=true;
+	redeployableTokens = 0;
+    inDecline = false;
+	previousDeclinedRace = RACE_NONE;
+	declinedRace = RACE_NONE;
+	currentRace = RACE_NONE;
 }
 
 bool Player::getInDecline(){
@@ -29,8 +33,20 @@ PowerBadge* Player::getPowerBadge() {
 	return currentBadge;
 }
 
-RaceToken Player::getToken() {
+RaceToken Player::getRaceToken() {
+	return currentRaceToken;
+}
+
+races Player::getCurrentRace() {
 	return currentRace;
+}
+
+races Player::getDeclinedRace() {
+	return declinedRace;
+}
+
+races Player::getPreviouslyDeclinedRace() {
+	return previousDeclinedRace;
 }
 
 std::list<VictoryCoin> Player::getVictoryCoin1s() {
@@ -72,11 +88,27 @@ void Player::setDieRoller(DieRoller *die) {
 }
 
 void Player::setRaceToken(RaceToken tokens) {
-	currentRace = tokens;
+	currentRaceToken = tokens;
+}
+
+void Player::setCurrentRace(races race) {
+	currentRace = race;
+}
+
+void Player::setDeclinedRace(races race) {
+	declinedRace = race;
+}
+
+void Player::setPreviouslyDeclinedRace(races race) {
+	previousDeclinedRace = race;
 }
 
 void Player::setRaceBanner(RaceBanner *banner) {
 	currentRaceBanner = banner;
+	if (banner == NULL)
+		setCurrentRace(RACE_NONE);
+	else
+		setCurrentRace(banner->getRace());
 }
 
 void Player::setNbOfUsableTokens(int tokenAmount) {
@@ -169,7 +201,7 @@ void Player::conquers() { //Need to make sure cant attack previously attacked te
 
 		attackTerritory(adjTerritory);
 	}
-    
+	lastAttack = false;
 	redeploy();
 }
 
@@ -216,7 +248,8 @@ void Player::attackTerritory(MapRegion *region) { //should have user confirm att
 	}
 	removeEnemyTokens(region);
 	region->setOwner(this);
-	region->addRaceTokens(this->getToken(), attackingAmount);
+	region->setRaceOfOccupants(this->getCurrentRace());
+	region->addRaceTokens(this->getRaceToken(), attackingAmount);
 	addOwnedRegion(region);
 
 	//cout << "NbOfTokens: " << region->getNbTokens() << endl;
@@ -235,9 +268,24 @@ bool Player::finalAttack(MapRegion *region) {
 	return false;
 }
 
+void Player::readyTroops() {
+	std::cout << "Readying troops" << std::endl;
+	
+	int temp = 0;
+
+	for (size_t i = 0; i < getOwnedRegions().size(); i++) {
+		temp = (getOwnedRegions()[i]->getNbTokens()) - 1;
+		getOwnedRegions()[i]->setNbTokens(1);
+		redeployableTokens += temp;
+	}
+	redeployableTokens += getNbOfUsableTokens();
+	setNbOfUsableTokens(redeployableTokens);
+	redeployableTokens = 0;
+}
+
 //Lets a player redeploy their tokens
 void Player::redeploy() {
-	std::cout << "Redeployment phase" << endl;
+	std::cout << "Redeployment phase" << std::endl;
 	int temp = 0;
 	int responseRegion, responseAdd;
 
@@ -279,7 +327,7 @@ void Player::redeploy() {
 						else
 							bogusInputs = false;
 					}
-					getOwnedRegions()[i]->addRaceTokens(this->getToken(), responseAdd); 
+					getOwnedRegions()[i]->addRaceTokens(this->getRaceToken(), responseAdd); 
 					redeployableTokens -= responseAdd;
 					breakFree = true;
 					stuffHappened = true;
@@ -298,13 +346,11 @@ int Player::calculateAttackThreshold(MapRegion *region) {
 
 	if (region->hasLostTribe()) {
 		int threshold = 3 + region->getDefensiveStructures().size(); 
-		//cout << threshold << " tribes"<<endl; //debugging methods
 		return threshold;
 	}
 	else
 	{
 		int threshold = region->getNbTokens() + 2 + region->getDefensiveStructures().size(); 
-		//cout << threshold << " not tribes" <<endl; //debugging methods
 		return threshold;
 	}
 }
@@ -320,21 +366,7 @@ void Player::removeEnemyTokens(MapRegion *region) {
 		formerOwner->returnTokensToHand(region->getNbTokens()-1);
 		region->setNbTokens(0);
 
-		//debugging methods
-		//for (int i = 0; i < formerOwner->getOwnedRegions().size(); i++) {
-		//	cout << "formerowner type " << formerOwner->getOwnedRegions()[i]->getType() << endl;
-		//	cout << "formerowner vertex " << formerOwner->getOwnedRegions()[i]->getIndexOfVertex() << endl;
-		//}
-
 		formerOwner->removeOwnedRegion(region);
-
-		//debugging methods
-		/*cout << "Number of regions owned by former owner " << formerOwner->getOwnedRegions().size() << endl;
-		for (int i = 0; i < formerOwner->getOwnedRegions().size(); i++) {
-			cout << "Vertexes: " << formerOwner->getOwnedRegions()[i]->getIndexOfVertex() << endl;
-			cout << "Nb Tokens: " << formerOwner->getOwnedRegions()[i]->getNbTokens() << endl;
-			cout << "Border? " << formerOwner->getOwnedRegions()[i]->getIsBorder() << endl;
-		}*/
 		
 	}
 }
@@ -351,37 +383,47 @@ void Player::removeOwnedRegion(MapRegion *region) {
 }
 
 void Player::declineRace(){
-    
-    inDecline=true;
-    declinedRace=currentRace;
-    declinedRaceBanner=currentRaceBanner;
-    currentBadge=NULL;
+
+	cout << "Declining " << this->getRacebanner()->getName() <<endl;
+
+	for (std::vector<int>::size_type i = 0; i < ownedRegions.size(); i++) {
+		MapRegion* tempRegion = ownedRegions[i];
+
+		//Take out previous declined race
+		if (declinedRace == tempRegion->getRaceOfOccupants()) {
+			tempRegion->setOwnershipStatus(false);
+			tempRegion->setOwner(NULL);
+			tempRegion->setNbTokens(0);
+			ownedRegions.erase(ownedRegions.begin() + i);
+		}
+		else
+			tempRegion->setNbTokens(1);
+	}
+
+    inDecline = true;
+	if (declinedRace != RACE_NONE) {
+		previousDeclinedRace = declinedRace;
+	}
+	setDeclinedRace(currentRace);
+    declinedRaceToken = currentRaceToken;
+    declinedRaceBanner = currentRaceBanner;
+	currentRace = RACE_NONE;
+    setPowerBadge(NULL);
     setRaceBanner(NULL);
-    
-    for (std::vector<int>::size_type i = 0; i != ownedRegions.size(); i++) {
-        MapRegion* pointer = ownedRegions[i];
-        
-        //Take out previous declined race
-        if(declinedRace.getRace()==pointer->getRaceToken().getRace()){
-            pointer->setOwnershipStatus(false);
-            pointer->setOwner(NULL);
-            pointer->setNbTokens(0);
-            ownedRegions.erase(ownedRegions.begin()+i);
-        }
-        pointer->setNbTokens(1);
-    
-    }
+
+	cout << "Decline end" << endl;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void Player::scores(CoinBank *bank) { //Later need to add how it is affected by powers 
+void Player::scores(CoinBank *bank) { 
 	bank->deal1s(this, ownedRegions.size());
 	std::cout << "You have scored " << ownedRegions.size() << " points from your regions this turn." << std::endl;
 
 	int bonusCoins;
 
-	switch (getPowerBadge()->getPower()) {
+	if (this->inDecline == false) {
+		switch (getPowerBadge()->getPower()) {
 		case POWER_ALCHEMIST:
 			bank->deal1s(this, ALCHEMIST_NUM_COINS);
 			std::cout << "You have scored " << ALCHEMIST_NUM_COINS << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
@@ -395,7 +437,7 @@ void Player::scores(CoinBank *bank) { //Later need to add how it is affected by 
 				}
 			}
 			bank->deal1s(this, bonusCoins);
-			std::cout << "You have scored " << bonusCoins<< " extra coins from your " << getPowerBadge()->getPowerName() <<" power!" << endl;
+			std::cout << "You have scored " << bonusCoins << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
 			break;
 
 		case POWER_HILL:
@@ -439,8 +481,8 @@ void Player::scores(CoinBank *bank) { //Later need to add how it is affected by 
 			break;
 		default:
 			break;
+		}
 	}
-		
 	std::cout << "You have " << this->getVictoryCoin1s().size() << " total coins" << std::endl;
 }
 

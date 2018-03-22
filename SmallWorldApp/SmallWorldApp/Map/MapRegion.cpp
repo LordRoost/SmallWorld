@@ -15,6 +15,7 @@ MapRegion::MapRegion() {
     isBorder=false;
 	mountainPiece = NULL;
 	nbOfTokens = 0;
+	raceOfOccupants = RACE_NONE;
 }
 
 MapRegion::MapRegion(string s, int _indexOfVertex) {
@@ -27,7 +28,8 @@ MapRegion::MapRegion(string s, int _indexOfVertex) {
 	isOwned = false;
     indexOfVertex=_indexOfVertex;
 	nbOfTokens = 0;
-    
+	raceOfOccupants = RACE_NONE;
+
     if((rand() % 100) < 40){
         isBorder=true;
     }
@@ -57,6 +59,7 @@ MapRegion::MapRegion(regionTypes _type) {
 	isOwned = false;
     isBorder=false;
 	nbOfTokens = 0;
+	raceOfOccupants = RACE_NONE;
 }
 
 
@@ -99,6 +102,10 @@ RaceToken MapRegion::getRaceToken() {
 
 int MapRegion::getNbTokens() {
 	return nbOfTokens;
+}
+
+races MapRegion::getRaceOfOccupants() {
+	return raceOfOccupants;
 }
 
 LostTribeToken* MapRegion::getLostTribeToken() {
@@ -144,6 +151,10 @@ void MapRegion::setLostTribeToken(LostTribeToken *tribe) {
 
 void MapRegion::setIsBorder(bool _isBorder){
     isBorder=_isBorder;
+}
+
+void MapRegion::setRaceOfOccupants(races occupantRace) {
+	raceOfOccupants = occupantRace;
 }
 
 void MapRegion::addRaceTokens(RaceToken race, int amount) {

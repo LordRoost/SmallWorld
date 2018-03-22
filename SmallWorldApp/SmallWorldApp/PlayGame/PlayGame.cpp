@@ -28,8 +28,8 @@ void PlayGame::startGame(){
 	coinBank = CoinBank();
 	
 	//Give players 5 victory coins of value 1
-	for (std::vector<int>::size_type i = 0; i != players.size(); i++) {
-	Player * pointer = &players[i];
+	for (std::vector<int>::size_type i = 0; i < players.size(); i++) {
+	Player *pointer = &players[i];
 	coinBank.startingDeal(pointer);
 	
 	}
@@ -39,8 +39,8 @@ void PlayGame::startGame(){
 
 void PlayGame::firstTurn(){
     
-    for (std::vector<int>::size_type i = 0; i != players.size(); i++) {
-        Player * pointer = &players[i];
+    for (std::vector<int>::size_type i = 0; i < players.size(); i++) {
+        Player *pointer = &players[i];
         pointer->picks_race(decks);
         pointer->conquers();
         pointer->scores(&coinBank);
@@ -53,9 +53,12 @@ void PlayGame::firstTurn(){
 void PlayGame::followingTurns(){
     
     while(turnMarker.getTurnNumber()<=TOTAL_NUM_TURNS){
-        for (std::vector<int>::size_type i = 0; i != players.size(); i++) {
-            Player * pointer = &players[i];
+		std::cout << "Turn " << turnMarker.getTurnNumber()+1 << std::endl;
+        for (std::vector<int>::size_type i = 0; i < players.size(); i++) {
+            Player *pointer = &players[i];
             
+			//cout << "Nb of Regions " << pointer->getOwnedRegions().size() << endl;
+			//cout << "Race Banner of player " << pointer->getRacebanner()->getName() << endl;
             cout<<"Do you want to decline your race?(y or n)"<<endl;
             string yorn;
             cin>>yorn;
@@ -63,11 +66,12 @@ void PlayGame::followingTurns(){
                 pointer->declineRace();
             }
             else{
+				pointer->readyTroops();
                 pointer->conquers();
             }
-        
+
             pointer->scores(&coinBank);
-            
+
         }
         
         turnMarker.nextTurn();
