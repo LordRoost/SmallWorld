@@ -9,10 +9,12 @@
 #include "Game.h"
 #include "Map.h"
 #include "PlayGame.h"
+#include "AI.h"
 
 class Player {
 public:	
 	Player();
+    Player(AI* aiStrategy);
 	~Player() {}
 
 	//getters
@@ -30,6 +32,7 @@ public:
 	int getRedeployableTokens();
 	bool getIfClaimedWealthy();
 	bool getInDecline();
+    AI* getAIStrategy();
 
 	//setters
 	void setPowerBadge(PowerBadge *badge);
@@ -91,7 +94,7 @@ private:
     int redeployableTokens;
     bool wealthyClaimed;
     bool inDecline;
+    AI* aiStrategy;
 };
-
 
 #endif //__PLAYERS_H__

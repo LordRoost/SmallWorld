@@ -17,6 +17,26 @@ Player::Player() {
 	choiceOfRegion = NULL;
 }
 
+//Player constructor
+Player::Player(AI* _aiStrategy) {
+    dice = new DieRoller();
+    declinedRaceBanner = NULL;
+    lastAttack = false;
+    wealthyClaimed = false;
+    occupiedRegionCounter = 0;
+    redeployableTokens = 0;
+    inDecline = false;
+    previousDeclinedRace = RACE_NONE;
+    declinedRace = RACE_NONE;
+    currentRace = RACE_NONE;
+    choiceOfRegion = NULL;
+    aiStrategy=_aiStrategy;
+}
+
+AI* Player::getAIStrategy(){
+    return aiStrategy;
+}
+
 bool Player::getInDecline(){
     return inDecline;
 }
