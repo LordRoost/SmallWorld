@@ -86,6 +86,8 @@ void Map::createMap() {
 //load map
 //first line is creating tiles(vertices)
 //second line is creating edges that connect vertices
+//line 3 is border or not
+//line 4 is lost tribe or not
 void Map::loadMap(string filename) {
 	string line;
 	ifstream file(filename.c_str());
@@ -119,7 +121,7 @@ void Map::loadMap(string filename) {
                     g[tile]->setLostTribeToken(pointer);
                 }
 			}
-			else {
+			else if(lineNb == 1) {
 
 				//vector to store both sides of "-"
 				vector<int> edge;
@@ -154,7 +156,7 @@ void Map::loadMap(string filename) {
                 g[tile]->setLostTribeToken(pointer);
             }
 		}
-		else {
+		else if (lineNb == 1){
 
 			vector<int> edge2;
 
@@ -288,6 +290,7 @@ bool Map::addMountainorLostTribe(string regionType){
 
 void Map::getAdgacentTerritories(MapRegion *region){
     
+	adgacentMapRegions.clear();
     AdjacencyIterator ai, a_end;
 
     MapRegion *pointer;
@@ -298,7 +301,7 @@ void Map::getAdgacentTerritories(MapRegion *region){
     for (; ai != a_end; ai++) {
         std::cout << *ai << "\t";
         pointer=g[*ai];
-        //adgacentMapRegions.push_back(pointer);
+        adgacentMapRegions.push_back(pointer);
     }
     
     cout<<endl;

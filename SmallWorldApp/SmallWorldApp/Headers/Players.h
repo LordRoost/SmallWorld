@@ -55,7 +55,7 @@ public:
 	void scores(CoinBank *bank); //allows a player to get points for their turn
 
 	void firstConquest();
-	void attackTerritory(MapRegion *region);
+	int attackTerritory(MapRegion *region);
 	bool finalAttack(MapRegion *region);
 	void redeploy();
 	void readyTroops();

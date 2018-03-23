@@ -14,6 +14,7 @@ Player::Player() {
 	previousDeclinedRace = RACE_NONE;
 	declinedRace = RACE_NONE;
 	currentRace = RACE_NONE;
+	choiceOfRegion = NULL;
 }
 
 bool Player::getInDecline(){
@@ -163,8 +164,8 @@ void Player::picks_race(RacePicker *picker) {
 
 extern Map gameMap;
 
-void Player::conquers() { //Need to make sure cant attack previously attacked territories
-	occupiedRegionCounter = 0;
+void Player::conquers() { 
+	occupiedRegionCounter = 0; //counter to see if the region was previously occupied and how many a player conquered in a turn
 	vertex_t theChoice;
 
 	if (this->getOwnedRegions().size() == 0 || inDecline) {
@@ -173,33 +174,51 @@ void Player::conquers() { //Need to make sure cant attack previously attacked te
 	}
 	
 	while (nbOfUseableTokens > 0 && lastAttack == false) {
+		vector<int> tempVector;
 		std::cout << "Choose a territory to attack: " << std::endl;
-
-	/*	gameMap.getAdgacentTerritories(choiceOfRegion);
-		vector<MapRegion*> adjacent = gameMap.adgacentMapRegions;
-		
-		for (int i = 0; i < adjacent.size(); i++) {
-			std::cout << i << " ";
-			
-		}
-		
-		std::cout << std::endl;
-		std::cin >> theChoice;
-		MapRegion * adjTerritory = adjacent[theChoice];
-		choiceOfRegion = adjTerritory;
-			
-		attackTerritory(adjTerritory);*/
 
 		gameMap.getAdgacentTerritories(choiceOfRegion);
 
 		std::cout << std::endl;
-		std::cin >> theChoice;
+
+		for (size_t i = 0; i < gameMap.adgacentMapRegions.size(); i++) {
+			tempVector.push_back(gameMap.adgacentMapRegions[i]->getIndexOfVertex());
+		}
+
+		bool breakFree = false;
+
+		bool stuffHappened = false;
+
+		while (breakFree == false) {
+			std::cin >> theChoice;
+			for (size_t i = 0; i < tempVector.size(); i++) {
+				if (theChoice == tempVector[i]) {
+					Graph tempGraph = *gameMap.getGraph();
+					MapRegion *adjTerritory = tempGraph[theChoice];
+
+					choiceOfRegion = adjTerritory;
+
+					if (attackTerritory(adjTerritory) == -1) { //If there were issues with attacking
+						break;
+					}
+
+					breakFree = true;
+					stuffHappened = true;
+					break;
+				}
+			}
+			if (stuffHappened == false)
+				std::cout << "Please enter a correct region." << std::endl;
+		}
+
+		/*
 		Graph tempGraph = *gameMap.getGraph();
 		MapRegion *adjTerritory = tempGraph[theChoice];
         
 		choiceOfRegion = adjTerritory; 
 
 		attackTerritory(adjTerritory);
+		*/
 	}
 	lastAttack = false;
 	redeploy();
@@ -209,15 +228,44 @@ void Player::conquers() { //Need to make sure cant attack previously attacked te
 void Player::firstConquest() { //what if firstconquest is also last??
 
 	int playerChoice;
+	std::vector<int> tempVector;
+
 	std::cout << "Select a territory to attack. Your first attack must be on a region that is a border: (Enter the number)" << std::endl;
 
 	for (size_t i = 0; i < gameMap.borderRegions.size(); i++) {
-
+		tempVector.push_back(gameMap.borderRegions[i]->getIndexOfVertex());
 		std::cout << gameMap.borderRegions[i]->getIndexOfVertex() << " ";
 	}
 	
 	std::cout << std::endl;
-	std::cin >> playerChoice;
+
+	bool breakFree = false;
+
+	bool stuffHappened = false;
+
+	while (breakFree == false) {
+		std::cin >> playerChoice;
+		for (size_t i = 0; i < tempVector.size(); i++) {
+			if (playerChoice == tempVector[i]) {
+				Graph tempGraph = *gameMap.getGraph();
+				MapRegion *borderTerritory = tempGraph[playerChoice];
+
+				choiceOfRegion = borderTerritory;
+
+				if (attackTerritory(borderTerritory) == -1) { //If there were issues with attacking
+					break;
+				}
+
+				breakFree = true;
+				stuffHappened = true;
+				break;
+			}
+		}
+		if (stuffHappened == false)
+			std::cout << "Please enter a correct region. It must be a border." << std::endl;
+	}
+
+	/*
 	Graph tempGraph = *gameMap.getGraph();
 	MapRegion *borderTerritory = tempGraph[playerChoice];
     //MapRegion *borderTerritory = &gameMap.getMap()[playerChoice];
@@ -225,20 +273,26 @@ void Player::firstConquest() { //what if firstconquest is also last??
 	choiceOfRegion = borderTerritory;
 
 	attackTerritory(borderTerritory);
+	*/
 }
 
-void Player::attackTerritory(MapRegion *region) { //should have user confirm attacks or something somewhere
+int Player::attackTerritory(MapRegion *region) { //should have user confirm attacks or something somewhere
 	
+	if (region->getOwner() == this) {
+		std::cout << "You can't attack your own regions! Please enter another region!" << std::endl;
+		return -1;
+	}
+
 	int attackingAmount = calculateAttackThreshold(region);
 
 	if (nbOfUseableTokens == 0) {
 		std::cout << "Something went wrong, you shouldn't be here, you can't attack with no tokens" << std::endl;
-		return;
+		return -1;
 	}
 	else if (nbOfUseableTokens < attackingAmount) {
-		if (finalAttack(region) == false) {
+		if (finalAttack(region) == false) { //if the dice roll failed
 			std::cout << "You have failed your attack on this region." << std::endl;
-			return;
+			return 0;
 		}
 	}
 
@@ -255,13 +309,16 @@ void Player::attackTerritory(MapRegion *region) { //should have user confirm att
 	//cout << "NbOfTokens: " << region->getNbTokens() << endl;
 
 	std::cout << "You have " << calculateCurrentNbUsableTokens(attackingAmount) << " " << getRacebanner()->getName() << " tokens left to attack with." << std::endl;	
+	return 1;
 }
 
 //method for the dice roll attack of the conquering phase
 bool Player::finalAttack(MapRegion *region) {
+	int result = dice->rollDice();
 
+	std::cout << "You have rolled the dice. Your result is: " << result << std::endl;
 	lastAttack = true;
-	if (dice->rollDice() + nbOfUseableTokens > calculateAttackThreshold(region)) {
+	if (result + nbOfUseableTokens > calculateAttackThreshold(region)) {
 		return true;
 	}
 
