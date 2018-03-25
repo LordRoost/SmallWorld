@@ -33,6 +33,7 @@ struct RaceInfo {
 	std::string raceName;
 	int amountTokensReceived;
 	int totalAmount;
+    int aggressivePoint;
 };
 
 
@@ -40,6 +41,7 @@ struct PowerInfo {
 	powers power;
 	std::string powerName;
 	int amountTokensReceived;
+    int aggressivePoint;
 };
 
 class Token {
@@ -107,12 +109,14 @@ public:
 	int getAmountTokensReceived();
 	void setAmountTokensReceived(int tokens);
 	void decline();
+    int getAggressivePoint();
 
 private:
 	bool isActive;
 	std::string name;
 	int amountOfTokensReceived;
 	races race;
+    int aggressivePoint;
 };
 
 class RaceBannerDeck {
@@ -143,11 +147,13 @@ public:
 	void setPowerName(std::string newName);
 	int getAmountTokensReceived();
 	void setAmountTokensReceived(int tokens);
+    int getAggressivePoint();
 
 private:
 	powers power;
 	int amountTokensReceived;
 	std::string powerName;
+    int aggressivePoint;
 };
 
 class PowerBadgeDeck {

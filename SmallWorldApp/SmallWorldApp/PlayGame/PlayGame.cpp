@@ -95,10 +95,10 @@ void PlayGame::setNumberOfPlayers(){
     }
     
     cout<< "Number of players you entered is " << nbOfPlayers<<endl;
-    
+    moderateAI moderateai;
     for(int i=0; i<nbOfPlayers;i++)
     {
-        Player player=Player();
+        Player player=Player(&moderateai);
         players.push_back(player);
     }
 }

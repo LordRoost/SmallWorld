@@ -15,6 +15,7 @@ Player::Player() {
 	declinedRace = RACE_NONE;
 	currentRace = RACE_NONE;
 	choiceOfRegion = NULL;
+    aiStrategy=NULL;
 }
 
 //Player constructor
@@ -162,7 +163,13 @@ void Player::picks_race(RacePicker *picker) {
 	picker->printOptions();
 	std::cout << "Choose your race: " << std::endl;
 	int answer;
-	std::cin >> answer;
+    
+    if(aiStrategy==NULL){
+        std::cin >> answer;
+    }
+    else{
+        answer=aiStrategy->pickPowerRace(picker->getPickableRaces(),picker->getPickablePowers());
+    }
 
 	if ((answer != 1) && (answer != 2) && (answer != 3) && (answer != 4) && (answer != 5) && (answer != 6)) {
 		std::cout << "Please enter a number from 1 to 6" <<std::endl;

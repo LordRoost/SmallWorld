@@ -24,6 +24,23 @@ void RacePicker::setup() {
 	}
 
 }
+std::vector<RaceBanner*> RacePicker::getAllPickableRaces(){
+    std::vector<RaceBanner*> vector(MAX_NUMBER_PICKABLE_RACES);
+    
+    for(int i=0;i<MAX_NUMBER_PICKABLE_RACES;i++){
+        vector[i]=pickableRaces[i];
+    }
+    return vector;
+}
+
+std::vector<PowerBadge*> RacePicker::getAllPickablePowers(){
+    std::vector<PowerBadge*> vector(MAX_NUMBER_PICKABLE_POWERS);
+    
+    for(int i=0;i<MAX_NUMBER_PICKABLE_POWERS;i++){
+        vector[i]=pickablePowers[i];
+    }
+    return vector;
+}
 
 RaceBanner* RacePicker::getPickableRaces() {
 	return pickableRaces[0];
