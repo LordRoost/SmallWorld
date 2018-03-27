@@ -14,10 +14,10 @@ void PlayGame::startGame(){
     
     gameMap.selectMap(mapFilesPath);
     gameMap.getAllBorders();
+    
     setNumberOfPlayers();
-    addPiecesToWells();
-
-	
+	addPiecesToWells();
+    
 	std::cout << std::endl;
 
 	Graph tempGraph = *gameMap.getGraph();
@@ -95,10 +95,10 @@ void PlayGame::setNumberOfPlayers(){
     }
     
     cout<< "Number of players you entered is " << nbOfPlayers<<endl;
-    moderateAI moderateai;
+    
     for(int i=0; i<nbOfPlayers;i++)
     {
-        Player player=Player(&moderateai);
+        Player player=Player(new aggressiveAI());
         players.push_back(player);
     }
 }

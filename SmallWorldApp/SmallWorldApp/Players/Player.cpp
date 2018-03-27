@@ -19,7 +19,7 @@ Player::Player() {
 }
 
 //Player constructor
-Player::Player(AI* _aiStrategy) {
+Player::Player(AI *_aiStrategy) {
     dice = new DieRoller();
     declinedRaceBanner = NULL;
     lastAttack = false;
@@ -34,7 +34,7 @@ Player::Player(AI* _aiStrategy) {
     aiStrategy=_aiStrategy;
 }
 
-AI* Player::getAIStrategy(){
+AI *Player::getAIStrategy(){
     return aiStrategy;
 }
 
@@ -162,13 +162,14 @@ void Player::picks_race(RacePicker *picker) {
 	
 	picker->printOptions();
 	std::cout << "Choose your race: " << std::endl;
-	int answer;
+    int answer;
     
     if(aiStrategy==NULL){
         std::cin >> answer;
     }
     else{
-        answer=aiStrategy->pickPowerRace(picker->getPickableRaces(),picker->getPickablePowers());
+        cout<< aiStrategy->getName()<<endl;
+        answer=aiStrategy->pickPowerRace(picker->getAllPickableRaces(),picker->getAllPickablePowers());
     }
 
 	if ((answer != 1) && (answer != 2) && (answer != 3) && (answer != 4) && (answer != 5) && (answer != 6)) {
