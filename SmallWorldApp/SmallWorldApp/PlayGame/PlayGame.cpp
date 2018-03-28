@@ -12,8 +12,8 @@ TurnMarker PlayGame::getTurnMarker(){
 
 void PlayGame::startGame(){
     
-    gameMap.selectMap(mapFilesPath);
-    gameMap.getAllBorders();
+    //gameMap.selectMap(mapFilesPath);
+    //gameMap.getAllBorders();
     setNumberOfPlayers();
     addPiecesToWells();
 
@@ -101,6 +101,9 @@ void PlayGame::setNumberOfPlayers(){
         Player player=Player();
         players.push_back(player);
     }
+
+	gameMap.selectMap(nbOfPlayers);
+	gameMap.getAllBorders();
 }
 
 void PlayGame::addPiecesToWells(){

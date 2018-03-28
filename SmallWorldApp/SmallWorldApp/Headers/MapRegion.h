@@ -23,7 +23,7 @@ struct RegionInfo {
 	std::string regionName;
 };
 
-static const char * EnumRegionTypes[] = { "Forest", "Farmland", "Mountain","Hill","Swamp" };
+static const char * EnumRegionTypes[] = { "Forest", "Farmland", "Mountain", "Hill", "Swamp" };
 
 
 enum regionBonus {
@@ -46,6 +46,7 @@ public:
 	void addRaceTokens(RaceToken race, int amount);
 	//void addRaceToken(RaceToken *race);
 	void addDefensiveStructure(GamePiece piece);
+	void addLostTribeToken();
 	void setMountainPiece(MountainPiece *m);
 	void setRaceOfOccupants(races occupantRace);
 
@@ -62,6 +63,8 @@ public:
 
 	bool hasLostTribe();
     int getIndexOfVertex();
+	void setTribe(bool tribe);
+	bool getTribe();
 
 private:
 	string typeName;
@@ -77,6 +80,7 @@ private:
 
     int indexOfVertex;
     bool isBorder;
+	bool hasTribe;
 	MountainPiece *mountainPiece;
 };
 

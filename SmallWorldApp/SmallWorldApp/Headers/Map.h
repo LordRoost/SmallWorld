@@ -30,13 +30,18 @@ public:
 	Graph* getGraph();
     static void getListOfMaps(const string& path);
     void selectMap(string path);
+	void selectMap(int nbOfPlayers);
     bool addMountainorLostTribe(string regionType);
 	void getAdgacentTerritories(MapRegion *region);
     //vector<MapRegion*> getAllBorders();
 	void getAllBorders();
+	void setBorders();
+	void setLostTribe();
 
 	vector<MapRegion*> borderRegions;
 	vector<MapRegion*> adgacentMapRegions;
+	std::deque<std::string> bordersInputs;
+	std::deque<std::string> lostTribesInputs;
 
 private:
 	Graph g;
