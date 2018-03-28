@@ -218,7 +218,13 @@ void Player::conquers() {
 		bool stuffHappened = false;
 
 		while (breakFree == false) {
-			std::cin >> theChoice;
+            
+            if(aiStrategy==NULL){
+                std::cin >> theChoice;
+            }
+            else{
+                theChoice=aiStrategy->aiConquers(this, gameMap.adgacentMapRegions);
+            }
 			for (size_t i = 0; i < tempVector.size(); i++) {
 				if (theChoice == tempVector[i]) {
 					Graph tempGraph = *gameMap.getGraph();
@@ -272,7 +278,13 @@ void Player::firstConquest() { //what if firstconquest is also last??
 	bool stuffHappened = false;
 
 	while (breakFree == false) {
-		std::cin >> playerChoice;
+        if(aiStrategy==NULL){
+            std::cin >> playerChoice;
+        }
+        else{
+            playerChoice=aiStrategy->aiConquers(this, gameMap.borderRegions);
+        }
+        
 		for (size_t i = 0; i < tempVector.size(); i++) {
 			if (playerChoice == tempVector[i]) {
 				Graph tempGraph = *gameMap.getGraph();

@@ -98,7 +98,15 @@ void PlayGame::setNumberOfPlayers(){
     
     for(int i=0; i<nbOfPlayers;i++)
     {
-        Player player=Player(new aggressiveAI());
+        Player player;
+        if(i==0){
+            player=Player();
+        }
+        else{
+            player=Player(new randomAI());
+        }
+        
+        
         players.push_back(player);
     }
 }
