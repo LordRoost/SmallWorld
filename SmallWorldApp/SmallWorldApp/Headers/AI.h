@@ -221,7 +221,8 @@ public:
     
     //Picks randomly the power and race combo
     int pickPowerRace(vector <RaceBanner*> races,vector <PowerBadge*> powers)override{
-        return (rand() % 6)+1;
+        int randomPick=(rand() % 6)+1;
+        return randomPick;
     }
     
     //Picks region to conquer randomly
@@ -239,12 +240,13 @@ public:
         
         std::sort(tempVector.begin(),tempVector.end());
         
-        int randomChoice=(rand() % tempVector.size());
+        int nbChoices=tempVector.size();
+       
+        int randomChoice=(rand() % nbChoices);
         
-        cout<<"random ai chose  "<<randomChoice<<endl;
+        cout<<"random ai chose  "<<tempVector[randomChoice]<<endl;
         
         return tempVector[randomChoice];
-        
        
     }
     
