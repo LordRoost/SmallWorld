@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <iostream>
 #include <list>
+#include <stack>
 #include "Dice.h"
 #include "Tokens.h"
 #include "Game.h"
@@ -12,11 +13,14 @@
 #include "PlayGame.h"
 #include "Players.h"
 
+extern Map gameMap;
+
 class AI{
 public:
 
     virtual int pickPowerRace(vector <RaceBanner*> races,vector <PowerBadge*> powers)=0;
-    virtual int aiConquers(Player* aiPlayer,vector<MapRegion*> borders)=0;
+    virtual int aiConquers(Player* aiPlayer,vector<MapRegion*> regions)=0;
+    virtual vector<stack<int>> aiRedeploy(Player* aiPlayer,int redeployabeTokens, vector<MapRegion*> regions)=0;
     virtual string getName(){return name;}
 
 private:
@@ -80,6 +84,47 @@ public:
         }
         
         return 0;
+    }
+    
+    //all in one place: where theres the most enemy tokens
+    vector<stack<int>> aiRedeploy(Player* aiPlayer,int redeployableTokens, vector<MapRegion*> regions)override{
+        stack<int> nbTokens;
+        stack<int> theRegions;
+        
+        vector<int> enemyTokensOfAllRegions;
+        
+        int mostEnemyTokens=0;
+        
+        int answerRegionIndex;
+        
+        int nbRegions=regions.size();
+        
+        for(int i=0;i<nbRegions;i++){
+            gameMap.getAdgacentTerritories(regions[i]);
+            int totEnemyTokens=0;
+            
+            for(int j=0;j<gameMap.adgacentMapRegions.size();j++){
+                if(aiPlayer!=gameMap.adgacentMapRegions[j]->getOwner()){
+                    totEnemyTokens+=gameMap.adgacentMapRegions[j]->getNbTokens();
+                }
+            }
+            
+            cout<<"Index: "<<regions[i]->getIndexOfVertex()<<" has "<<totEnemyTokens<<"enemy tokens around it"<<endl;
+            
+            if(mostEnemyTokens<=totEnemyTokens){
+                mostEnemyTokens=totEnemyTokens;
+                answerRegionIndex=regions[i]->getIndexOfVertex();
+            }
+        }
+        theRegions.push(answerRegionIndex);
+        nbTokens.push(redeployableTokens);
+        
+        vector<stack<int>> answers;
+        answers.push_back(theRegions);
+        answers.push_back(nbTokens);
+        
+        return answers;
+        
     }
     
     string getName()override{return name;}
@@ -146,7 +191,36 @@ public:
         return 0;
     }
     
-    string getName()override{return name;};
+    //equal amount of tokens for every owned regions
+    vector<stack<int>> aiRedeploy(Player* aiPlayer,int redeployableTokens, vector<MapRegion*> regions)override{
+        stack<int> nbTokens;
+        stack<int> theRegions;
+        
+        int nbRegions=regions.size();
+        int equalTokens=redeployableTokens/nbRegions;
+        int modulo=redeployableTokens%nbRegions;
+        
+        for(int i=0;i<nbRegions;i++){
+            theRegions.push(regions[i]->getIndexOfVertex());
+            
+            if(modulo>0){
+                nbTokens.push(equalTokens+1);
+                --modulo;
+            }
+            else{
+                nbTokens.push(equalTokens);
+            }
+        }
+        
+        vector<stack<int>> answers;
+        answers.push_back(theRegions);
+        answers.push_back(nbTokens);
+        
+        return answers;
+        
+    }
+    
+    string getName()override{return name;}
 private:
     string name="defensive AI is thinking";
 };
@@ -221,7 +295,8 @@ public:
     
     //Picks randomly the power and race combo
     int pickPowerRace(vector <RaceBanner*> races,vector <PowerBadge*> powers)override{
-        return (rand() % 6)+1;
+        int randomPick=(rand() % 6)+1;
+        return randomPick;
     }
     
     //Picks region to conquer randomly
@@ -239,12 +314,13 @@ public:
         
         std::sort(tempVector.begin(),tempVector.end());
         
-        int randomChoice=(rand() % tempVector.size());
+        int nbChoices=tempVector.size();
+       
+        int randomChoice=(rand() % nbChoices);
         
-        cout<<"random ai chose  "<<randomChoice<<endl;
+        cout<<"random ai chose  "<<tempVector[randomChoice]<<endl;
         
         return tempVector[randomChoice];
-        
        
     }
     

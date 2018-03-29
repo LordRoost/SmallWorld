@@ -101,10 +101,10 @@ void PlayGame::setNumberOfPlayers(){
     {
         Player player;
         if(i==0){
-            player=Player();
+            player=Player(new defensiveAI());
         }
         else{
-            player=Player(new randomAI());
+            player=Player(new aggressiveAI());
         }
         
         

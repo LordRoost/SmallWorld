@@ -417,6 +417,16 @@ void Player::redeploy() {
 		int temp = 0;
 		//int responseRegion, responseAdd;
 		setRedeployableTokens(0);
+	redeployableTokens += getNbOfUsableTokens();
+	setNbOfUsableTokens(0);
+    
+    vector<stack<int>> answers;
+    
+    if(aiStrategy!=NULL){
+        cout<<endl;
+        answers=aiStrategy->aiRedeploy(this,redeployableTokens, getOwnedRegions());
+        cout<<endl;
+    }
 
 		for (size_t i = 0; i < getOwnedRegions().size(); i++) {
 			temp = (getOwnedRegions()[i]->getNbTokens()) - 1;
@@ -428,6 +438,55 @@ void Player::redeploy() {
 
 		deployment(redeployableTokens);
 
+		while (breakFree == false) {
+            
+            if(aiStrategy==NULL){
+                std::cin >> responseRegion;
+            }
+            else{
+                cout<<aiStrategy->getName()<<" about region to redeploy"<<endl;
+                cout<<"Region with vertex "<<answers[0].top()<<endl;
+                responseRegion=answers[0].top();
+                answers[0].pop();
+            }
+            
+			for (size_t i = 0; i < getOwnedRegions().size(); i++) {
+				if (responseRegion == getOwnedRegions()[i]->getIndexOfVertex()) {
+					std::cout << "Enter the number of tokens that you want to add here: " << std::endl;
+                    
+                    if(aiStrategy==NULL){
+                        std::cin >> responseAdd;
+                    }
+                    else{
+                        cout<<aiStrategy->getName()<<" about number of tokens to redeploy"<<endl;
+                        cout<<"This amount of tokens: "<<answers[1].top()<<endl;
+                        responseAdd=answers[1].top();
+                        answers[1].pop();
+                    }
+
+					while (bogusInputs) {
+						if (responseAdd > redeployableTokens) {
+							std::cout << "Please enter a number that isn't bigger than the amount of tokens you have to redistribute!" << std::endl;
+							std::cin >> responseAdd;
+						}
+						else if (responseAdd < 0) {
+							std::cout << "Oh no!! What is you doing! Do not enter negative numbers!" << std::endl;
+							std::cin >> responseAdd;
+						}
+						else
+							bogusInputs = false;
+					}
+					getOwnedRegions()[i]->addRaceTokens(this->getRaceToken(), responseAdd); 
+					redeployableTokens -= responseAdd;
+					breakFree = true;
+					stuffHappened = true;
+					break;
+				}
+			}
+			if(stuffHappened == false)
+				std::cout << "Please enter a correct region." << std::endl;
+		}
+		
 	}
 	else {
 		std::cout << "please enter y or n!" << std::endl;
