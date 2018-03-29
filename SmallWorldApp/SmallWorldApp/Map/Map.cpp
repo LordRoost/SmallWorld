@@ -115,11 +115,11 @@ void Map::loadMap(string filename) {
 				int index = tile & INT_MAX;
 				g[tile] = new MapRegion(token, index);
                 
-                if(addMountainorLostTribe(token)){
-                    LostTribeToken LostTribe= LostTribeToken();
-                    LostTribeToken* pointer=&LostTribe;
-                    g[tile]->setLostTribeToken(pointer);
-                }
+                //if(addMountainorLostTribe(token)){
+                //    LostTribeToken LostTribe= LostTribeToken();
+                //    LostTribeToken* pointer=&LostTribe;
+                //    g[tile]->setLostTribeToken(pointer);
+                //}
 			}
 			else if(lineNb == 1) {
 
@@ -142,6 +142,12 @@ void Map::loadMap(string filename) {
 
 				add_edge(edge[0], edge[1], g);
 			}
+			else if (lineNb == 2) {
+				bordersInputs.push_back(token); 
+			}
+			else if (lineNb == 3) {
+				lostTribesInputs.push_back(token); 
+			}
 
 			s.erase(0, pos + delimiter.length());
 		}
@@ -150,11 +156,11 @@ void Map::loadMap(string filename) {
 			vertex_t tile = add_vertex(g);
 			int index = tile & INT_MAX;
 			g[tile] = new MapRegion(token, index);
-            if(addMountainorLostTribe(token)){
+            /*if(addMountainorLostTribe(token)){
                 LostTribeToken LostTribe= LostTribeToken();
                 LostTribeToken* pointer=&LostTribe;
                 g[tile]->setLostTribeToken(pointer);
-            }
+            }*/
 		}
 		else if (lineNb == 1){
 
@@ -178,9 +184,17 @@ void Map::loadMap(string filename) {
 
 			add_edge(edge2[0], edge2[1], g);
 		}
+		else if (lineNb == 2) {
+			bordersInputs.push_back(token);
+		}
+		else if (lineNb == 3) {
+			lostTribesInputs.push_back(token); 
+		}
 		lineNb++;
 	}
 	write_graphviz(cout, g);
+	setLostTribe();
+	setBorders();
 }
 
 
@@ -275,6 +289,20 @@ void Map::selectMap(string path){
     }
 }
 
+void Map::selectMap(int nbOfPlayers) {
+
+	//Display Map files in directory
+	cout << "Let's start a Smallworld game" << endl;
+
+	string fullPath = "C:/Users/luoja/Documents/Github/SmallWorld/MapFiles/map";
+	//string fullPath="/Users/ericpayettereformed/Documents/Smallworld/MapFiles/map";
+
+	fullPath.append(std::to_string(nbOfPlayers));
+	fullPath.append(".txt");
+
+	loadMap(fullPath);
+}
+
 bool Map::addMountainorLostTribe(string regionType){
     if(regionType=="Mountain"){
         //add moutain piece
@@ -318,4 +346,45 @@ void Map::getAllBorders() {
 			borderRegions.push_back(pointer);
 		}
 	}
+}
+
+void Map::setBorders() {
+
+	std::string inputted;
+	for (int i = 0; i < num_vertices(g); i++) {
+		inputted = bordersInputs.front();
+		if (inputted == "0") {
+			g[i]->setIsBorder(false);
+		}
+		else if(inputted == "1") {
+			g[i]->setIsBorder(true);
+		}
+		else{
+			std::cout << "Something is odd..." << std::endl;
+		}
+		bordersInputs.pop_front();
+	}
+}
+
+void Map::setLostTribe() {
+
+	std::string inputted;
+	for (int i = 0; i < num_vertices(g); i++) {
+		inputted = lostTribesInputs.front();
+		if (inputted == "0") {
+			g[i]->setLostTribeToken(NULL);
+			g[i]->setTribe(false);
+		}
+		else if (inputted == "1") {
+			LostTribeToken LostTribe = LostTribeToken();
+			LostTribeToken* pointer = &LostTribe;
+			g[i]->setLostTribeToken(pointer);
+			g[i]->setTribe(true);
+		}
+		else {
+			std::cout << "Something is odd..." << std::endl;
+		}
+		lostTribesInputs.pop_front();
+	}
+
 }

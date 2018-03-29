@@ -12,10 +12,11 @@ TurnMarker PlayGame::getTurnMarker(){
 
 void PlayGame::startGame(){
     
-    gameMap.selectMap(mapFilesPath);
-    gameMap.getAllBorders();
-    
-    setNumberOfPlayers();
+
+  //gameMap.selectMap(mapFilesPath);
+  //gameMap.getAllBorders();
+
+  setNumberOfPlayers();
 	addPiecesToWells();
     
 	std::cout << std::endl;
@@ -109,6 +110,9 @@ void PlayGame::setNumberOfPlayers(){
         
         players.push_back(player);
     }
+
+	gameMap.selectMap(nbOfPlayers);
+	gameMap.getAllBorders();
 }
 
 void PlayGame::addPiecesToWells(){

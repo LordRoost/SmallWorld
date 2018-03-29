@@ -168,8 +168,21 @@ void MapRegion::addDefensiveStructure(GamePiece piece) {
 }
 
 bool MapRegion::hasLostTribe() {
-	if (lostTribes == NULL)
+	//if (lostTribes == NULL)
+	if(hasTribe == false)
 		return false;
 	else
 		return true;
+}
+
+void MapRegion::setTribe(bool tribe) {
+	hasTribe = tribe;
+}
+
+bool MapRegion::getTribe() {
+	return hasTribe;
+}
+
+void MapRegion::addLostTribeToken() {
+
 }
