@@ -68,7 +68,9 @@ public:
     void declineRace();
 
 	//various utility methods
-	void returnTokensToHand(int returnedTokens); //
+	void placeAllTokensOnMap();//Places all tokens that users have in hand in one of their owned territories.
+	void deployment(int nbOfTokens);
+	void returnTokensToHand(int returnedTokens); 
 	int calculateCurrentNbUsableTokens(int subtracted);
 	void calculateUsableTokens();
 	//void calculateUsableTokens(PowerBadge power, RaceBanner banner);
