@@ -109,7 +109,7 @@ public:
                 }
             }
             
-            cout<<"Index: "<<regions[i]->getIndexOfVertex()<<" has "<<totEnemyTokens<<"enemy tokens around it"<<endl;
+            cout<<"Index: "<<regions[i]->getIndexOfVertex()<<" has "<<totEnemyTokens<<" enemy tokens around it"<<endl;
             
             if(mostEnemyTokens<=totEnemyTokens){
                 mostEnemyTokens=totEnemyTokens;
