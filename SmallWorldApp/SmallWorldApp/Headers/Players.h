@@ -14,7 +14,7 @@
 class Player {
 public:	
 	Player();
-    Player(AI* aiStrategy);
+    Player(AI *aiStrategy);
 	~Player() {}
 
 	//getters
@@ -32,7 +32,7 @@ public:
 	int getRedeployableTokens();
 	bool getIfClaimedWealthy();
 	bool getInDecline();
-    AI* getAIStrategy();
+    AI *getAIStrategy();
 
 	//setters
 	void setPowerBadge(PowerBadge *badge);
@@ -94,7 +94,7 @@ private:
     int redeployableTokens;
     bool wealthyClaimed;
     bool inDecline;
-    AI* aiStrategy;
+    AI *aiStrategy;
 };
 
 #endif //__PLAYERS_H__

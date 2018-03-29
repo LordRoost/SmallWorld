@@ -13,6 +13,8 @@ public:
 	void setup();
 	RaceBanner* getPickableRaces();
 	PowerBadge* getPickablePowers();
+    std::vector<RaceBanner*>getAllPickableRaces();
+    std::vector<PowerBadge*> getAllPickablePowers();
 	RaceBanner* getPickableRaces(int index);
 	PowerBadge* getPickablePowers(int index);
 	void printOptions();

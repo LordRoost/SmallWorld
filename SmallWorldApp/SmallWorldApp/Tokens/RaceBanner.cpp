@@ -1,8 +1,8 @@
 #include "../Headers/Tokens.h"
 
-RaceInfo raceInfo[TOTAL_RACES] = { { RACE_AMAZONS, "Amazons", 6, 15 },{ RACE_DWARVES, "Dwarves", 3, 8 },{ RACE_ELVES, "Elves", 6, 11 },{ RACE_GHOULS, "Ghouls", 5, 10 },{ RACE_GIANTS, "Giants", 6, 11 },
-{ RACE_HALFLINGS, "Halflings", 6, 11 },{ RACE_HUMANS, "Humans", 5, 10 },{ RACE_ORCS, "Orcs", 5, 10 },{ RACE_RATMEN, "Ratmen", 8, 13 } ,{ RACE_SKELETONS, "Skeletons", 6, 20 } ,{ RACE_SORCERERS, "Sorcerers", 5, 18 } ,
-{ RACE_TRITONS, "Tritons", 6, 11 } ,{ RACE_TROLLS, "Trolls", 5, 10 } ,{ RACE_WIZARDS, "Wizards", 5, 10 } };
+RaceInfo raceInfo[TOTAL_RACES] = { { RACE_AMAZONS, "Amazons", 6, 15,13 },{ RACE_DWARVES, "Dwarves", 3, 8,1 },{ RACE_ELVES, "Elves", 6, 11,9 },{ RACE_GHOULS, "Ghouls", 5, 10,7 },{ RACE_GIANTS, "Giants", 6, 11,12 },
+{ RACE_HALFLINGS, "Halflings", 6, 11,6 },{ RACE_HUMANS, "Humans", 5, 10,2 },{ RACE_ORCS, "Orcs", 5, 10,5 },{ RACE_RATMEN, "Ratmen", 8, 13,14 } ,{ RACE_SKELETONS, "Skeletons", 6, 20,10 } ,{ RACE_SORCERERS, "Sorcerers", 5, 18,8 } ,
+{ RACE_TRITONS, "Tritons", 6, 11,11 } ,{ RACE_TROLLS, "Trolls", 5, 10,4 } ,{ RACE_WIZARDS, "Wizards", 5, 10,3 } };
 
 RaceBanner::RaceBanner() {
 	isActive = true;
@@ -12,7 +12,12 @@ RaceBanner::RaceBanner(races bannerRace) {
 	isActive = true;
 	race = bannerRace;
 	name = raceInfo[race].raceName;
-	amountOfTokensReceived = raceInfo[race].amountTokensReceived; 
+	amountOfTokensReceived = raceInfo[race].amountTokensReceived;
+    aggressivePoint=raceInfo[race].aggressivePoint;
+}
+
+int RaceBanner::getAggressivePoint(){
+    return aggressivePoint;
 }
 
 bool RaceBanner::getStatus() {

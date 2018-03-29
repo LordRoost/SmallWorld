@@ -12,12 +12,13 @@ TurnMarker PlayGame::getTurnMarker(){
 
 void PlayGame::startGame(){
     
-    //gameMap.selectMap(mapFilesPath);
-    //gameMap.getAllBorders();
-    setNumberOfPlayers();
-    addPiecesToWells();
 
-	
+  //gameMap.selectMap(mapFilesPath);
+  //gameMap.getAllBorders();
+
+  setNumberOfPlayers();
+	addPiecesToWells();
+    
 	std::cout << std::endl;
 
 	Graph tempGraph = *gameMap.getGraph();
@@ -98,7 +99,15 @@ void PlayGame::setNumberOfPlayers(){
     
     for(int i=0; i<nbOfPlayers;i++)
     {
-        Player player=Player();
+        Player player;
+        if(i==0){
+            player=Player();
+        }
+        else{
+            player=Player(new randomAI());
+        }
+        
+        
         players.push_back(player);
     }
 

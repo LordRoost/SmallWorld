@@ -9,6 +9,8 @@ int main(){
 
     PlayGame game1;
     
+    
+    
     game1.startGame();
     game1.firstTurn();
     game1.getTurnMarker().nextTurn();
@@ -17,7 +19,7 @@ int main(){
     cout<<"game ended"<<endl;
 
     
-	cin >> input; 
+	//cin >> input; 
     return 0;
 }
 

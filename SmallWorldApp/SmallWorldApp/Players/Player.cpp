@@ -15,10 +15,11 @@ Player::Player() {
 	declinedRace = RACE_NONE;
 	currentRace = RACE_NONE;
 	choiceOfRegion = NULL;
+    aiStrategy=NULL;
 }
 
 //Player constructor
-Player::Player(AI* _aiStrategy) {
+Player::Player(AI *_aiStrategy) {
     dice = new DieRoller();
     declinedRaceBanner = NULL;
     lastAttack = false;
@@ -33,7 +34,7 @@ Player::Player(AI* _aiStrategy) {
     aiStrategy=_aiStrategy;
 }
 
-AI* Player::getAIStrategy(){
+AI *Player::getAIStrategy(){
     return aiStrategy;
 }
 
@@ -161,8 +162,15 @@ void Player::picks_race(RacePicker *picker) {
 	
 	picker->printOptions();
 	std::cout << "Choose your race: " << std::endl;
-	int answer;
-	std::cin >> answer;
+    int answer;
+    
+    if(aiStrategy==NULL){
+        std::cin >> answer;
+    }
+    else{
+        cout<< aiStrategy->getName()<<endl;
+        answer=aiStrategy->pickPowerRace(picker->getAllPickableRaces(),picker->getAllPickablePowers());
+    }
 
 	if ((answer != 1) && (answer != 2) && (answer != 3) && (answer != 4) && (answer != 5) && (answer != 6)) {
 		std::cout << "Please enter a number from 1 to 6" <<std::endl;
@@ -210,7 +218,13 @@ void Player::conquers() {
 		bool stuffHappened = false;
 
 		while (breakFree == false) {
-			std::cin >> theChoice;
+            
+            if(aiStrategy==NULL){
+                std::cin >> theChoice;
+            }
+            else{
+                theChoice=aiStrategy->aiConquers(this, gameMap.adgacentMapRegions);
+            }
 			for (size_t i = 0; i < tempVector.size(); i++) {
 				if (theChoice == tempVector[i]) {
 					Graph tempGraph = *gameMap.getGraph();
@@ -264,7 +278,13 @@ void Player::firstConquest() { //what if firstconquest is also last??
 	bool stuffHappened = false;
 
 	while (breakFree == false) {
-		std::cin >> playerChoice;
+        if(aiStrategy==NULL){
+            std::cin >> playerChoice;
+        }
+        else{
+            playerChoice=aiStrategy->aiConquers(this, gameMap.borderRegions);
+        }
+        
 		for (size_t i = 0; i < tempVector.size(); i++) {
 			if (playerChoice == tempVector[i]) {
 				Graph tempGraph = *gameMap.getGraph();
