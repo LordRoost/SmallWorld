@@ -9,7 +9,7 @@ int TurnMarker::getTurnNumber(){
 }
 
 void TurnMarker::nextTurn(){
-    turnNumber++;
+    ++turnNumber;
 }
 
 

@@ -21,6 +21,7 @@ public:
     virtual int pickPowerRace(vector <RaceBanner*> races,vector <PowerBadge*> powers)=0;
     virtual int aiConquers(Player* aiPlayer,vector<MapRegion*> regions)=0;
     virtual vector<stack<int>> aiRedeploy(Player* aiPlayer,int redeployabeTokens, vector<MapRegion*> regions)=0;
+    virtual string aiDecline(int turnNb)=0;
     virtual string getName(){return name;}
 
 private:
@@ -127,6 +128,23 @@ public:
         
     }
     
+    string aiDecline(int turnNb)override{
+        
+        if(turnNb%2==1){
+            cout<<getName()<<" about declining"<<endl;
+            cout<<"He wants to decline"<<endl;
+            cout<<endl;
+            return "y";
+        }
+        else{
+            cout<<endl;
+            cout<<getName()<<" about declining"<<endl;
+            cout<<"He does not want to decline"<<endl;
+            return "n";
+        }
+        
+    }
+    
     string getName()override{return name;}
 private:
     string name="aggressive AI is thinking";
@@ -220,6 +238,23 @@ public:
         
     }
     
+    string aiDecline(int turnNb)override{
+        
+        if(turnNb%2==1){
+            cout<<getName()<<" about declining"<<endl;
+            cout<<"He wants to decline"<<endl;
+            cout<<endl;
+            return "y";
+        }
+        else{
+            cout<<endl;
+            cout<<getName()<<" about declining"<<endl;
+            cout<<"He does not want to decline"<<endl;
+            return "n";
+        }
+        
+    }
+    
     string getName()override{return name;}
 private:
     string name="defensive AI is thinking";
@@ -282,6 +317,52 @@ public:
         return 0;
     }
     
+    //does the same as defensive ai because its the best strategy
+    vector<stack<int>> aiRedeploy(Player* aiPlayer,int redeployableTokens, vector<MapRegion*> regions)override{
+        stack<int> nbTokens;
+        stack<int> theRegions;
+        
+        int nbRegions=regions.size();
+        int equalTokens=redeployableTokens/nbRegions;
+        int modulo=redeployableTokens%nbRegions;
+        
+        for(int i=0;i<nbRegions;i++){
+            theRegions.push(regions[i]->getIndexOfVertex());
+            
+            if(modulo>0){
+                nbTokens.push(equalTokens+1);
+                --modulo;
+            }
+            else{
+                nbTokens.push(equalTokens);
+            }
+        }
+        
+        vector<stack<int>> answers;
+        answers.push_back(theRegions);
+        answers.push_back(nbTokens);
+        
+        return answers;
+        
+    }
+    
+    string aiDecline(int turnNb)override{
+        
+        if(turnNb%2==1){
+            cout<<getName()<<" about declining"<<endl;
+            cout<<"He wants to decline"<<endl;
+            cout<<endl;
+            return "y";
+        }
+        else{
+            cout<<endl;
+            cout<<getName()<<" about declining"<<endl;
+            cout<<"He does not want to decline"<<endl;
+            return "n";
+        }
+        
+    }
+    
     string getName()override{return name;}
 private:
     string name="moderate AI is thinking";
@@ -322,6 +403,55 @@ public:
         
         return tempVector[randomChoice];
        
+    }
+    
+    //Randomly put random amount of tokens on owned regions
+    vector<stack<int>> aiRedeploy(Player* aiPlayer,int redeployableTokens, vector<MapRegion*> regions)override{
+        stack<int> nbTokens;
+        stack<int> theRegions;
+        
+        int nbRegions=regions.size();
+        int tokensLeft=redeployableTokens;
+        
+        int randomAmountOfTokens;
+        int randomVertexOfRegion;
+        
+        while(tokensLeft>0){
+            
+            
+            randomAmountOfTokens=(rand() % tokensLeft)+1;
+            randomVertexOfRegion=regions[(rand() % nbRegions)]->getIndexOfVertex();
+            
+            nbTokens.push(randomAmountOfTokens);
+            theRegions.push(randomVertexOfRegion);
+            
+            tokensLeft-=randomAmountOfTokens;
+            
+        }
+   
+        vector<stack<int>> answers;
+        answers.push_back(theRegions);
+        answers.push_back(nbTokens);
+        
+        return answers;
+        
+    }
+    
+    string aiDecline(int turnNb)override{
+        
+        if(turnNb%2==1){
+            cout<<getName()<<" about declining"<<endl;
+            cout<<"He wants to decline"<<endl;
+            cout<<endl;
+            return "y";
+        }
+        else{
+            cout<<endl;
+            cout<<getName()<<" about declining"<<endl;
+            cout<<"He does not want to decline"<<endl;
+            return "n";
+        }
+        
     }
     
     string getName()override{return name;}
