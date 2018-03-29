@@ -330,9 +330,26 @@ int Player::attackTerritory(MapRegion *region) { //should have user confirm atta
 		return -1;
 	}
 	else if (nbOfUseableTokens < attackingAmount) {
+
+		//int leftOverTokens = nbOfUseableTokens;
+
 		if (finalAttack(region) == false) { //if the dice roll failed
 			std::cout << "You have failed your attack on this region." << std::endl;
 			return 0;
+		}
+		else {
+			std::cout << "You have succeeded in your attack!" << std::endl;
+			if (region->getOwner() != NULL || region->hasLostTribe()) {
+				occupiedRegionCounter++;
+			}
+			removeEnemyTokens(region);
+			region->setOwner(this);
+			region->setRaceOfOccupants(this->getCurrentRace());
+			region->addRaceTokens(this->getRaceToken(), nbOfUseableTokens);
+			std::cout << "You have placed " << nbOfUseableTokens << " tokens."<< std::endl;
+			addOwnedRegion(region);
+			std::cout << "You have " << calculateCurrentNbUsableTokens(attackingAmount) << " " << getRacebanner()->getName() << " tokens left to attack with." << std::endl;
+			return 1;
 		}
 	}
 
@@ -344,6 +361,7 @@ int Player::attackTerritory(MapRegion *region) { //should have user confirm atta
 	region->setOwner(this);
 	region->setRaceOfOccupants(this->getCurrentRace());
 	region->addRaceTokens(this->getRaceToken(), attackingAmount);
+	std::cout << "You have placed " << attackingAmount << " tokens." << std::endl;
 	addOwnedRegion(region);
 
 	//cout << "NbOfTokens: " << region->getNbTokens() << endl;
@@ -378,90 +396,49 @@ void Player::readyTroops() {
 	redeployableTokens += getNbOfUsableTokens();
 	setNbOfUsableTokens(redeployableTokens);
 	redeployableTokens = 0;
+
+	std::cout << "You have " << nbOfUseableTokens << " tokens to attack with." << std::endl;
 }
 
 //Lets a player redeploy their tokens
 void Player::redeploy() {
 	std::cout << "Redeployment phase" << std::endl;
-	int temp = 0;
-	int responseRegion, responseAdd;
 
-	for (size_t i = 0; i < getOwnedRegions().size(); i++) {
-		temp = (getOwnedRegions()[i]->getNbTokens())-1;
-		getOwnedRegions()[i]->setNbTokens(1);
-		redeployableTokens += temp;
+	std::cout << "Do you wish to redeploy your units? (y or n)" << std::endl;
+	char userAnswer;
+
+	std::cin >> userAnswer;
+
+	if (userAnswer == 'n') {
+		placeAllTokensOnMap();
+		return;
 	}
-	redeployableTokens += getNbOfUsableTokens();
-	setNbOfUsableTokens(0);
-    
-    vector<stack<int>> answers;
-    
-    if(aiStrategy!=NULL){
-        cout<<endl;
-        answers=aiStrategy->aiRedeploy(this,redeployableTokens, getOwnedRegions());
-        cout<<endl;
-    }
+	else if (userAnswer == 'y') {
+		int temp = 0;
+		//int responseRegion, responseAdd;
+		setRedeployableTokens(0);
 
-	while (redeployableTokens > 0) {
-		std::cout << "You have " << redeployableTokens << " tokens to redeploy" << std::endl;
-		std::cout << "Choose a region to add tokens to: " << std::endl;
+		vector<stack<int>> answers;
+    
+		if(aiStrategy!=NULL){
+			cout<<endl;
+			answers=aiStrategy->aiRedeploy(this,redeployableTokens, getOwnedRegions());
+			cout<<endl;
+		}
+
 		for (size_t i = 0; i < getOwnedRegions().size(); i++) {
-			std::cout << getOwnedRegions()[i]->getIndexOfVertex() << std::endl;
+			temp = (getOwnedRegions()[i]->getNbTokens()) - 1;
+			getOwnedRegions()[i]->setNbTokens(1);
+			redeployableTokens += temp;
 		}
+		redeployableTokens += getNbOfUsableTokens();
+		setNbOfUsableTokens(0);
 
-		bool breakFree = false;
-		bool bogusInputs = true;
-		bool stuffHappened = false;
-
-		while (breakFree == false) {
-            
-            if(aiStrategy==NULL){
-                std::cin >> responseRegion;
-            }
-            else{
-                cout<<aiStrategy->getName()<<" about region to redeploy"<<endl;
-                cout<<"Region with vertex "<<answers[0].top()<<endl;
-                responseRegion=answers[0].top();
-                answers[0].pop();
-            }
-            
-			for (size_t i = 0; i < getOwnedRegions().size(); i++) {
-				if (responseRegion == getOwnedRegions()[i]->getIndexOfVertex()) {
-					std::cout << "Enter the number of tokens that you want to add here: " << std::endl;
-                    
-                    if(aiStrategy==NULL){
-                        std::cin >> responseAdd;
-                    }
-                    else{
-                        cout<<aiStrategy->getName()<<" about number of tokens to redeploy"<<endl;
-                        cout<<"This amount of tokens: "<<answers[1].top()<<endl;
-                        responseAdd=answers[1].top();
-                        answers[1].pop();
-                    }
-
-					while (bogusInputs) {
-						if (responseAdd > redeployableTokens) {
-							std::cout << "Please enter a number that isn't bigger than the amount of tokens you have to redistribute!" << std::endl;
-							std::cin >> responseAdd;
-						}
-						else if (responseAdd < 0) {
-							std::cout << "Oh no!! What is you doing! Do not enter negative numbers!" << std::endl;
-							std::cin >> responseAdd;
-						}
-						else
-							bogusInputs = false;
-					}
-					getOwnedRegions()[i]->addRaceTokens(this->getRaceToken(), responseAdd); 
-					redeployableTokens -= responseAdd;
-					breakFree = true;
-					stuffHappened = true;
-					break;
-				}
-			}
-			if(stuffHappened == false)
-				std::cout << "Please enter a correct region." << std::endl;
-		}
+		deployment(redeployableTokens);
 		
+	}
+	else {
+		std::cout << "please enter y or n!" << std::endl;
 	}
 }
 
@@ -612,6 +589,89 @@ void Player::scores(CoinBank *bank) {
 
 
 //utility functions ------------------------------------------------------------------------------------
+
+void Player::placeAllTokensOnMap() {
+	
+	std::cout << "Place your remaining tokens in hand onto one of your territories" << std::endl;
+
+	deployment(nbOfUseableTokens);
+
+	setNbOfUsableTokens(0);
+}
+
+void Player::deployment(int nbOfTokens) {
+
+	vector<stack<int>> answers;
+
+	if (aiStrategy != NULL) {
+		cout << endl;
+		answers = aiStrategy->aiRedeploy(this, redeployableTokens, getOwnedRegions());
+		cout << endl;
+	}
+
+	while (nbOfTokens > 0) {
+		std::cout << "You have " << nbOfTokens << " tokens to deploy" << std::endl;
+		std::cout << "Choose a region to add tokens to: " << std::endl;
+		for (size_t i = 0; i < getOwnedRegions().size(); i++) {
+			std::cout << getOwnedRegions()[i]->getIndexOfVertex() << std::endl;
+		}
+
+		bool breakFree = false;
+		bool bogusInputs = true;
+		bool stuffHappened = false;
+		int responseRegion, responseAdd;
+
+		while (breakFree == false) {
+
+			if (aiStrategy == NULL) {
+				std::cin >> responseRegion;
+			}
+			else {
+				cout << aiStrategy->getName() << " about region to deploy" << endl;
+				cout << "Region with vertex " << answers[0].top() << endl;
+				responseRegion = answers[0].top();
+				answers[0].pop();
+			}
+
+			for (size_t i = 0; i < getOwnedRegions().size(); i++) {
+				if (responseRegion == getOwnedRegions()[i]->getIndexOfVertex()) {
+					std::cout << "Enter the number of tokens that you want to add here: " << std::endl;
+
+					if (aiStrategy == NULL) {
+						std::cin >> responseAdd;
+					}
+					else {
+						cout << aiStrategy->getName() << " about number of tokens to deploy" << endl;
+						cout << "This amount of tokens: " << answers[1].top() << endl;
+						responseAdd = answers[1].top();
+						answers[1].pop();
+					}
+
+					while (bogusInputs) {
+						if (responseAdd > nbOfTokens) {
+							std::cout << "Please enter a number that isn't bigger than the amount of tokens you have to place!" << std::endl;
+							std::cin >> responseAdd;
+						}
+						else if (responseAdd < 0) {
+							std::cout << "Oh no!! What is you doing! Do not enter negative numbers!" << std::endl;
+							std::cin >> responseAdd;
+						}
+						else
+							bogusInputs = false;
+					}
+					getOwnedRegions()[i]->addRaceTokens(this->getRaceToken(), responseAdd);
+					nbOfTokens -= responseAdd;
+					breakFree = true;
+					stuffHappened = true;
+					break;
+				}
+			}
+			if (stuffHappened == false)
+				std::cout << "Please enter a correct region." << std::endl;
+		}
+	}
+			
+}
 
 void Player::returnTokensToHand(int returnedTokens) {
 	setNbOfUsableTokens(nbOfUseableTokens + returnedTokens);
