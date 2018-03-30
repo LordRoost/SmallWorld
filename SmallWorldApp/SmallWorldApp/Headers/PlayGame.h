@@ -23,6 +23,8 @@ public:
     void startGame();
     void setNumberOfPlayers();
     void addPiecesToWells();
+	//void addMountainPieces(MountainPiece piece);
+	//MountainPiece dealMountain();
     
     //First turn methods
     void firstTurn();
@@ -37,6 +39,8 @@ private:
     //PowerBadgeDeck powerBadgeDeck;
 	CoinBank coinBank;
 	TurnMarker turnMarker;
+	TokenWell tokenWell;
+	//vector<MountainPiece> mountainPieces;
     
     
 };

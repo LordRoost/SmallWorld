@@ -2,6 +2,7 @@
 #define Map_H
 
 #include <stdio.h>
+#include "Game.h"
 #include <iostream>
 #include <boost/graph/adjacency_list.hpp>
 #include "MapRegion.h"
@@ -24,6 +25,8 @@ typedef boost::graph_traits<Graph>::vertex_iterator VertexIterator;
 
 class Map {
 public:
+	Map();
+	Map(TokenWell *aWell);
 	void createMap();
 	void loadMap(string file);
 	bool graphIsConnected();
@@ -37,6 +40,7 @@ public:
 	void getAllBorders();
 	void setBorders();
 	void setLostTribe();
+	void initialize(TokenWell *aWell);
 
 	vector<MapRegion*> borderRegions;
 	vector<MapRegion*> adgacentMapRegions;
@@ -45,6 +49,7 @@ public:
 
 private:
 	Graph g;
+	TokenWell *well;
 
 };
 

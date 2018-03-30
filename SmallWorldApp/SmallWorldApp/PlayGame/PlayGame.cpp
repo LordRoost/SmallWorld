@@ -1,6 +1,7 @@
 #include "../Headers/PlayGame.h"
 
-extern Map gameMap;
+Map gameMap;
+//extern Map gameMap;
 
 Map PlayGame::getMap(){
     return gameMap;
@@ -16,9 +17,14 @@ void PlayGame::startGame(){
   //gameMap.selectMap(mapFilesPath);
   //gameMap.getAllBorders();
 
-  setNumberOfPlayers();
+	tokenWell = TokenWell();
+
 	addPiecesToWells();
-    
+
+	gameMap.initialize(&tokenWell);
+
+	setNumberOfPlayers();
+
 	std::cout << std::endl;
 
 	Graph tempGraph = *gameMap.getGraph();
@@ -101,10 +107,10 @@ void PlayGame::setNumberOfPlayers(){
     {
         Player player;
         if(i==0){
-            player=Player(new defensiveAI());
+            //player=Player(new defensiveAI());
         }
         else{
-            player=Player(new aggressiveAI());
+            //player=Player(new aggressiveAI());
         }
         
         
@@ -129,11 +135,26 @@ void PlayGame::addPiecesToWells(){
 
 	decks = new RacePicker();
 	decks->setup();
-	decks->printOptions();
-    
+	//decks->printOptions();
+
+	for (int i = 0; i < MAX_NUM_MOUNTAIN_TOKENS; i++) {
+		MountainPiece *mountain = new MountainPiece;
+		tokenWell.addMountainPieces(mountain);
+	}
+
     
     //Mountains and fortresses dragon etc
     //lost tribes
     //to be made as child classes of gamepiece
 }
 
+//void PlayGame::addMountainPieces(MountainPiece piece) {
+//	mountainPieces.push_back(piece);
+//}
+//
+//MountainPiece PlayGame::dealMountain() {
+//	
+//	MountainPiece aMountain = mountainPieces.back();
+//	mountainPieces.pop_back();
+//	return aMountain;
+//}

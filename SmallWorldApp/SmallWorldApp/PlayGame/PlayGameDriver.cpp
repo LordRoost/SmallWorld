@@ -1,5 +1,5 @@
 #include "../Headers/PlayGame.h"
-Map gameMap;
+//Map gameMap;
 
 int main(){
 

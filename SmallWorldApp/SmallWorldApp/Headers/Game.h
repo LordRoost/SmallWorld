@@ -51,3 +51,14 @@ private:
 	std::vector <VictoryCoin> coinValue5;
 	std::vector <VictoryCoin> coinValue10;
 };
+
+class TokenWell {
+public:
+	TokenWell();
+	std::vector<MountainPiece*> getMountainPieces();
+	void addMountainPieces(MountainPiece *piece);
+	MountainPiece* dealMountain();
+
+private:
+	std::vector<MountainPiece*> mountainPieces;
+};

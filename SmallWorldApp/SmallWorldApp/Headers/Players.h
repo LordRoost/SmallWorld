@@ -29,6 +29,7 @@ public:
 	RaceBanner* getRacebanner();
 	int getNbOfUsableTokens();
 	std::vector<MapRegion*> getOwnedRegions();
+	std::vector<MapRegion*> getAttackableRegions();
 	int getRedeployableTokens();
 	bool getIfClaimedWealthy();
 	bool getInDecline();
@@ -49,6 +50,7 @@ public:
 
 	
 	void addOwnedRegion(MapRegion *region);
+	void addAttackableRegion(MapRegion *region);
 	void addVictoryCoin(VictoryCoin coins);
 	void addVictoryCoin1s(VictoryCoin ones);
 
@@ -73,17 +75,20 @@ public:
 	void returnTokensToHand(int returnedTokens); 
 	int calculateCurrentNbUsableTokens(int subtracted);
 	void calculateUsableTokens();
+	void findAllAdjacentTerritories();
 	//void calculateUsableTokens(PowerBadge power, RaceBanner banner);
 	void printAmountTokens();
 	void printCurrentMoney();
 	void printCurrentBanner();
 	void printCurrentPower();
+	void sortMapregionVector(std::vector<MapRegion*>*); //sorts a vector of mapregions so that the display is in order
 
 	MapRegion *choiceOfRegion;
 	int occupiedRegionCounter;
 
 private:
 	std::vector<MapRegion*> ownedRegions;
+	std::vector<MapRegion*> attackableRegions;
 	DieRoller *dice;
 	PowerBadge *currentBadge;
 	RaceToken currentRaceToken, declinedRaceToken, previousDeclinedRaceToken;

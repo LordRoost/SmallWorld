@@ -131,6 +131,7 @@
     <ClCompile Include="Dice\DieRoller.cpp" />
     <ClCompile Include="Gamefield\CoinBank.cpp" />
     <ClCompile Include="Gamefield\RacePicker.cpp" />
+    <ClCompile Include="Gamefield\TokenWell.cpp" />
     <ClCompile Include="Map\Map.cpp" />
     <ClCompile Include="Map\MapDriver.cpp" />
     <ClCompile Include="Map\MapRegion.cpp" />

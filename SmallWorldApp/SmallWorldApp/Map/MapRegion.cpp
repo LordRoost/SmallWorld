@@ -121,7 +121,7 @@ int MapRegion::getIndexOfVertex(){
 
 void MapRegion::setMountainPiece(MountainPiece *m) {
 	mountainPiece = m;
-	
+	addDefensiveStructure(*m);
 }
 
 void MapRegion::setOwner(Player *newOwner) {

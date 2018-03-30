@@ -8,7 +8,7 @@ using namespace std;
 int mainwe() {
 
     
-	Map m;
+	//Map m;
 /*
 	m.loadMap("/Users/ericpayettereformed/Documents/Smallworld/Smallworld/MapFiles/map.txt");
 

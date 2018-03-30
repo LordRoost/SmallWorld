@@ -134,5 +134,8 @@
     <ClCompile Include="Players\ScoringDriver.cpp">
       <Filter>Source Files\Players</Filter>
     </ClCompile>
+    <ClCompile Include="Gamefield\TokenWell.cpp">
+      <Filter>Source Files\GameField</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

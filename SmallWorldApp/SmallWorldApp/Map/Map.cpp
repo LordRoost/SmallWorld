@@ -6,6 +6,14 @@ using namespace boost;
 
 typedef graph_traits<Graph>::vertex_descriptor vertex_t;
 
+Map::Map() {
+	well = NULL;
+}
+
+Map::Map(TokenWell *aWell) {
+	well = aWell;
+}
+
 Graph* Map::getGraph(){
     return &g;
 }
@@ -115,6 +123,10 @@ void Map::loadMap(string filename) {
 				int index = tile & INT_MAX;
 				g[tile] = new MapRegion(token, index);
                 
+				if (g[tile]->getType()==REGION_TYPE_MOUNTAIN) {
+					g[tile]->setMountainPiece(well->dealMountain());
+				}
+
                 //if(addMountainorLostTribe(token)){
                 //    LostTribeToken LostTribe= LostTribeToken();
                 //    LostTribeToken* pointer=&LostTribe;
@@ -156,6 +168,9 @@ void Map::loadMap(string filename) {
 			vertex_t tile = add_vertex(g);
 			int index = tile & INT_MAX;
 			g[tile] = new MapRegion(token, index);
+			if (g[tile]->getType() == REGION_TYPE_MOUNTAIN) {
+				g[tile]->setMountainPiece(well->dealMountain());
+			}
             /*if(addMountainorLostTribe(token)){
                 LostTribeToken LostTribe= LostTribeToken();
                 LostTribeToken* pointer=&LostTribe;
@@ -387,4 +402,8 @@ void Map::setLostTribe() {
 		lostTribesInputs.pop_front();
 	}
 
+}
+
+void Map::initialize(TokenWell *aWell) {
+	well = aWell;
 }

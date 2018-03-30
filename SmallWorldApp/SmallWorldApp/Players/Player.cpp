@@ -91,6 +91,10 @@ std::vector<MapRegion*> Player::getOwnedRegions() { // ?????
 	return ownedRegions;
 }
 
+std::vector<MapRegion*> Player::getAttackableRegions() { // ?????
+	return attackableRegions;
+}
+
 int Player::getRedeployableTokens() {
 	return redeployableTokens;
 }
@@ -157,6 +161,10 @@ void Player::addOwnedRegion(MapRegion *region) { //????
 	ownedRegions.push_back(region);
 }
 
+void Player::addAttackableRegion(MapRegion *region) { //????
+	attackableRegions.push_back(region);
+}
+
 //Need to add fact that one must spend tokens to get further combos
 void Player::picks_race(RacePicker *picker) { 
 	
@@ -205,12 +213,18 @@ void Player::conquers() {
 		vector<int> tempVector;
 		std::cout << "Choose a territory to attack: " << std::endl;
 
-		gameMap.getAdgacentTerritories(choiceOfRegion);
+		findAllAdjacentTerritories();
+
+		//gameMap.getAdgacentTerritories(choiceOfRegion);
 
 		std::cout << std::endl;
 
-		for (size_t i = 0; i < gameMap.adgacentMapRegions.size(); i++) {
-			tempVector.push_back(gameMap.adgacentMapRegions[i]->getIndexOfVertex());
+		//for (size_t i = 0; i < gameMap.adgacentMapRegions.size(); i++) {
+		//	tempVector.push_back(gameMap.adgacentMapRegions[i]->getIndexOfVertex());
+		//}
+
+		for (size_t i = 0; i < attackableRegions.size(); i++) {
+			tempVector.push_back(attackableRegions[i]->getIndexOfVertex());
 		}
 
 		bool breakFree = false;
@@ -223,14 +237,15 @@ void Player::conquers() {
                 std::cin >> theChoice;
             }
             else{
-                theChoice=aiStrategy->aiConquers(this, gameMap.adgacentMapRegions);
+                theChoice=aiStrategy->aiConquers(this, attackableRegions);
             }
 			for (size_t i = 0; i < tempVector.size(); i++) {
 				if (theChoice == tempVector[i]) {
 					Graph tempGraph = *gameMap.getGraph();
 					MapRegion *adjTerritory = tempGraph[theChoice];
 
-					choiceOfRegion = adjTerritory;
+					//choiceOfRegion = adjTerritory;
+					
 
 					if (attackTerritory(adjTerritory) == -1) { //If there were issues with attacking
 						break;
@@ -244,15 +259,6 @@ void Player::conquers() {
 			if (stuffHappened == false)
 				std::cout << "Please enter a correct region." << std::endl;
 		}
-
-		/*
-		Graph tempGraph = *gameMap.getGraph();
-		MapRegion *adjTerritory = tempGraph[theChoice];
-        
-		choiceOfRegion = adjTerritory; 
-
-		attackTerritory(adjTerritory);
-		*/
 	}
 	lastAttack = false;
 	redeploy();
@@ -305,15 +311,6 @@ void Player::firstConquest() { //what if firstconquest is also last??
 			std::cout << "Please enter a correct region. It must be a border." << std::endl;
 	}
 
-	/*
-	Graph tempGraph = *gameMap.getGraph();
-	MapRegion *borderTerritory = tempGraph[playerChoice];
-    //MapRegion *borderTerritory = &gameMap.getMap()[playerChoice];
-	//MapRegion *borderTerritory = borders[playerChoice];
-	choiceOfRegion = borderTerritory;
-
-	attackTerritory(borderTerritory);
-	*/
 }
 
 int Player::attackTerritory(MapRegion *region) { //should have user confirm attacks or something somewhere
@@ -694,6 +691,49 @@ void Player::calculateUsableTokens() {
 	setNbOfUsableTokens(amountFromPower + amountFromRace);
 }
 
+void Player::findAllAdjacentTerritories() {
+	
+	bool notHasRegion = true;
+
+	//cout << "Number of owned regions: " << ownedRegions.size() << endl;
+
+	for (size_t i = 0; i < ownedRegions.size(); i++) {
+
+		gameMap.getAdgacentTerritories(ownedRegions[i]);
+
+		//cout << "Number of adj regions: " << gameMap.adgacentMapRegions.size() << endl; //works fine
+
+
+		for (size_t j = 0; j < gameMap.adgacentMapRegions.size(); j++) {
+			
+			while (notHasRegion) {
+				for (size_t k = 0; k < attackableRegions.size(); k++) {
+
+					if (gameMap.adgacentMapRegions[j] == attackableRegions[k]) {
+						notHasRegion = false;
+						break;
+					}
+
+				}
+				//std::cout << gameMap.adgacentMapRegions[j]->getIndexOfVertex() << "\t";
+				if (notHasRegion == false)
+					break;
+				attackableRegions.push_back(gameMap.adgacentMapRegions[j]);
+			}
+			notHasRegion = true;
+
+		}
+	}
+	//cout << "Number of Attackable regions: "<< attackableRegions.size() << endl;
+
+	sortMapregionVector(&attackableRegions);
+
+	for (size_t l = 0; l < attackableRegions.size(); l++) {
+		cout << attackableRegions[l]->getIndexOfVertex() << "\t";
+	}
+
+}
+
 //void Player::calculateUsableTokens(PowerBadge power, RaceBanner banner) {
 //
 //	int amountFromPower, amountFromRace;
@@ -719,4 +759,24 @@ void Player::printCurrentBanner() {
 
 void Player::printCurrentPower() {
 	std::cout << "Current Power: " << getPowerBadge()->getPowerName() << std::endl;
+}
+
+void Player::sortMapregionVector(std::vector<MapRegion*> *theVector) {
+
+	for (size_t j = 0; j < theVector->size(); j++) {
+
+		for (size_t k = 0; k < theVector->size(); k++) {
+			
+			if ((*theVector)[j]->getIndexOfVertex() < (*theVector)[k]->getIndexOfVertex()) {
+				std::iter_swap(theVector->begin() + j, theVector->begin() + k);
+			}
+		}
+	}
+
+	//cout << "Here are the sorted values" << endl;
+	//for (size_t i = 0; i < theVector->size(); i++) {
+	//	cout << (*theVector)[i]->getIndexOfVertex()  <<" ";
+	//}
+	////cout << endl;
+
 }
