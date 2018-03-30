@@ -404,8 +404,15 @@ void Player::redeploy() {
 	std::cout << "Do you wish to redeploy your units? (y or n)" << std::endl;
 	char userAnswer;
 
-	std::cin >> userAnswer;
-
+    if(aiStrategy==NULL){
+        std::cin >> userAnswer;
+    }
+    else{
+        userAnswer='y';
+        cout<<aiStrategy->getName()<<" that he about redeploying"<<endl;
+        cout<<"He wants to redeploy"<<endl;
+    }
+	
 	if (userAnswer == 'n') {
 		placeAllTokensOnMap();
 		return;
@@ -414,14 +421,6 @@ void Player::redeploy() {
 		int temp = 0;
 		//int responseRegion, responseAdd;
 		setRedeployableTokens(0);
-
-		vector<stack<int>> answers;
-    
-		if(aiStrategy!=NULL){
-			cout<<endl;
-			answers=aiStrategy->aiRedeploy(this,redeployableTokens, getOwnedRegions());
-			cout<<endl;
-		}
 
 		for (size_t i = 0; i < getOwnedRegions().size(); i++) {
 			temp = (getOwnedRegions()[i]->getNbTokens()) - 1;
@@ -492,6 +491,7 @@ void Player::declineRace(){
 			tempRegion->setOwnershipStatus(false);
 			tempRegion->setOwner(NULL);
 			tempRegion->setNbTokens(0);
+            tempRegion->setRaceOfOccupants(RACE_NONE);
 			ownedRegions.erase(ownedRegions.begin() + i);
 		}
 		else

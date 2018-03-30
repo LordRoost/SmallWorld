@@ -7,7 +7,7 @@ Map PlayGame::getMap(){
     return gameMap;
 }
 
-TurnMarker PlayGame::getTurnMarker(){
+TurnMarker* PlayGame::getTurnMarker(){
     return turnMarker;
 }
 
@@ -41,10 +41,11 @@ void PlayGame::startGame(){
 	
 	}
 	//Turn 1
-	turnMarker = TurnMarker();
+	turnMarker = new TurnMarker();
 }
 
 void PlayGame::firstTurn(){
+    std::cout << "Turn " << turnMarker->getTurnNumber()<<" is beginning" << std::endl;
     
     for (std::vector<int>::size_type i = 0; i < players.size(); i++) {
         Player *pointer = &players[i];
@@ -54,34 +55,56 @@ void PlayGame::firstTurn(){
         
     }
     
-    
+    std::cout << "Turn " << turnMarker->getTurnNumber()<<" is ending" << std::endl;
 }
 
 void PlayGame::followingTurns(){
     
-    while(turnMarker.getTurnNumber()<=TOTAL_NUM_TURNS){
-		std::cout << "Turn " << turnMarker.getTurnNumber()+1 << std::endl;
+    while(turnMarker->getTurnNumber()<=TOTAL_NUM_TURNS){
+		std::cout << "Turn " << turnMarker->getTurnNumber() <<" is beginning"<< std::endl;
         for (std::vector<int>::size_type i = 0; i < players.size(); i++) {
             Player *pointer = &players[i];
             
 			//cout << "Nb of Regions " << pointer->getOwnedRegions().size() << endl;
 			//cout << "Race Banner of player " << pointer->getRacebanner()->getName() << endl;
-            cout<<"Do you want to decline your race?(y or n)"<<endl;
             string yorn;
-            cin>>yorn;
-            if(yorn=="y"){
-                pointer->declineRace();
+            
+            if(!pointer->getInDecline()){
+                
+            
+                cout<<"Do you want to decline your race?(y or n)"<<endl;
+                
+                
+                if(pointer->getAIStrategy()==NULL){
+                    cin>>yorn;
+                }
+                else{
+                    yorn=pointer->getAIStrategy()->aiDecline(turnMarker->getTurnNumber());
+                }
+            
+                if(yorn=="y"){
+                    pointer->declineRace();
+                }
+                else{
+                    pointer->readyTroops();
+                    pointer->conquers();
+                }
             }
+            
             else{
-				pointer->readyTroops();
+                pointer->setInDecline(false);
+                pointer->picks_race(decks);
                 pointer->conquers();
+                
             }
-
             pointer->scores(&coinBank);
 
         }
         
-        turnMarker.nextTurn();
+        cout<<"Turn "<<turnMarker->getTurnNumber()<<" has ended"<<endl;
+        cout<<endl;
+        
+        turnMarker->nextTurn();
     }
 }
 
@@ -107,9 +130,11 @@ void PlayGame::setNumberOfPlayers(){
     {
         Player player;
         if(i==0){
+            //player=Player(new moderateAI());
             //player=Player(new defensiveAI());
         }
         else{
+            //player=Player(new randomAI());
             //player=Player(new aggressiveAI());
         }
         
