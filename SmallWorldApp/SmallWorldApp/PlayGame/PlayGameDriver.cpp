@@ -13,7 +13,7 @@ int main(){
     
     game1.startGame();
     game1.firstTurn();
-    game1.getTurnMarker().nextTurn();
+    game1.getTurnMarker()->nextTurn();
     game1.followingTurns();
     
     cout<<"game ended"<<endl;

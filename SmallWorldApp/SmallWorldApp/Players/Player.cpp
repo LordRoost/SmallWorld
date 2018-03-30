@@ -494,6 +494,7 @@ void Player::declineRace(){
 			tempRegion->setOwnershipStatus(false);
 			tempRegion->setOwner(NULL);
 			tempRegion->setNbTokens(0);
+            tempRegion->setRaceOfOccupants(RACE_NONE);
 			ownedRegions.erase(ownedRegions.begin() + i);
 		}
 		else

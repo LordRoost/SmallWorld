@@ -15,7 +15,7 @@ static int victoryPointBank=515;
 
 class PlayGame {
 public:
-    TurnMarker getTurnMarker();
+    TurnMarker* getTurnMarker();
     
     //Start game methods
     Map getMap();
@@ -36,7 +36,7 @@ private:
     //RaceBannerDeck raceBannerDeck;
     //PowerBadgeDeck powerBadgeDeck;
 	CoinBank coinBank;
-	TurnMarker turnMarker;
+	TurnMarker* turnMarker;
     
     
 };

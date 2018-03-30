@@ -6,7 +6,7 @@ Map PlayGame::getMap(){
     return gameMap;
 }
 
-TurnMarker PlayGame::getTurnMarker(){
+TurnMarker* PlayGame::getTurnMarker(){
     return turnMarker;
 }
 
@@ -35,11 +35,11 @@ void PlayGame::startGame(){
 	
 	}
 	//Turn 1
-	turnMarker = TurnMarker();
+	turnMarker = new TurnMarker();
 }
 
 void PlayGame::firstTurn(){
-    std::cout << "Turn " << turnMarker.getTurnNumber()<<" is beginning" << std::endl;
+    std::cout << "Turn " << turnMarker->getTurnNumber()<<" is beginning" << std::endl;
     
     for (std::vector<int>::size_type i = 0; i < players.size(); i++) {
         Player *pointer = &players[i];
@@ -49,13 +49,13 @@ void PlayGame::firstTurn(){
         
     }
     
-    
+    std::cout << "Turn " << turnMarker->getTurnNumber()<<" is ending" << std::endl;
 }
 
 void PlayGame::followingTurns(){
     
-    while(turnMarker.getTurnNumber()<=TOTAL_NUM_TURNS){
-		std::cout << "Turn " << turnMarker.getTurnNumber() <<" is beginning"<< std::endl;
+    while(turnMarker->getTurnNumber()<=TOTAL_NUM_TURNS){
+		std::cout << "Turn " << turnMarker->getTurnNumber() <<" is beginning"<< std::endl;
         for (std::vector<int>::size_type i = 0; i < players.size(); i++) {
             Player *pointer = &players[i];
             
@@ -73,7 +73,7 @@ void PlayGame::followingTurns(){
                     cin>>yorn;
                 }
                 else{
-                    yorn=pointer->getAIStrategy()->aiDecline(turnMarker.getTurnNumber());
+                    yorn=pointer->getAIStrategy()->aiDecline(turnMarker->getTurnNumber());
                 }
             
                 if(yorn=="y"){
@@ -95,10 +95,10 @@ void PlayGame::followingTurns(){
 
         }
         
-        cout<<"Turn "<<turnMarker.getTurnNumber()<<" has ended"<<endl;
+        cout<<"Turn "<<turnMarker->getTurnNumber()<<" has ended"<<endl;
         cout<<endl;
         
-        turnMarker.nextTurn();
+        turnMarker->nextTurn();
     }
 }
 
