@@ -117,14 +117,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Dice.h" />
-    <ClInclude Include="Headers\DominationView.h" />
     <ClInclude Include="Headers\Game.h" />
     <ClInclude Include="Headers\Map.h" />
     <ClInclude Include="Headers\MapRegion.h" />
-    <ClInclude Include="Headers\Observer.h" />
     <ClInclude Include="Headers\Players.h" />
     <ClInclude Include="Headers\PlayGame.h" />
-    <ClInclude Include="Headers\Subject.h" />
     <ClInclude Include="Headers\Tokens.h" />
     <ClInclude Include="Headers\TurnMarker.h" />
   </ItemGroup>
@@ -138,8 +135,6 @@
     <ClCompile Include="Map\Map.cpp" />
     <ClCompile Include="Map\MapDriver.cpp" />
     <ClCompile Include="Map\MapRegion.cpp" />
-    <ClCompile Include="ObserverPattern\Observer.cpp" />
-    <ClCompile Include="ObserverPattern\Subject.cpp" />
     <ClCompile Include="Players\Player.cpp" />
     <ClCompile Include="Players\PlayerDriver.cpp" />
     <ClCompile Include="Players\ScoringDriver.cpp" />
@@ -156,7 +151,6 @@
     <ClCompile Include="Tokens\TokensDriver.cpp" />
     <ClCompile Include="Tokens\VictoryCoin.cpp" />
     <ClCompile Include="TurnMarker\TurnMarker.cpp" />
-    <ClCompile Include="Views\DominationView.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

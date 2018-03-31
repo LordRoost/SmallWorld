@@ -10,13 +10,13 @@
 #define NUM_OF_10S 30
 #define NUM_OF_5S 24
 #define NUM_OF_3S 20
-#define NUM_OF_1S 500 //temporary
+#define NUM_OF_1S 35
 #define TOTAL_NUM_COINS 109
 #define NUM_OF_RACE_BANNERS 14
 #define NUM_OF_POWERS 20
 #define ALCHEMIST_NUM_COINS 2
 #define WEALTHY_NUM_COINS 7 //number of coins given by wealthy special power
-#define MAX_NUM_MOUNTAIN_TOKENS 10
+#define MAX_NUM_MOUNTAIN_TOKENS 9
 #define MAX_NUM_FORTRESS_TOKENS 6
 #define MAX_NUM_TROLL_LAIR_TOKENS 10
 #define MAX_NUM_ENCAMPMENT_TOKENS 5

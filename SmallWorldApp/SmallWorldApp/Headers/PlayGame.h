@@ -6,7 +6,6 @@
 //#include "Tokens.h"
 #include "Game.h"
 #include "TurnMarker.h"
-#include "Subject.h"
 
 //static const string mapFilesPath="/Users/ericpayettereformed/Documents/Smallworld/MapFiles/";
 static const string mapFilesPath = "C:/Users/luoja/Documents/Github/SmallWorld/MapFiles/";
@@ -14,7 +13,7 @@ static const string mapFilesPath = "C:/Users/luoja/Documents/Github/SmallWorld/M
 static int victoryPointBank=515;
 
 
-class PlayGame : public Subject {
+class PlayGame {
 public:
     TurnMarker* getTurnMarker();
     

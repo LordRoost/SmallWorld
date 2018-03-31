@@ -31,8 +31,6 @@ void PlayGame::startGame(){
 	MapRegion *m = tempGraph[1];
 	gameMap.getAdgacentTerritories(m);
 
-
-
 	//Make victory coins in bank
 	coinBank = CoinBank();
 	
