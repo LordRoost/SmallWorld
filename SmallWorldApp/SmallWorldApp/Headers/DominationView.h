@@ -10,6 +10,7 @@ as the map state changes and be visible at all times during game play.*/
 
 class DominationView : public Observer{
 public:
+	//hi
 	//DominationView();
 	DominationView(PlayGame* game);
 	DominationView(Player* player);
