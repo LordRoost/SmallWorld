@@ -6,17 +6,27 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+
 #define NUM_OF_10S 30
 #define NUM_OF_5S 24
 #define NUM_OF_3S 20
-#define NUM_OF_1S 35
+#define NUM_OF_1S 500 //temporary
 #define TOTAL_NUM_COINS 109
 #define NUM_OF_RACE_BANNERS 14
 #define NUM_OF_POWERS 20
+#define ALCHEMIST_NUM_COINS 2
+#define WEALTHY_NUM_COINS 7 //number of coins given by wealthy special power
+#define MAX_NUM_MOUNTAIN_TOKENS 10
+#define MAX_NUM_FORTRESS_TOKENS 6
+#define MAX_NUM_TROLL_LAIR_TOKENS 10
+#define MAX_NUM_ENCAMPMENT_TOKENS 5
+#define MAX_NUM_HOLES_IN_THE_GROUND_TOKENS 2
+#define MAX_NUM_HEROES_TOKENS 2
+#define MAX_NUM_DRAGON_TOKENS 1
 
 enum races {
 	RACE_AMAZONS, RACE_DWARVES, RACE_ELVES, RACE_GHOULS, RACE_GIANTS, RACE_HALFLINGS, RACE_HUMANS, 
-	RACE_ORCS, RACE_RATMEN, RACE_SKELETONS, RACE_SORCERERS, RACE_TRITONS, RACE_TROLLS, RACE_WIZARDS, TOTAL_RACES //RACE_LOST_TRIBES
+	RACE_ORCS, RACE_RATMEN, RACE_SKELETONS, RACE_SORCERERS, RACE_TRITONS, RACE_TROLLS, RACE_WIZARDS, TOTAL_RACES, RACE_NONE 
 };
 
 enum powers {
@@ -24,12 +34,13 @@ enum powers {
 	POWER_HILL, POWER_MERCHANT, POWER_MOUNTED, POWER_PILLAGING, POWER_SEAFARING, POWER_SPIRIT, POWER_STOUT, POWER_SWAMP, POWER_UNDERWORLD, POWER_WEALTHY, TOTAL_POWERS
 };
 
+
 struct RaceInfo {
 	races race;
 	std::string raceName;
 	int amountTokensReceived;
 	int totalAmount;
-	//power still needed to be added
+    int aggressivePoint;
 };
 
 
@@ -37,7 +48,7 @@ struct PowerInfo {
 	powers power;
 	std::string powerName;
 	int amountTokensReceived;
-	//special ability still needed to be added
+    int aggressivePoint;
 };
 
 class Token {
@@ -76,6 +87,7 @@ public:
 private:
 };
 
+//coins with which to determind the winner of the game. Can also be spent during picking of races and powers
 class VictoryCoin {
 public:
 	VictoryCoin() {}
@@ -89,7 +101,7 @@ private:
 	int value;
 };
 
-
+//the banner with the race that the user can choose
 class RaceBanner {
 public:
 	RaceBanner();
@@ -104,12 +116,14 @@ public:
 	int getAmountTokensReceived();
 	void setAmountTokensReceived(int tokens);
 	void decline();
+    int getAggressivePoint();
 
 private:
 	bool isActive;
 	std::string name;
 	int amountOfTokensReceived;
 	races race;
+    int aggressivePoint;
 };
 
 class RaceBannerDeck {
@@ -128,9 +142,11 @@ private:
 
 };
 
+//the badges with the powers that teh player can choose
 class PowerBadge {
 public:
 	PowerBadge() {}
+	~PowerBadge() {}
 	PowerBadge(powers power);
 	powers getPower(); 
 	void setPower(powers newPower);
@@ -138,11 +154,13 @@ public:
 	void setPowerName(std::string newName);
 	int getAmountTokensReceived();
 	void setAmountTokensReceived(int tokens);
+    int getAggressivePoint();
 
 private:
 	powers power;
 	int amountTokensReceived;
 	std::string powerName;
+    int aggressivePoint;
 };
 
 class PowerBadgeDeck {
@@ -154,14 +172,15 @@ public:
 	void buildDeck();
 	PowerBadge* draw();
 	void discardBadge(PowerBadge *powerBadge);
-	void printDeck();
+	void printDeck(); //prints the contents of the deck
 
 private:
 	PowerBadge *badges[NUM_OF_POWERS]; //for initial array
-	std::queue<PowerBadge*> deck;
+	std::queue<PowerBadge*> deck; //actual deck which the players draw from
 
 };
 
+//The pieces that go on teh map, such as mountains, dragons, structures, etc
 class GamePiece {
 public:
 	GamePiece();
@@ -173,6 +192,13 @@ private:
 	//mapRegion currentLocation;
 
 };
+
+class MountainPiece :public GamePiece {
+public:
+	MountainPiece();
+				
+};
+
 
 class MoveablePiece: public GamePiece{ //encampment, hero, dragon
 public:

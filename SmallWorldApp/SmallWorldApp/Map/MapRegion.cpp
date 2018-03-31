@@ -13,6 +13,9 @@ MapRegion::MapRegion() {
 	owner = NULL;
 	isOwned = false;
     isBorder=false;
+	mountainPiece = NULL;
+	nbOfTokens = 0;
+	raceOfOccupants = RACE_NONE;
 }
 
 MapRegion::MapRegion(string s, int _indexOfVertex) {
@@ -24,13 +27,27 @@ MapRegion::MapRegion(string s, int _indexOfVertex) {
 	owner = NULL;
 	isOwned = false;
     indexOfVertex=_indexOfVertex;
-    
+	nbOfTokens = 0;
+	raceOfOccupants = RACE_NONE;
+
     if((rand() % 100) < 40){
         isBorder=true;
     }
     else{
         isBorder=false;
     }
+
+	if (s == "Mountain") {
+		MountainPiece m = MountainPiece();
+		MountainPiece * pointer = &m;
+		mountainPiece = pointer;
+		
+	}
+	else {
+		mountainPiece = NULL;
+		
+	}
+	
 }
 
 MapRegion::MapRegion(regionTypes _type) {
@@ -41,6 +58,8 @@ MapRegion::MapRegion(regionTypes _type) {
 	owner = NULL;
 	isOwned = false;
     isBorder=false;
+	nbOfTokens = 0;
+	raceOfOccupants = RACE_NONE;
 }
 
 
@@ -85,6 +104,10 @@ int MapRegion::getNbTokens() {
 	return nbOfTokens;
 }
 
+races MapRegion::getRaceOfOccupants() {
+	return raceOfOccupants;
+}
+
 LostTribeToken* MapRegion::getLostTribeToken() {
 	return lostTribes;
 }
@@ -96,6 +119,10 @@ int MapRegion::getIndexOfVertex(){
     return indexOfVertex;
 }
 
+void MapRegion::setMountainPiece(MountainPiece *m) {
+	mountainPiece = m;
+	addDefensiveStructure(*m);
+}
 
 void MapRegion::setOwner(Player *newOwner) {
 	owner = newOwner;
@@ -126,9 +153,13 @@ void MapRegion::setIsBorder(bool _isBorder){
     isBorder=_isBorder;
 }
 
+void MapRegion::setRaceOfOccupants(races occupantRace) {
+	raceOfOccupants = occupantRace;
+}
+
 void MapRegion::addRaceTokens(RaceToken race, int amount) {
 	tokens = race;
-	nbOfTokens = amount;
+	nbOfTokens += amount;
 
 }
 
@@ -137,8 +168,21 @@ void MapRegion::addDefensiveStructure(GamePiece piece) {
 }
 
 bool MapRegion::hasLostTribe() {
-	if (lostTribes == NULL)
+	//if (lostTribes == NULL)
+	if(hasTribe == false)
 		return false;
 	else
 		return true;
+}
+
+void MapRegion::setTribe(bool tribe) {
+	hasTribe = tribe;
+}
+
+bool MapRegion::getTribe() {
+	return hasTribe;
+}
+
+void MapRegion::addLostTribeToken() {
+
 }

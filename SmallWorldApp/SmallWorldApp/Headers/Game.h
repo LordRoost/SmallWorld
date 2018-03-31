@@ -3,6 +3,7 @@
 #include "Tokens.h"
 #define MAX_NUMBER_PICKABLE_RACES 6
 #define MAX_NUMBER_PICKABLE_POWERS 6
+#define BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE //this is just to not have the boost outdated message everytime code is run
 
 class Player;
 
@@ -12,6 +13,8 @@ public:
 	void setup();
 	RaceBanner* getPickableRaces();
 	PowerBadge* getPickablePowers();
+    std::vector<RaceBanner*>getAllPickableRaces();
+    std::vector<PowerBadge*> getAllPickablePowers();
 	RaceBanner* getPickableRaces(int index);
 	PowerBadge* getPickablePowers(int index);
 	void printOptions();
@@ -47,4 +50,15 @@ private:
 	std::vector <VictoryCoin> coinValue3;
 	std::vector <VictoryCoin> coinValue5;
 	std::vector <VictoryCoin> coinValue10;
+};
+
+class TokenWell {
+public:
+	TokenWell();
+	std::vector<MountainPiece*> getMountainPieces();
+	void addMountainPieces(MountainPiece *piece);
+	MountainPiece* dealMountain();
+
+private:
+	std::vector<MountainPiece*> mountainPieces;
 };

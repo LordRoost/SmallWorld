@@ -31,6 +31,15 @@
     <Filter Include="Source Files\PlayGame">
       <UniqueIdentifier>{f3d86f05-2548-4937-b883-611439e92dae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\TurnMarker">
+      <UniqueIdentifier>{3bdb20d5-d3d8-496a-b112-cfe2fb6e2286}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Views">
+      <UniqueIdentifier>{42049c5e-a19a-4754-a025-138061d9491f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ObserverPattern">
+      <UniqueIdentifier>{eda1056c-26ad-4760-b1d3-afa4d9d5eff9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Dice.h">
@@ -52,6 +61,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\PlayGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\TurnMarker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\DominationView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Observer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Subject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\AI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -121,6 +145,24 @@
     </ClCompile>
     <ClCompile Include="PlayGame\PlayGameDriver.cpp">
       <Filter>Source Files\PlayGame</Filter>
+    </ClCompile>
+    <ClCompile Include="TurnMarker\TurnMarker.cpp">
+      <Filter>Source Files\TurnMarker</Filter>
+    </ClCompile>
+    <ClCompile Include="Players\ScoringDriver.cpp">
+      <Filter>Source Files\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="Gamefield\TokenWell.cpp">
+      <Filter>Source Files\GameField</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\DominationView.cpp">
+      <Filter>Source Files\Views</Filter>
+    </ClCompile>
+    <ClCompile Include="ObserverPattern\Observer.cpp">
+      <Filter>Source Files\ObserverPattern</Filter>
+    </ClCompile>
+    <ClCompile Include="ObserverPattern\Subject.cpp">
+      <Filter>Source Files\ObserverPattern</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

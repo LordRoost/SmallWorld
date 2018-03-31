@@ -23,7 +23,7 @@ struct RegionInfo {
 	std::string regionName;
 };
 
-static const char * EnumRegionTypes[] = { "Forest", "Farmland", "Mountain","Hill","Swamp" };
+static const char * EnumRegionTypes[] = { "Forest", "Farmland", "Mountain", "Hill", "Swamp" };
 
 
 enum regionBonus {
@@ -46,6 +46,9 @@ public:
 	void addRaceTokens(RaceToken race, int amount);
 	//void addRaceToken(RaceToken *race);
 	void addDefensiveStructure(GamePiece piece);
+	void addLostTribeToken();
+	void setMountainPiece(MountainPiece *m);
+	void setRaceOfOccupants(races occupantRace);
 
 	Player* getOwner();
 	regionTypes getType();
@@ -56,9 +59,12 @@ public:
 	LostTribeToken* getLostTribeToken();
 	vector<GamePiece> getDefensiveStructures();
     bool getIsBorder();
+	races getRaceOfOccupants();
 
 	bool hasLostTribe();
     int getIndexOfVertex();
+	void setTribe(bool tribe);
+	bool getTribe();
 
 private:
 	string typeName;
@@ -67,12 +73,15 @@ private:
 	Player *owner;
 	//std::vector <Token> *tokens;
 	RaceToken tokens;
+	races raceOfOccupants;
 	int nbOfTokens;
 	LostTribeToken *lostTribes; 
 	std::vector<GamePiece> defensiveStructures; //holds game pieces that offer defensive abilities to regions (Mountain, Forteress, Troll Lair and Encampments)
 
     int indexOfVertex;
     bool isBorder;
+	bool hasTribe;
+	MountainPiece *mountainPiece;
 };
 
 #endif
