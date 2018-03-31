@@ -5,14 +5,13 @@
 #include <iostream>
 #include <list>
 #include "Dice.h"
-#include "Subject.h"
 #include "Tokens.h"
 #include "Game.h"
 #include "Map.h"
 #include "PlayGame.h"
 #include "AI.h"
 
-class Player : public Subject{
+class Player {
 public:	
 	Player();
     Player(AI *aiStrategy);
@@ -83,7 +82,6 @@ public:
 	void printCurrentBanner();
 	void printCurrentPower();
 	void sortMapregionVector(std::vector<MapRegion*>*); //sorts a vector of mapregions so that the display is in order
-	double calculateOwnedPercentage(); //gives the % of territory that the player owns
 
 	MapRegion *choiceOfRegion;
 	int occupiedRegionCounter;

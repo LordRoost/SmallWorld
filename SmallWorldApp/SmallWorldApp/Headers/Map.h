@@ -16,11 +16,6 @@
 #include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
 
-#define NUM_REGIONS_2_PLAYER_MAP 20  
-#define NUM_REGIONS_3_PLAYER_MAP 27
-#define NUM_REGIONS_4_PLAYER_MAP 36
-#define NUM_REGIONS_5_PLAYER_MAP 45
-
 using namespace boost;
 using namespace std;
 
