@@ -116,6 +116,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Headers\AI.h" />
     <ClInclude Include="Headers\Dice.h" />
     <ClInclude Include="Headers\DominationView.h" />
     <ClInclude Include="Headers\Game.h" />

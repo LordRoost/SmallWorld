@@ -22,6 +22,11 @@ void DominationView::Update() {
 }
 
 void DominationView::display() {
+
+	//for (size_t i = 0; i < players.size(); i++) {
+
+	//}
+
 	double percentageOfMap = _subjectPlayer->calculateOwnedPercentage();
-	std::cout << "--------------Player " <<"1" << " owns " <<  percentageOfMap << " % of the map.-------------------------" << std::endl;
+	std::cout << "--------------Player " <<"1" << " owns " <<  percentageOfMap << " % of the map-------------------------" << std::endl;
 }

@@ -7,6 +7,8 @@
 #include "Game.h"
 #include "TurnMarker.h"
 #include "Subject.h"
+//#include "Observer.h"
+//#include "DominationView.h"
 
 //static const string mapFilesPath="/Users/ericpayettereformed/Documents/Smallworld/MapFiles/";
 static const string mapFilesPath = "C:/Users/luoja/Documents/Github/SmallWorld/MapFiles/";
@@ -14,7 +16,8 @@ static const string mapFilesPath = "C:/Users/luoja/Documents/Github/SmallWorld/M
 static int victoryPointBank=515;
 
 
-class PlayGame : public Subject {
+
+class PlayGame : public Subject{// : public Observer{
 public:
     TurnMarker* getTurnMarker();
     
@@ -31,10 +34,12 @@ public:
     void firstTurn();
     void followingTurns();
     
+	vector<Player*> players;
+	//vector<DominationView*> views;
     
 private:
     //Map map;
-    vector<Player> players;
+    //vector<Player> players;
 	RacePicker *decks;
     //RaceBannerDeck raceBannerDeck;
     //PowerBadgeDeck powerBadgeDeck;

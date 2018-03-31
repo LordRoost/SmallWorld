@@ -347,6 +347,7 @@ int Player::attackTerritory(MapRegion *region) { //should have user confirm atta
 			addOwnedRegion(region);
 			std::cout << "You have " << calculateCurrentNbUsableTokens(attackingAmount) << " " << getRacebanner()->getName() << " tokens left to attack with." << std::endl;
 			Notify();
+
 			return 1;
 		}
 	}
@@ -365,6 +366,7 @@ int Player::attackTerritory(MapRegion *region) { //should have user confirm atta
 	//cout << "NbOfTokens: " << region->getNbTokens() << endl;
 
 	std::cout << "You have " << calculateCurrentNbUsableTokens(attackingAmount) << " " << getRacebanner()->getName() << " tokens left to attack with." << std::endl;	
+	Notify();
 	return 1;
 }
 
@@ -783,5 +785,5 @@ void Player::sortMapregionVector(std::vector<MapRegion*> *theVector) {
 }
 
 double Player::calculateOwnedPercentage() {
-	return (this->ownedRegions.size() / NUM_REGIONS_2_PLAYER_MAP); //change to proper number depending on number of players
+	return ((double)this->ownedRegions.size() / (double)NUM_REGIONS_2_PLAYER_MAP * 100); //change to proper number depending on number of players
 }

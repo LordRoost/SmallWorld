@@ -27,10 +27,10 @@ void PlayGame::startGame(){
 
 	std::cout << std::endl;
 
+
 	Graph tempGraph = *gameMap.getGraph();
 	MapRegion *m = tempGraph[1];
 	gameMap.getAdgacentTerritories(m);
-
 
 
 	//Make victory coins in bank
@@ -38,8 +38,9 @@ void PlayGame::startGame(){
 	
 	//Give players 5 victory coins of value 1
 	for (std::vector<int>::size_type i = 0; i < players.size(); i++) {
-	Player *pointer = &players[i];
-	coinBank.startingDeal(pointer);
+	//Player *pointer = &players[i];
+		Player *pointer = players[i];
+		coinBank.startingDeal(pointer);
 	
 	}
 	//Turn 1
@@ -50,7 +51,8 @@ void PlayGame::firstTurn(){
     std::cout << "Turn " << turnMarker->getTurnNumber()<<" is beginning" << std::endl;
     
     for (std::vector<int>::size_type i = 0; i < players.size(); i++) {
-        Player *pointer = &players[i];
+        //Player *pointer = &players[i];
+		Player *pointer = players[i];
         pointer->picks_race(decks);
         pointer->conquers();
         pointer->scores(&coinBank);
@@ -65,7 +67,8 @@ void PlayGame::followingTurns(){
     while(turnMarker->getTurnNumber()<=TOTAL_NUM_TURNS){
 		std::cout << "Turn " << turnMarker->getTurnNumber() <<" is beginning"<< std::endl;
         for (std::vector<int>::size_type i = 0; i < players.size(); i++) {
-            Player *pointer = &players[i];
+            //Player *pointer = &players[i];
+			Player *pointer = players[i];
             
 			//cout << "Nb of Regions " << pointer->getOwnedRegions().size() << endl;
 			//cout << "Race Banner of player " << pointer->getRacebanner()->getName() << endl;
@@ -130,7 +133,7 @@ void PlayGame::setNumberOfPlayers(){
     
     for(int i=0; i<nbOfPlayers;i++)
     {
-        Player player;
+        Player *player = new Player();
         if(i==0){
             //player=Player(new moderateAI());
             //player=Player(new defensiveAI());
@@ -142,6 +145,7 @@ void PlayGame::setNumberOfPlayers(){
         
         
         players.push_back(player);
+		//delete(player);
     }
 
 	gameMap.selectMap(nbOfPlayers);
