@@ -83,7 +83,7 @@ public:
 	void printCurrentBanner();
 	void printCurrentPower();
 	void sortMapregionVector(std::vector<MapRegion*>*); //sorts a vector of mapregions so that the display is in order
-	double calculateOwnedPercentage(); //gives the % of territory that the player owns
+	double calculateOwnedPercentage(int nbPlayers); //gives the % of territory that the player owns
 
 	MapRegion *choiceOfRegion;
 	int occupiedRegionCounter;

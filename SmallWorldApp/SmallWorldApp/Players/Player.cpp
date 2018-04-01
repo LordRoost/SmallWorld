@@ -784,6 +784,25 @@ void Player::sortMapregionVector(std::vector<MapRegion*> *theVector) {
 
 }
 
-double Player::calculateOwnedPercentage() {
-	return ((double)this->ownedRegions.size() / (double)NUM_REGIONS_2_PLAYER_MAP * 100); //change to proper number depending on number of players
+double Player::calculateOwnedPercentage(int nbPlayers) { 
+	int totalMapRegions;
+
+	switch (nbPlayers) {
+	case 2: 
+		totalMapRegions = NUM_REGIONS_2_PLAYER_MAP;
+		break;   
+	case 3:
+		totalMapRegions = NUM_REGIONS_3_PLAYER_MAP;
+		break;
+	case 4: 
+		totalMapRegions = NUM_REGIONS_4_PLAYER_MAP;
+		break;
+	case 5: 
+		totalMapRegions = NUM_REGIONS_5_PLAYER_MAP;
+		break;
+	default:
+		std::cout << "Something is wrong" << std::endl;
+	}
+	
+	return ((double)this->ownedRegions.size() / (double)totalMapRegions * 100); 
 }

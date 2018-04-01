@@ -7,46 +7,57 @@
 #include "Game.h"
 #include "TurnMarker.h"
 #include "Subject.h"
-//#include "Observer.h"
 //#include "DominationView.h"
 
 //static const string mapFilesPath="/Users/ericpayettereformed/Documents/Smallworld/MapFiles/";
-static const string mapFilesPath = "C:/Users/luoja/Documents/Github/SmallWorld/MapFiles/";
+static const std::string mapFilesPath = "C:/Users/luoja/Documents/Github/SmallWorld/MapFiles/";
 
 static int victoryPointBank=515;
 
 
 
-class PlayGame : public Subject{// : public Observer{
+class PlayGame : public Subject {
 public:
     TurnMarker* getTurnMarker();
     
     //Start game methods
     Map getMap();
-    string getMapFilesPath();
+    std::string getMapFilesPath();
     void startGame();
     void setNumberOfPlayers();
     void addPiecesToWells();
-	//void addMountainPieces(MountainPiece piece);
-	//MountainPiece dealMountain();
-    
+
+
+	//Player* getCurrentPlayer();
+	int getCurrentPlayerNb();
+	std::string getCurrentPhase();
+	int getCurrentTurn();
+
+	//void setCurrentPlayer(Player* person);
+	void setCurrentPlayerNb(int nb);
+	void setCurrentPhase(std::string phase);
+	void setCurrentTurn();
+
     //First turn methods
     void firstTurn();
     void followingTurns();
-    
-	vector<Player*> players;
-	//vector<DominationView*> views;
+
+	std::vector<Player*> players;
+
     
 private:
+
     //Map map;
     //vector<Player> players;
 	RacePicker *decks;
-    //RaceBannerDeck raceBannerDeck;
-    //PowerBadgeDeck powerBadgeDeck;
 	CoinBank coinBank;
 	TurnMarker* turnMarker;
 	TokenWell tokenWell;
-	//vector<MountainPiece> mountainPieces;
+
+	//Player *currentPlayer;
+	int currentPlayerNb;
+	std::string currentPhase;
+	int currentTurn;
     
     
 };
