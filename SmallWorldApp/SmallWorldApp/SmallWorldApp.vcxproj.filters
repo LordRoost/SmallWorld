@@ -78,6 +78,9 @@
     <ClInclude Include="Headers\AI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Headers\StepView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dice\Dice.cpp">
@@ -149,9 +152,6 @@
     <ClCompile Include="TurnMarker\TurnMarker.cpp">
       <Filter>Source Files\TurnMarker</Filter>
     </ClCompile>
-    <ClCompile Include="Players\ScoringDriver.cpp">
-      <Filter>Source Files\Players</Filter>
-    </ClCompile>
     <ClCompile Include="Gamefield\TokenWell.cpp">
       <Filter>Source Files\GameField</Filter>
     </ClCompile>
@@ -163,6 +163,9 @@
     </ClCompile>
     <ClCompile Include="ObserverPattern\Subject.cpp">
       <Filter>Source Files\ObserverPattern</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\StepView.cpp">
+      <Filter>Source Files\Views</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

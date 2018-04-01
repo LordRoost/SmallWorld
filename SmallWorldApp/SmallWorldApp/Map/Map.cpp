@@ -342,12 +342,10 @@ void Map::getAdgacentTerritories(MapRegion *region){
 
     boost::tie(ai, a_end) = boost::adjacent_vertices(index, g);
     for (; ai != a_end; ai++) {
-        std::cout << *ai << "\t";
         pointer=g[*ai];
         adgacentMapRegions.push_back(pointer);
     }
-    
-    cout<<endl;
+
     
 }
 

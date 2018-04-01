@@ -11,8 +11,39 @@ TurnMarker* PlayGame::getTurnMarker(){
     return turnMarker;
 }
 
+//Player* PlayGame::getCurrentPlayer() {
+//	return currentPlayer;
+//}
+
+int PlayGame::getCurrentPlayerNb() {
+	return currentPlayerNb;
+}
+
+std::string PlayGame::getCurrentPhase() {
+	return currentPhase;
+}
+
+int PlayGame::getCurrentTurn() {
+	return currentTurn;
+}
+
+//void PlayGame::setCurrentPlayer(Player* person) {
+//	currentPlayer = person;
+//}
+
+void PlayGame::setCurrentPlayerNb(int nb) {
+	currentPlayerNb = nb;
+}
+
+void PlayGame::setCurrentPhase(std::string phase) {
+	currentPhase = phase;
+}
+
+void PlayGame::setCurrentTurn() {
+	currentTurn = turnMarker->getTurnNumber();
+}
+
 void PlayGame::startGame(){
-    
 
   //gameMap.selectMap(mapFilesPath);
   //gameMap.getAllBorders();
@@ -28,9 +59,9 @@ void PlayGame::startGame(){
 	std::cout << std::endl;
 
 
-	Graph tempGraph = *gameMap.getGraph();
-	MapRegion *m = tempGraph[1];
-	gameMap.getAdgacentTerritories(m);
+	//Graph tempGraph = *gameMap.getGraph();
+	//MapRegion *m = tempGraph[1];
+	//gameMap.getAdgacentTerritories(m);
 
 
 	//Make victory coins in bank
@@ -48,30 +79,43 @@ void PlayGame::startGame(){
 }
 
 void PlayGame::firstTurn(){
-    std::cout << "Turn " << turnMarker->getTurnNumber()<<" is beginning" << std::endl;
+	setCurrentTurn();
+    std::cout << "Turn " << currentTurn <<" is beginning" << std::endl;
     
     for (std::vector<int>::size_type i = 0; i < players.size(); i++) {
         //Player *pointer = &players[i];
 		Player *pointer = players[i];
+		setCurrentPlayerNb(i+1);
+		setCurrentPhase("Picking Race");
+		Notify();
         pointer->picks_race(decks);
+		setCurrentPhase("Conquering");
+		Notify();
         pointer->conquers();
+		setCurrentPhase("Scoring");
+		Notify();
         pointer->scores(&coinBank);
+		setCurrentPhase("End");
+		Notify();
         
     }
     
-    std::cout << "Turn " << turnMarker->getTurnNumber()<<" is ending" << std::endl;
+    std::cout << "Turn " << currentTurn <<" is ending" << std::endl;
 }
 
 void PlayGame::followingTurns(){
     
-    while(turnMarker->getTurnNumber()<=TOTAL_NUM_TURNS){
-		std::cout << "Turn " << turnMarker->getTurnNumber() <<" is beginning"<< std::endl;
+	setCurrentTurn();
+    //while(turnMarker->getTurnNumber()<=TOTAL_NUM_TURNS){
+	while (currentTurn <= TOTAL_NUM_TURNS) {
+		std::cout << "Turn " << currentTurn <<" is beginning"<< std::endl;
         for (std::vector<int>::size_type i = 0; i < players.size(); i++) {
             //Player *pointer = &players[i];
 			Player *pointer = players[i];
+			setCurrentPlayerNb(i + 1);
+			setCurrentPhase("Decline");
+			Notify();
             
-			//cout << "Nb of Regions " << pointer->getOwnedRegions().size() << endl;
-			//cout << "Race Banner of player " << pointer->getRacebanner()->getName() << endl;
             string yorn;
             
             if(!pointer->getInDecline()){
@@ -84,32 +128,45 @@ void PlayGame::followingTurns(){
                     cin>>yorn;
                 }
                 else{
-                    yorn=pointer->getAIStrategy()->aiDecline(turnMarker->getTurnNumber());
+                    yorn=pointer->getAIStrategy()->aiDecline(currentTurn);
                 }
             
                 if(yorn=="y"){
                     pointer->declineRace();
                 }
                 else{
+					setCurrentPhase("Readying Troops");
+					Notify();
                     pointer->readyTroops();
+					setCurrentPhase("Conquering");
+					Notify();
                     pointer->conquers();
                 }
             }
             
             else{
                 pointer->setInDecline(false);
+				setCurrentPhase("Picking Race");
+				Notify();
                 pointer->picks_race(decks);
+				setCurrentPhase("Conquering");
+				Notify();
                 pointer->conquers();
                 
-            }
+            }			
+			setCurrentPhase("Scoring");
+			Notify();
             pointer->scores(&coinBank);
 
         }
         
-        cout<<"Turn "<<turnMarker->getTurnNumber()<<" has ended"<<endl;
+		setCurrentPhase("End");
+		Notify();
+        cout<<"Turn "<< currentTurn <<" has ended"<<endl;
         cout<<endl;
         
         turnMarker->nextTurn();
+
     }
 }
 
@@ -153,16 +210,6 @@ void PlayGame::setNumberOfPlayers(){
 }
 
 void PlayGame::addPiecesToWells(){
-    
-    //raceBannerDeck=RaceBannerDeck();
-    //raceBannerDeck.buildDeck();
-    //raceBannerDeck.shuffle();
-    //raceBannerDeck.printDeck();
-    //
-    //powerBadgeDeck=PowerBadgeDeck();
-    //powerBadgeDeck.buildDeck();
-    //powerBadgeDeck.shuffle();
-    //powerBadgeDeck.printDeck();
 
 	decks = new RacePicker();
 	decks->setup();
@@ -173,19 +220,6 @@ void PlayGame::addPiecesToWells(){
 		tokenWell.addMountainPieces(mountain);
 	}
 
-    
-    //Mountains and fortresses dragon etc
-    //lost tribes
-    //to be made as child classes of gamepiece
 }
 
-//void PlayGame::addMountainPieces(MountainPiece piece) {
-//	mountainPieces.push_back(piece);
-//}
-//
-//MountainPiece PlayGame::dealMountain() {
-//	
-//	MountainPiece aMountain = mountainPieces.back();
-//	mountainPieces.pop_back();
-//	return aMountain;
-//}
+
