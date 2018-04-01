@@ -63,11 +63,6 @@ MapRegion::MapRegion(regionTypes _type) {
 }
 
 
-//const char * MapRegion::getTextForEnumRegionTypes(int enumVal)
-//{
-//	return EnumRegionTypes[enumVal];
-//}
-
 Player* MapRegion::getOwner() {
 	return owner;
 }
@@ -88,13 +83,6 @@ bool MapRegion::getOwnershipStatus() {
 	return isOwned;
 }
 
-//RaceToken MapRegion::getRaceToken() {
-//	return tokens.front();
-//}
-//
-//int MapRegion::getNbTokens() {
-//	return tokens.size();
-//}
 
 RaceToken MapRegion::getRaceToken() {
 	return tokens;
@@ -126,7 +114,8 @@ void MapRegion::setMountainPiece(MountainPiece *m) {
 
 void MapRegion::setOwner(Player *newOwner) {
 	owner = newOwner;
-	setOwnershipStatus(true);
+	if(owner != NULL)
+		setOwnershipStatus(true);
 }
 
 void MapRegion::setName(string newName) {
@@ -185,4 +174,12 @@ bool MapRegion::getTribe() {
 
 void MapRegion::addLostTribeToken() {
 
+}
+
+void MapRegion::vacate() {
+	lostTribes = NULL;
+	owner = NULL;
+	isOwned = false;
+	nbOfTokens = 0;
+	raceOfOccupants = RACE_NONE;
 }

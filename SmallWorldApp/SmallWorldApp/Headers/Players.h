@@ -65,6 +65,7 @@ public:
 	bool finalAttack(MapRegion *region);
 	void redeploy();
 	void readyTroops();
+	void abandonRegion();
 	int calculateAttackThreshold(MapRegion *region);
 	void removeEnemyTokens(MapRegion *region);
 	void removeOwnedRegion(MapRegion *region);

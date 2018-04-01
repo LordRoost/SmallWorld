@@ -66,6 +66,8 @@ public:
 	void setTribe(bool tribe);
 	bool getTribe();
 
+	void vacate(); //empties the region and resets it to a clean slate
+
 private:
 	string typeName;
 	regionTypes type;

@@ -101,13 +101,14 @@ void PlayGame::firstTurn(){
     }
     
     std::cout << "Turn " << currentTurn <<" is ending" << std::endl;
+	turnMarker->nextTurn();
 }
 
 void PlayGame::followingTurns(){
     
-	setCurrentTurn();
     //while(turnMarker->getTurnNumber()<=TOTAL_NUM_TURNS){
 	while (currentTurn <= TOTAL_NUM_TURNS) {
+		setCurrentTurn();
 		std::cout << "Turn " << currentTurn <<" is beginning"<< std::endl;
         for (std::vector<int>::size_type i = 0; i < players.size(); i++) {
             //Player *pointer = &players[i];
@@ -135,6 +136,16 @@ void PlayGame::followingTurns(){
                     pointer->declineRace();
                 }
                 else{
+
+					char abandonAnswer = '0';
+
+					std::cout << "Do you wish to abandon some regions? (y/n)" << std::endl;
+					std::cin >> abandonAnswer;
+					if (abandonAnswer == 'y') {
+						setCurrentPhase("Abandoning Regions");
+						Notify();
+						pointer->abandonRegion();
+					}
 					setCurrentPhase("Readying Troops");
 					Notify();
                     pointer->readyTroops();

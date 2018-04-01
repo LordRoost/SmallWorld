@@ -87,11 +87,11 @@ int Player::getNbOfUsableTokens() {
 	return nbOfUseableTokens;
 }
 
-std::vector<MapRegion*> Player::getOwnedRegions() { // ?????
+std::vector<MapRegion*> Player::getOwnedRegions() { 
 	return ownedRegions;
 }
 
-std::vector<MapRegion*> Player::getAttackableRegions() { // ?????
+std::vector<MapRegion*> Player::getAttackableRegions() { 
 	return attackableRegions;
 }
 
@@ -157,11 +157,11 @@ void Player::addVictoryCoin1s(VictoryCoin ones) {
 	owned1s.push_back(ones);
 }
 
-void Player::addOwnedRegion(MapRegion *region) { //????
+void Player::addOwnedRegion(MapRegion *region) { 
 	ownedRegions.push_back(region);
 }
 
-void Player::addAttackableRegion(MapRegion *region) { //????
+void Player::addAttackableRegion(MapRegion *region) { 
 	attackableRegions.push_back(region);
 }
 
@@ -400,6 +400,33 @@ void Player::readyTroops() {
 	std::cout << "You have " << nbOfUseableTokens << " tokens to attack with." << std::endl;
 }
 
+void Player::abandonRegion() {
+	std::cout << "Abandoning regions" << std::endl;
+	std::cout << "Which regions to you wish to abandon? (Enter q to stop abandoning regions)" << std::endl;
+
+	char answer = '0';
+
+	while (answer != 'q' && getOwnedRegions().size() > 0) {
+		for (size_t i = 0; i < getOwnedRegions().size(); i++) {
+			std::cout << getOwnedRegions()[i]->getIndexOfVertex() << "\t";
+		}
+		std::cout << std::endl;
+		std::cin >> answer;
+		for (size_t i = 0; i < getOwnedRegions().size(); i++) {
+			int temp = answer-'0';
+			if (temp == getOwnedRegions()[i]->getIndexOfVertex()) {
+				this->returnTokensToHand(getOwnedRegions()[i]->getNbTokens());
+				getOwnedRegions()[i]->vacate();
+				this->removeOwnedRegion(getOwnedRegions()[i]);
+
+				std::cout << "You have abandoned region " << answer << std::endl;
+			}
+		}
+
+	}
+
+}
+
 //Lets a player redeploy their tokens
 void Player::redeploy() {
 	std::cout << "Redeployment phase" << std::endl;
@@ -477,7 +504,6 @@ void Player::removeOwnedRegion(MapRegion *region) {
 		if (region == ownedRegions[i]) {
 
 			ownedRegions.erase(ownedRegions.begin() + i); //remove the region from former owner's owned
-			//cout << "I am erasing at " << i << endl;
 		}
 	}
 }
@@ -698,14 +724,9 @@ void Player::findAllAdjacentTerritories() {
 	
 	bool notHasRegion = true;
 
-	//cout << "Number of owned regions: " << ownedRegions.size() << endl;
-
 	for (size_t i = 0; i < ownedRegions.size(); i++) {
 
 		gameMap.getAdgacentTerritories(ownedRegions[i]);
-
-		//cout << "Number of adj regions: " << gameMap.adgacentMapRegions.size() << endl; //works fine
-
 
 		for (size_t j = 0; j < gameMap.adgacentMapRegions.size(); j++) {
 			
@@ -718,7 +739,7 @@ void Player::findAllAdjacentTerritories() {
 					}
 
 				}
-				//std::cout << gameMap.adgacentMapRegions[j]->getIndexOfVertex() << "\t";
+
 				if (notHasRegion == false)
 					break;
 				attackableRegions.push_back(gameMap.adgacentMapRegions[j]);
@@ -727,7 +748,6 @@ void Player::findAllAdjacentTerritories() {
 
 		}
 	}
-	//cout << "Number of Attackable regions: "<< attackableRegions.size() << endl;
 
 	sortMapregionVector(&attackableRegions);
 
@@ -736,15 +756,6 @@ void Player::findAllAdjacentTerritories() {
 	}
 
 }
-
-//void Player::calculateUsableTokens(PowerBadge power, RaceBanner banner) {
-//
-//	int amountFromPower, amountFromRace;
-//	amountFromPower = power.getAmountTokensReceived();
-//	amountFromRace = banner.getAmountTokensReceived();
-//
-//	setNbOfUsableTokens(amountFromPower + amountFromRace);
-//}
 
 void Player::printAmountTokens() {
 	std::cout << "Tokens in hand: " << getNbOfUsableTokens() << std::endl;

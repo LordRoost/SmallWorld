@@ -11,6 +11,7 @@ public:
 	DominationView(Player* player, PlayGame *game);
 	~DominationView();
 	void Update();
+	void barDisplay(int nb);
 	void display();
 
 
