@@ -1,9 +1,10 @@
 #pragma once
 #include "Observer.h"
 #include "PlayGame.h"
+#include "GamesStatisticsDecorator.h"
 
 
-class StepView : public Observer {
+class StepView : public GameStatistics, public Observer {
 public:
 
 	StepView(PlayGame* game);
@@ -13,4 +14,5 @@ public:
 
 private:
 	PlayGame * _subject;
+    GameStatistics* g;
 };

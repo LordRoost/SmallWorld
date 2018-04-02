@@ -1,14 +1,16 @@
 #include "../Headers/DominationView.h"
 
-DominationView::DominationView(Player* player, PlayGame *game) {
+DominationView::DominationView(Player* player, PlayGame *game, GameStatistics* _g) {
 	_subjectPlayer = player;
 	_subjectPlayer->Attach(this);
 	theGame = game;
+    g=_g;
 }
 
 
 DominationView::~DominationView() {
 	_subjectPlayer->Detach(this);
+    
 }
 
 void DominationView::Update() {
