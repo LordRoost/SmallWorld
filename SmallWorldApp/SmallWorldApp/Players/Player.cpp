@@ -402,6 +402,12 @@ void Player::readyTroops() {
 
 void Player::abandonRegion() {
 	std::cout << "Abandoning regions" << std::endl;
+
+	if (getOwnedRegions().size() == 0) {
+		std::cout << "You have no regions!" << std::endl;
+		return;
+	}
+
 	std::cout << "Which regions to you wish to abandon? (Enter q to stop abandoning regions)" << std::endl;
 
 	char answer = '0';
@@ -430,41 +436,43 @@ void Player::abandonRegion() {
 //Lets a player redeploy their tokens
 void Player::redeploy() {
 	std::cout << "Redeployment phase" << std::endl;
+	char userAnswer = '0';
 
-	std::cout << "Do you wish to redeploy your units? (y or n)" << std::endl;
-	char userAnswer;
+	while (userAnswer != 'y' && userAnswer != 'n') {
+		std::cout << "Do you wish to redeploy your units? (y or n)" << std::endl;
 
-    if(aiStrategy==NULL){
-        std::cin >> userAnswer;
-    }
-    else{
-        userAnswer='y';
-        cout<<aiStrategy->getName()<<" that he about redeploying"<<endl;
-        cout<<"He wants to redeploy"<<endl;
-    }
-	
-	if (userAnswer == 'n') {
-		placeAllTokensOnMap();
-		return;
-	}
-	else if (userAnswer == 'y') {
-		int temp = 0;
-		//int responseRegion, responseAdd;
-		setRedeployableTokens(0);
-
-		for (size_t i = 0; i < getOwnedRegions().size(); i++) {
-			temp = (getOwnedRegions()[i]->getNbTokens()) - 1;
-			getOwnedRegions()[i]->setNbTokens(1);
-			redeployableTokens += temp;
+		if (aiStrategy == NULL) {
+			std::cin >> userAnswer;
 		}
-		redeployableTokens += getNbOfUsableTokens();
-		setNbOfUsableTokens(0);
+		else {
+			userAnswer = 'y';
+			cout << aiStrategy->getName() << " that he about redeploying" << endl;
+			cout << "He wants to redeploy" << endl;
+		}
 
-		deployment(redeployableTokens);
-		
-	}
-	else {
-		std::cout << "please enter y or n!" << std::endl;
+		if (userAnswer == 'n') {
+			placeAllTokensOnMap();
+			return;
+		}
+		else if (userAnswer == 'y') {
+			int temp = 0;
+			//int responseRegion, responseAdd;
+			setRedeployableTokens(0);
+
+			for (size_t i = 0; i < getOwnedRegions().size(); i++) {
+				temp = (getOwnedRegions()[i]->getNbTokens()) - 1;
+				getOwnedRegions()[i]->setNbTokens(1);
+				redeployableTokens += temp;
+			}
+			redeployableTokens += getNbOfUsableTokens();
+			setNbOfUsableTokens(0);
+
+			deployment(redeployableTokens);
+
+		}
+		else {
+			std::cout << "please enter y or n!" << std::endl;
+		}
 	}
 }
 
@@ -508,9 +516,10 @@ void Player::removeOwnedRegion(MapRegion *region) {
 	}
 }
 
-void Player::declineRace(){
+void Player::declineRace(RacePicker *picker){
 
 	cout << "Declining " << this->getRacebanner()->getName() <<endl;
+	picker->discardDeclined(this->getRacebanner(),this->getPowerBadge());
 
 	for (std::vector<int>::size_type i = 0; i < ownedRegions.size(); i++) {
 		MapRegion* tempRegion = ownedRegions[i];
@@ -537,6 +546,7 @@ void Player::declineRace(){
 	currentRace = RACE_NONE;
     setPowerBadge(NULL);
     setRaceBanner(NULL);
+
 
 	cout << "Decline end" << endl;
 }

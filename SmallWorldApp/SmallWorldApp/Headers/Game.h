@@ -20,6 +20,7 @@ public:
 	void printOptions();
 	void replaceChoices(int index);
 	int calculateTotalTokens(int index);
+	void discardDeclined(RaceBanner *discardedBanner, PowerBadge *discardedBadge);
 
 private:
 	RaceBannerDeck *bannerDeck;

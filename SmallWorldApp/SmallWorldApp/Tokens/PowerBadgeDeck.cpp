@@ -16,6 +16,11 @@ void PowerBadgeDeck::shuffle() {
 	std::shuffle(std::begin(badges), std::end(badges), std::default_random_engine(seed));
 }
 
+void PowerBadgeDeck::shuffleDiscard() {
+	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+	std::shuffle(std::begin(badgeDiscardPile), std::end(badgeDiscardPile), std::default_random_engine(seed));
+}
+
 void PowerBadgeDeck::buildDeck() {
 	shuffle();
 	for (int i = 0; i < NUM_OF_POWERS; i++) {
@@ -31,8 +36,7 @@ PowerBadge* PowerBadgeDeck::draw() {
 
 //when a player makes a race go into decline, the power gets discarded using this method
 void PowerBadgeDeck::discardBadge(PowerBadge *badge) {
-	discardPile.push_back(*badge);
-	//deck.push(badge);
+	badgeDiscardPile.push_back(badge);
 }
 
 //prints the contents of the powers deck
@@ -41,4 +45,8 @@ void PowerBadgeDeck::printDeck() {
 	for (int i = 0; i < NUM_OF_POWERS; i++) {
 		std::cout << badges[i]->getPowerName() << std::endl;
 	}
+}
+
+void PowerBadgeDeck::addBadge(PowerBadge *badge) {
+	deck.push(badge);
 }

@@ -69,7 +69,7 @@ public:
 	int calculateAttackThreshold(MapRegion *region);
 	void removeEnemyTokens(MapRegion *region);
 	void removeOwnedRegion(MapRegion *region);
-    void declineRace();
+    void declineRace(RacePicker *picker);
 
 	//various utility methods
 	void placeAllTokensOnMap();//Places all tokens that users have in hand in one of their owned territories.

@@ -133,7 +133,7 @@ void PlayGame::followingTurns(){
                 }
             
                 if(yorn=="y"){
-                    pointer->declineRace();
+                    pointer->declineRace(decks);
                 }
                 else{
 

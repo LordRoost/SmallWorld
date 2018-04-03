@@ -131,10 +131,14 @@ public:
 	RaceBannerDeck();
 	~RaceBannerDeck() {}
 	void shuffle();
+	void shuffleDiscard();
 	void buildDeck();
 	RaceBanner* draw();
-	void putBannerBack(RaceBanner *banner);
+	void discardBanner(RaceBanner *banner);
 	void printDeck();
+	void addBanner(RaceBanner *banner);
+
+	std::deque<RaceBanner*> bannerDiscardPile;
 
 private:
 	RaceBanner *banners[NUM_OF_RACE_BANNERS]; //for initial array
@@ -142,7 +146,7 @@ private:
 
 };
 
-//the badges with the powers that teh player can choose
+//the badges with the powers that the player can choose
 class PowerBadge {
 public:
 	PowerBadge() {}
@@ -165,14 +169,16 @@ private:
 
 class PowerBadgeDeck {
 public:
-	std::vector<PowerBadge> discardPile; //should later be made private
+	std::deque<PowerBadge*> badgeDiscardPile; //should later be made private
 	PowerBadgeDeck();
 	~PowerBadgeDeck() {}
 	void shuffle();
+	void shuffleDiscard();
 	void buildDeck();
 	PowerBadge* draw();
 	void discardBadge(PowerBadge *powerBadge);
 	void printDeck(); //prints the contents of the deck
+	void addBadge(PowerBadge *badge);
 
 private:
 	PowerBadge *badges[NUM_OF_POWERS]; //for initial array
