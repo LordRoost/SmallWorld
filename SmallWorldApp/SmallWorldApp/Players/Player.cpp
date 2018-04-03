@@ -16,6 +16,7 @@ Player::Player() {
 	currentRace = RACE_NONE;
 	choiceOfRegion = NULL;
     aiStrategy=NULL;
+	nbScoredCoinsPower = 0;
 }
 
 //Player constructor
@@ -32,6 +33,7 @@ Player::Player(AI *_aiStrategy) {
     currentRace = RACE_NONE;
     choiceOfRegion = NULL;
     aiStrategy=_aiStrategy;
+	nbScoredCoinsPower = 0;
 }
 
 AI *Player::getAIStrategy(){
@@ -261,7 +263,6 @@ void Player::conquers() {
 		}
 	}
 	lastAttack = false;
-	redeploy();
 }
 
 //First attack of the user, which must be on a border region
@@ -555,6 +556,7 @@ void Player::declineRace(RacePicker *picker){
 
 void Player::scores(CoinBank *bank) { 
 	bank->deal1s(this, ownedRegions.size());
+	nbScoredCoinsPower = 0;
 	std::cout << "You have scored " << ownedRegions.size() << " points from your regions this turn." << std::endl;
 
 	int bonusCoins;
@@ -564,6 +566,7 @@ void Player::scores(CoinBank *bank) {
 		case POWER_ALCHEMIST:
 			bank->deal1s(this, ALCHEMIST_NUM_COINS);
 			std::cout << "You have scored " << ALCHEMIST_NUM_COINS << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+			nbScoredCoinsPower = ALCHEMIST_NUM_COINS;
 			break;
 
 		case POWER_FOREST:
@@ -575,6 +578,7 @@ void Player::scores(CoinBank *bank) {
 			}
 			bank->deal1s(this, bonusCoins);
 			std::cout << "You have scored " << bonusCoins << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+			nbScoredCoinsPower = bonusCoins;
 			break;
 
 		case POWER_HILL:
@@ -586,16 +590,19 @@ void Player::scores(CoinBank *bank) {
 			}
 			bank->deal1s(this, bonusCoins);
 			std::cout << "You have scored " << bonusCoins << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+			nbScoredCoinsPower = bonusCoins;
 			break;
 
 		case POWER_MERCHANT:
 			bank->deal1s(this, ownedRegions.size());
 			std::cout << "You have scored " << ownedRegions.size() << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+			nbScoredCoinsPower = getOwnedRegions().size();
 			break;
 
 		case POWER_PILLAGING:
 			bank->deal1s(this, occupiedRegionCounter);
 			std::cout << "You have scored " << occupiedRegionCounter << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+			nbScoredCoinsPower = occupiedRegionCounter;
 			break;
 
 		case POWER_SWAMP:
@@ -607,12 +614,14 @@ void Player::scores(CoinBank *bank) {
 			}
 			bank->deal1s(this, bonusCoins);
 			std::cout << "You have scored " << bonusCoins << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+			nbScoredCoinsPower = bonusCoins;
 			break;
 
 		case POWER_WEALTHY:
 			if (wealthyClaimed == false) {
 				bank->deal1s(this, WEALTHY_NUM_COINS);
 				std::cout << "You have scored " << WEALTHY_NUM_COINS << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+				nbScoredCoinsPower = WEALTHY_NUM_COINS;
 				wealthyClaimed = true; //must set back to false after geting rid of power
 			}
 			break;
@@ -621,6 +630,7 @@ void Player::scores(CoinBank *bank) {
 		}
 	}
 	std::cout << "You have " << this->getVictoryCoin1s().size() << " total coins" << std::endl;
+	Notify();
 }
 
 

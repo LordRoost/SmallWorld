@@ -88,6 +88,7 @@ public:
 
 	MapRegion *choiceOfRegion;
 	int occupiedRegionCounter;
+	int nbScoredCoinsPower;
 
 private:
 	std::vector<MapRegion*> ownedRegions;

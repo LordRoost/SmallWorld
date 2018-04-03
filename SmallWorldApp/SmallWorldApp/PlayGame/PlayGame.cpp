@@ -92,6 +92,9 @@ void PlayGame::firstTurn(){
 		setCurrentPhase("Conquering");
 		Notify();
         pointer->conquers();
+		setCurrentPhase("Redeploying");
+		Notify();
+		pointer->redeploy();
 		setCurrentPhase("Scoring");
 		Notify();
         pointer->scores(&coinBank);

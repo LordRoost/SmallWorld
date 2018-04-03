@@ -40,6 +40,9 @@
     <Filter Include="Source Files\ObserverPattern">
       <UniqueIdentifier>{eda1056c-26ad-4760-b1d3-afa4d9d5eff9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Decorator">
+      <UniqueIdentifier>{424f1700-25af-4ede-be5c-e47ecadfc83b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Dice.h">
@@ -80,6 +83,21 @@
     </ClInclude>
     <ClInclude Include="Headers\StepView.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\DominationDecorator.h">
+      <Filter>Header Files\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\VictoryCoinDecorator.h">
+      <Filter>Header Files\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\GameStatsDecorator.h">
+      <Filter>Header Files\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\GameStatsInterface.h">
+      <Filter>Header Files\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\GameStats.h">
+      <Filter>Header Files\Decorator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -165,6 +183,15 @@
       <Filter>Source Files\ObserverPattern</Filter>
     </ClCompile>
     <ClCompile Include="Views\StepView.cpp">
+      <Filter>Source Files\Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\DominationDecorator.cpp">
+      <Filter>Source Files\Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\GameStats.cpp">
+      <Filter>Source Files\Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\VictoryCoinDecorator.cpp">
       <Filter>Source Files\Views</Filter>
     </ClCompile>
   </ItemGroup>
