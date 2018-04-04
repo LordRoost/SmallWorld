@@ -145,6 +145,7 @@
     <ClCompile Include="Map\Map.cpp" />
     <ClCompile Include="Map\MapDriver.cpp" />
     <ClCompile Include="Map\MapRegion.cpp" />
+    <ClCompile Include="ObserverDriver.cpp" />
     <ClCompile Include="ObserverPattern\Observer.cpp" />
     <ClCompile Include="ObserverPattern\Subject.cpp" />
     <ClCompile Include="Players\Player.cpp" />

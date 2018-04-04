@@ -2,6 +2,7 @@
 
 DominationDecorator::~DominationDecorator() {
 	_subject->Detach(this);
+	
 }
 
 void DominationDecorator::Update() {

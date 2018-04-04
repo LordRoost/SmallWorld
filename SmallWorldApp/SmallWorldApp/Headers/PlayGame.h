@@ -7,7 +7,11 @@
 #include "Game.h"
 #include "TurnMarker.h"
 #include "Subject.h"
+#include "GameStats.h"
+//#include "GameStatsInterface.h"
 //#include "DominationView.h"
+//#include "DominationDecorator.h"
+//#include "VictoryCoinDecorator.h"
 
 //static const string mapFilesPath="/Users/ericpayettereformed/Documents/Smallworld/MapFiles/";
 static const std::string mapFilesPath = "C:/Users/luoja/Documents/Github/SmallWorld/MapFiles/";
@@ -42,7 +46,10 @@ public:
     void firstTurn();
     void followingTurns();
 
+	void decoratorPrompt(Player *player);
+
 	std::vector<Player*> players;
+	//GameStatsInterface *gs;
 
     
 private:
@@ -58,6 +65,7 @@ private:
 	int currentPlayerNb;
 	std::string currentPhase;
 	int currentTurn;
+	//bool statusDecorators = true;
     
     
 };

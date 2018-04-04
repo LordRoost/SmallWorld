@@ -194,5 +194,8 @@
     <ClCompile Include="Views\VictoryCoinDecorator.cpp">
       <Filter>Source Files\Views</Filter>
     </ClCompile>
+    <ClCompile Include="ObserverDriver.cpp">
+      <Filter>Source Files\PlayGame</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

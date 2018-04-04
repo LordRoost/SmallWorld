@@ -1,6 +1,13 @@
 #include "../Headers/PlayGame.h"
+//#include "../Headers/GameStats.h"
+#include "../Headers/DominationDecorator.h"
+#include "../Headers/VictoryCoinDecorator.h"
+
+//class DominationDecorator;
+//class VictoryCoindecorator;
 
 Map gameMap;
+GameStatsInterface *gs; 
 //extern Map gameMap;
 
 Map PlayGame::getMap(){
@@ -45,9 +52,6 @@ void PlayGame::setCurrentTurn() {
 
 void PlayGame::startGame(){
 
-  //gameMap.selectMap(mapFilesPath);
-  //gameMap.getAllBorders();
-
 	tokenWell = TokenWell();
 
 	addPiecesToWells();
@@ -58,18 +62,11 @@ void PlayGame::startGame(){
 
 	std::cout << std::endl;
 
-
-	//Graph tempGraph = *gameMap.getGraph();
-	//MapRegion *m = tempGraph[1];
-	//gameMap.getAdgacentTerritories(m);
-
-
 	//Make victory coins in bank
 	coinBank = CoinBank();
 	
 	//Give players 5 victory coins of value 1
 	for (std::vector<int>::size_type i = 0; i < players.size(); i++) {
-	//Player *pointer = &players[i];
 		Player *pointer = players[i];
 		coinBank.startingDeal(pointer);
 	
@@ -79,12 +76,15 @@ void PlayGame::startGame(){
 }
 
 void PlayGame::firstTurn(){
+	//gs = new GameStats(this); //comment back for decorator demo
 	setCurrentTurn();
     std::cout << "Turn " << currentTurn <<" is beginning" << std::endl;
     
     for (std::vector<int>::size_type i = 0; i < players.size(); i++) {
-        //Player *pointer = &players[i];
+
 		Player *pointer = players[i];
+		//decoratorPrompt(pointer); //comment back for decorator demo
+	
 		setCurrentPlayerNb(i+1);
 		setCurrentPhase("Picking Race");
 		Notify();
@@ -109,13 +109,13 @@ void PlayGame::firstTurn(){
 
 void PlayGame::followingTurns(){
     
-    //while(turnMarker->getTurnNumber()<=TOTAL_NUM_TURNS){
 	while (currentTurn <= TOTAL_NUM_TURNS) {
 		setCurrentTurn();
 		std::cout << "Turn " << currentTurn <<" is beginning"<< std::endl;
         for (std::vector<int>::size_type i = 0; i < players.size(); i++) {
-            //Player *pointer = &players[i];
 			Player *pointer = players[i];
+			//decoratorPrompt(pointer); //comment out for observerdemo
+
 			setCurrentPlayerNb(i + 1);
 			setCurrentPhase("Decline");
 			Notify();
@@ -147,7 +147,7 @@ void PlayGame::followingTurns(){
 					if (abandonAnswer == 'y') {
 						setCurrentPhase("Abandoning Regions");
 						Notify();
-						pointer->abandonRegion();
+						pointer->abandonRegion(); //comment out for AI demo
 					}
 					setCurrentPhase("Readying Troops");
 					Notify();
@@ -206,12 +206,12 @@ void PlayGame::setNumberOfPlayers(){
     {
         Player *player = new Player();
         if(i==0){
-            //player=Player(new moderateAI());
-            //player=Player(new defensiveAI());
+            //player = new Player(new moderateAI()); //uncomment for AI demo
+            //player = new Player(new defensiveAI()); //uncomment for AI demo
         }
         else{
-            //player=Player(new randomAI());
-            //player=Player(new aggressiveAI());
+            //player = new Player(new randomAI()); //uncomment for AI demo
+            //player = new Player(new aggressiveAI()); //uncomment for AI demo
         }
         
         
@@ -227,7 +227,6 @@ void PlayGame::addPiecesToWells(){
 
 	decks = new RacePicker();
 	decks->setup();
-	//decks->printOptions();
 
 	for (int i = 0; i < MAX_NUM_MOUNTAIN_TOKENS; i++) {
 		MountainPiece *mountain = new MountainPiece;
@@ -236,4 +235,119 @@ void PlayGame::addPiecesToWells(){
 
 }
 
+void PlayGame::decoratorPrompt(Player *player) {
+	char decoAnswer = '0';
+	char chosenDeco = '0';
+	char chosenRemoveDeco = '0';
+	int temp,tempRemove;
+	if (player->statusDecorators == true) {
+		while (decoAnswer != 'y' && decoAnswer != 'n' &&decoAnswer != 'q') {
+			std::cout << "Do you want to add decorators to the Game Stats view? Enter q if you do not want to be prompted again in the future. Enter r if you want to remove decorators instead. (y/n/r/q)" << std::endl;
+			std::cin >> decoAnswer;
+			if (decoAnswer == 'y') {
+				std::cout << "You can add: " << std::endl << "1. Domination Observer Decorator" << std::endl << "2. Victory Coins Observer Decorator" << std::endl;
+				std:cout << "Enter n to stop adding." << std::endl;
 
+				while (chosenDeco != '1' && chosenDeco != '2'&& chosenDeco != 'n') {
+					std::cout << "Enter the number of the decorator that you want to add: " << std::endl;
+					std::cin >> chosenDeco;
+					temp = chosenDeco - '0';
+					if (temp == 1 && player->decoDominationCheck == false) {
+
+						gs = new DominationDecorator(gs, this, player);
+						player->decoDominationCheck = true;
+						std::cout << "You have added a Domination Observer Decorator." << std::endl;
+						chosenDeco = '0';
+					}
+					else if (temp == 1 && player->decoDominationCheck == true) {
+						std::cout << "You already have a Domination Observer Decorator!" << std::endl;
+						chosenDeco = '0';
+					}
+					else if (temp == 2 && player->decoCoinsCheck == false) {
+						gs = new VictoryCoinDecorator(gs, this, player);
+						player->decoCoinsCheck = true;
+						std::cout << "You have added a Victory Coin Observer Decorator." << std::endl;
+						chosenDeco = '0';
+					}
+					else if (temp == 2 && player->decoCoinsCheck == true) {
+						std::cout << "You already have a Victory Coin Observer Decorator!" << std::endl;
+						chosenDeco = '0';
+					}
+					else if (chosenDeco == 'n') {
+						chosenDeco = '0';
+						break;
+					}
+					else {
+						std::cout << "Please enter the correct number!" << std::endl;
+					}
+				}
+				
+			}
+			else if (decoAnswer == 'n') {
+				std::cout << "You have chosen not to add any decorators this turn." << std::endl;
+				break;
+			}
+			else if (decoAnswer == 'r') {
+				std::cout << "Which decorator do you wish to remove?" << std::endl << "1. Domination Observer Decorator" << std::endl << "2. Victory Coins Observer Decorator" << std::endl;
+				std::cout << "Enter n to stop adding." << std::endl;
+
+				while (chosenRemoveDeco != '1' && chosenRemoveDeco != '2'&& chosenRemoveDeco != 'n') {
+					std::cout << "Enter the number of the decorator that you want to remove: " << std::endl;
+					std::cin >> chosenRemoveDeco;
+					tempRemove = chosenRemoveDeco - '0';
+					if (tempRemove == 1 && player->decoDominationCheck == true) {
+						if (player->decoCoinsCheck == true) {
+							//GameStatsInterface *newGameStats = new VictoryCoinDecorator(new GameStats(this), this, player);
+							delete(gs);
+							gs = new VictoryCoinDecorator(new GameStats(this), this, player);
+							player->decoDominationCheck = false;
+							chosenRemoveDeco = '0';
+						}
+						else {
+							//GameStatsInterface *newGameStats = new GameStats(this);
+							delete(gs);
+							gs = new GameStats(this);
+							player->decoDominationCheck = false;
+							chosenRemoveDeco = '0';
+						}
+					}
+					else if (tempRemove == 1 && player->decoDominationCheck == false) {
+						std::cout << "You don't have a Domination Observer Decorator!" << std::endl;
+						chosenRemoveDeco = '0';
+					}
+					else if (tempRemove == 2 && player->decoCoinsCheck == true) {
+						if (player->decoDominationCheck == true) {
+							gs = new DominationDecorator(new GameStats(this), this, player);
+							player->decoCoinsCheck = false;
+							chosenRemoveDeco = '0';
+						}
+						else {
+							gs = new GameStats(this);
+							player->decoCoinsCheck = false;
+							chosenRemoveDeco = '0';
+						}
+					}
+					else if (tempRemove == 2 && player->decoCoinsCheck == false) {
+						std::cout << "You don't have a Victory Coin Observer Decorator!" << std::endl;
+						chosenRemoveDeco = '0';
+					}
+					else if (chosenRemoveDeco == 'n') {
+						chosenRemoveDeco = '0';
+						break;
+					}
+					else {
+						std::cout << "Please enter the correct number!" << std::endl;
+					}
+				}
+			}
+			else if (decoAnswer == 'q') {
+				player->statusDecorators = false;
+				std::cout << "You have chosen not to add any decorators. You will no longer be messaged about decorators." << std::endl;
+				break;
+			}
+			else {
+				std::cout << "Please enter y/n or q!" << std::endl;
+			}
+		}
+	}
+}

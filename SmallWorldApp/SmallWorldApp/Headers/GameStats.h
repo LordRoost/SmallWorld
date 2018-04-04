@@ -2,6 +2,8 @@
 #include "GameStatsInterface.h"
 //#include "PlayGame.h"
 
+class PlayGame;
+
 class GameStats : public GameStatsInterface {
 public:
 

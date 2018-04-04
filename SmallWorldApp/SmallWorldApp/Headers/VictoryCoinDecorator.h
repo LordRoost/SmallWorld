@@ -4,7 +4,6 @@
 
 class VictoryCoinDecorator : public GameStatsDecorator {
 public:
-	//VictoryCoinDecorator(GameStatsInterface *decoratedGameStats) : GameStatsDecorator(decoratedGameStats) {}
 	VictoryCoinDecorator(GameStatsInterface *decoratedGameStats, PlayGame* game, Player* aPlayer) : GameStatsDecorator(decoratedGameStats) {
 		_subject = aPlayer;
 		_subject->Attach(this);

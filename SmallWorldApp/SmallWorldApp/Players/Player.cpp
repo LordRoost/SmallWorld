@@ -17,6 +17,9 @@ Player::Player() {
 	choiceOfRegion = NULL;
     aiStrategy=NULL;
 	nbScoredCoinsPower = 0;
+	statusDecorators = true;
+	decoDominationCheck = false;
+	decoCoinsCheck = false;
 }
 
 //Player constructor
@@ -34,6 +37,9 @@ Player::Player(AI *_aiStrategy) {
     choiceOfRegion = NULL;
     aiStrategy=_aiStrategy;
 	nbScoredCoinsPower = 0;
+	statusDecorators = true;
+	decoDominationCheck = false;
+	decoCoinsCheck = false;
 }
 
 AI *Player::getAIStrategy(){
@@ -401,6 +407,7 @@ void Player::readyTroops() {
 	std::cout << "You have " << nbOfUseableTokens << " tokens to attack with." << std::endl;
 }
 
+//This code works, it just needs to be commented out when demo-ing AI.
 void Player::abandonRegion() {
 	std::cout << "Abandoning regions" << std::endl;
 

@@ -1,5 +1,6 @@
 #include "../Headers/GameStats.h"
 #include "../Headers/PlayGame.h"
+#include <iostream>
 
 
 GameStats::GameStats(PlayGame* game) {
@@ -10,6 +11,7 @@ GameStats::GameStats(PlayGame* game) {
 
 GameStats::~GameStats() {
 	_subject->Detach(this);
+	cout << "hi" << endl;
 }
 
 void GameStats::Update() {

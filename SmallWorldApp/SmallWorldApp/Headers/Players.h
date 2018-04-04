@@ -65,7 +65,7 @@ public:
 	bool finalAttack(MapRegion *region);
 	void redeploy();
 	void readyTroops();
-	void abandonRegion();
+	void abandonRegion(); //needs to be commented out for AI demo
 	int calculateAttackThreshold(MapRegion *region);
 	void removeEnemyTokens(MapRegion *region);
 	void removeOwnedRegion(MapRegion *region);
@@ -89,6 +89,9 @@ public:
 	MapRegion *choiceOfRegion;
 	int occupiedRegionCounter;
 	int nbScoredCoinsPower;
+	bool statusDecorators;
+	bool decoDominationCheck;
+	bool decoCoinsCheck;
 
 private:
 	std::vector<MapRegion*> ownedRegions;
