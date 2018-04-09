@@ -198,4 +198,7 @@
       <Filter>Source Files\PlayGame</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
 </Project>

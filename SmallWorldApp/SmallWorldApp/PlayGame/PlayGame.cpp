@@ -196,6 +196,10 @@ void PlayGame::setNumberOfPlayers(){
         if(nbOfPlayers>1&&nbOfPlayers<6){
             break;
         }
+		else if (cin.fail()) {
+			cin.clear();
+			cin.ignore();
+		}
         
         cout<<"Number of Players you entered is invalid, please try again"<<endl;
     }

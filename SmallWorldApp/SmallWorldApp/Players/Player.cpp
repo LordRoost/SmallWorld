@@ -182,16 +182,30 @@ void Player::picks_race(RacePicker *picker) {
     
     if(aiStrategy==NULL){
         std::cin >> answer;
+		if (cin.fail()) {
+			cin.clear();
+			cin.ignore();
+		}
     }
     else{
         cout<< aiStrategy->getName()<<endl;
         answer=aiStrategy->pickPowerRace(picker->getAllPickableRaces(),picker->getAllPickablePowers());
     }
 
-	if ((answer != 1) && (answer != 2) && (answer != 3) && (answer != 4) && (answer != 5) && (answer != 6)) {
-		std::cout << "Please enter a number from 1 to 6" <<std::endl;
+	while (true) {
+
+		if ((answer > 0) && (answer < 7)) {
+			break;
+		}
+		else if (cin.fail()) {
+			cin.clear();
+			cin.ignore();
+		}
+		std::cout << "Please enter a number from 1 to 6" << std::endl;
 		std::cin >> answer;
 	}
+
+
 
 	setPowerBadge(picker->getPickablePowers(answer - 1));
 	setRaceBanner(picker->getPickableRaces(answer - 1));
@@ -243,6 +257,10 @@ void Player::conquers() {
             
             if(aiStrategy==NULL){
                 std::cin >> theChoice;
+				if (cin.fail()) {
+					cin.clear();
+					cin.ignore();
+				}
             }
             else{
                 theChoice=aiStrategy->aiConquers(this, attackableRegions);
@@ -293,6 +311,10 @@ void Player::firstConquest() { //what if firstconquest is also last??
 	while (breakFree == false) {
         if(aiStrategy==NULL){
             std::cin >> playerChoice;
+			if (cin.fail()) {
+				cin.clear();
+				cin.ignore();
+			}
         }
         else{
             playerChoice=aiStrategy->aiConquers(this, gameMap.borderRegions);
@@ -451,6 +473,10 @@ void Player::redeploy() {
 
 		if (aiStrategy == NULL) {
 			std::cin >> userAnswer;
+			if (cin.fail()) {
+				cin.clear();
+				cin.ignore();
+			}
 		}
 		else {
 			userAnswer = 'y';
@@ -678,6 +704,10 @@ void Player::deployment(int nbOfTokens) {
 
 			if (aiStrategy == NULL) {
 				std::cin >> responseRegion;
+				if (cin.fail()) {
+					cin.clear();
+					cin.ignore();
+				}
 			}
 			else {
 				cout << aiStrategy->getName() << " about region to deploy" << endl;
@@ -692,6 +722,10 @@ void Player::deployment(int nbOfTokens) {
 
 					if (aiStrategy == NULL) {
 						std::cin >> responseAdd;
+						if (cin.fail()) {
+							cin.clear();
+							cin.ignore();
+						}
 					}
 					else {
 						cout << aiStrategy->getName() << " about number of tokens to deploy" << endl;
@@ -704,10 +738,18 @@ void Player::deployment(int nbOfTokens) {
 						if (responseAdd > nbOfTokens) {
 							std::cout << "Please enter a number that isn't bigger than the amount of tokens you have to place!" << std::endl;
 							std::cin >> responseAdd;
+							if (cin.fail()) {
+								cin.clear();
+								cin.ignore();
+							}
 						}
 						else if (responseAdd < 0) {
-							std::cout << "Oh no!! What is you doing! Do not enter negative numbers!" << std::endl;
+							std::cout << "Oh no!! What are you doing! Do not enter bogus values!" << std::endl;
 							std::cin >> responseAdd;
+							if (cin.fail()) {
+								cin.clear();
+								cin.ignore();
+							}
 						}
 						else
 							bogusInputs = false;

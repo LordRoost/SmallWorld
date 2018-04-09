@@ -1,3 +1,5 @@
+#ifndef __GAMESTATS_H__
+#define __GAMESTATS_H__
 #pragma once
 #include "GameStatsInterface.h"
 //#include "PlayGame.h"
@@ -18,3 +20,5 @@ public:
 protected:
 	PlayGame * _subject;
 };
+
+#endif //__GAMESTATS_H__

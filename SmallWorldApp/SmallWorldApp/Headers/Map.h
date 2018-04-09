@@ -1,5 +1,5 @@
-#ifndef Map_H
-#define Map_H
+#ifndef __MAP_H__
+#define __MAP_H__
 
 #include <stdio.h>
 #include "Game.h"
@@ -58,5 +58,5 @@ private:
 
 };
 
-#endif
+#endif //__MAP_H__
 

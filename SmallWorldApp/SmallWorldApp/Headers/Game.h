@@ -1,3 +1,5 @@
+#ifndef __GAME_H__
+#define __GAME_H__
 #pragma once
 
 #include "Tokens.h"
@@ -63,3 +65,5 @@ public:
 private:
 	std::vector<MountainPiece*> mountainPieces;
 };
+
+#endif //__GAME_H__
