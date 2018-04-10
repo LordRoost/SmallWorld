@@ -9,9 +9,10 @@
 //DominationView;
 
 
-int mainer(){	
+int main(){	
 
     PlayGame game1;
+	int word;
 	
 	//GameStatsInterface *gs = new GameStats(&game1);
 
@@ -37,7 +38,7 @@ int mainer(){
     
     std::cout<<"game ended"<<std::endl;
 
-    
+	cin >> word;
     return 0;
 }
 

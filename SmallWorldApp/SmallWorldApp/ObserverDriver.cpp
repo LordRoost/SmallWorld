@@ -3,7 +3,7 @@
 #include "Headers/DominationView.h"
 
 
-int main() {
+int mainer() {
 
 	PlayGame game1;
 	int word;
