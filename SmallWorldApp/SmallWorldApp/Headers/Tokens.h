@@ -129,7 +129,7 @@ private:
 class RaceBannerDeck {
 public:
 	RaceBannerDeck();
-	~RaceBannerDeck() {}
+	~RaceBannerDeck();
 	void shuffle();
 	void shuffleDiscard();
 	void buildDeck();
@@ -171,7 +171,7 @@ class PowerBadgeDeck {
 public:
 	std::deque<PowerBadge*> badgeDiscardPile; //should later be made private
 	PowerBadgeDeck();
-	~PowerBadgeDeck() {}
+	~PowerBadgeDeck();
 	void shuffle();
 	void shuffleDiscard();
 	void buildDeck();
@@ -186,16 +186,14 @@ private:
 
 };
 
-//The pieces that go on teh map, such as mountains, dragons, structures, etc
+//The pieces that go on the map, such as mountains, dragons, structures, etc
 class GamePiece {
 public:
 	GamePiece();
 	~GamePiece() {}
-	//mapRegion getLocation();
-	//void setLocation(mapRegion location);
 
 private:
-	//mapRegion currentLocation;
+
 
 };
 

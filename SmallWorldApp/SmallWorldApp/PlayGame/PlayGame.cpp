@@ -6,6 +6,15 @@
 Map gameMap;
 GameStatsInterface *gs; 
 
+PlayGame::PlayGame() {
+	decks = NULL;
+	turnMarker = NULL;
+	theWinner = NULL;
+	tokenWell = NULL;
+	coinBank = NULL;
+	totalTurns = 10;
+}
+
 Map PlayGame::getMap(){
     return gameMap;
 }
@@ -26,6 +35,14 @@ int PlayGame::getCurrentTurn() {
 	return currentTurn;
 }
 
+int PlayGame::getTotalTurns() {
+	return totalTurns;
+}
+
+Player* PlayGame::getWinner() {
+	return theWinner;
+}
+
 void PlayGame::setCurrentPlayerNb(int nb) {
 	currentPlayerNb = nb;
 }
@@ -38,25 +55,44 @@ void PlayGame::setCurrentTurn() {
 	currentTurn = turnMarker->getTurnNumber();
 }
 
+void PlayGame::setTotalTurns(int nbPlayers) {
+	if (nbPlayers == 2 || nbPlayers == 3) {
+		totalTurns = TOTAL_NUM_TURNS_2_PLAYERS;
+	}
+	else if (nbPlayers == 4) {
+		totalTurns = TOTAL_NUM_TURNS_4_PLAYERS;
+	}
+	else if (nbPlayers == 5) {
+		totalTurns = TOTAL_NUM_TURNS_5_PLAYERS;
+	}
+	else {
+		std::cout << "Something went wrong. The number of players is wrong." << std::endl;
+	}
+}
+
+void PlayGame::setWinner(Player* aPlayer) {
+	theWinner = aPlayer;
+}
+
 void PlayGame::startGame(){
 
-	tokenWell = TokenWell();
+	tokenWell = new TokenWell();
 
 	addPiecesToWells();
 
-	gameMap.initialize(&tokenWell);
+	gameMap.initialize(tokenWell);
 
 	setNumberOfPlayers();
 
 	std::cout << std::endl;
 
 	//Make victory coins in bank
-	coinBank = CoinBank();
+	coinBank = new CoinBank();
 	
 	//Give players 5 victory coins of value 1
 	for (std::vector<int>::size_type i = 0; i < players.size(); i++) {
 		Player *pointer = players[i];
-		coinBank.startingDeal(pointer);
+		coinBank->startingDeal(pointer);
 	
 	}
 	//Turn 1
@@ -86,7 +122,7 @@ void PlayGame::firstTurn(){
 		pointer->redeploy();
 		setCurrentPhase("Scoring");
 		Notify();
-        pointer->scores(&coinBank);
+        pointer->scores(coinBank);
 		setCurrentPhase("End");
 		Notify();
         
@@ -98,7 +134,7 @@ void PlayGame::firstTurn(){
 
 void PlayGame::followingTurns(){
     
-	while (currentTurn <= TOTAL_NUM_TURNS) {
+	while (currentTurn < totalTurns) {
 		setCurrentTurn();
 		std::cout << "Turn " << currentTurn <<" is beginning"<< std::endl;
         for (std::vector<int>::size_type i = 0; i < players.size(); i++) {
@@ -131,12 +167,12 @@ void PlayGame::followingTurns(){
 
 					char abandonAnswer = '0';
 
-					std::cout << "Do you wish to abandon some regions? (y/n)" << std::endl;
-					std::cin >> abandonAnswer;
+					//std::cout << "Do you wish to abandon some regions? (y/n)" << std::endl;
+					//std::cin >> abandonAnswer;
 					if (abandonAnswer == 'y') {
 						setCurrentPhase("Abandoning Regions");
 						Notify();
-						pointer->abandonRegion(); //comment out for AI demo
+						//pointer->abandonRegion(); //comment out for AI demo
 					}
 					setCurrentPhase("Readying Troops");
 					Notify();
@@ -166,7 +202,7 @@ void PlayGame::followingTurns(){
 
 			setCurrentPhase("Scoring");
 			Notify();
-            pointer->scores(&coinBank);
+            pointer->scores(coinBank);
 
         }
         
@@ -206,21 +242,21 @@ void PlayGame::setNumberOfPlayers(){
     {
         Player *player = new Player();
         if(i==0){
-            //player = new Player(new moderateAI()); //uncomment for AI demo
-            //player = new Player(new defensiveAI()); //uncomment for AI demo
+            player = new Player(new moderateAI()); //uncomment for AI demo
+            player = new Player(new defensiveAI()); //uncomment for AI demo
         }
         else{
-            //player = new Player(new randomAI()); //uncomment for AI demo
-            //player = new Player(new aggressiveAI()); //uncomment for AI demo
+            player = new Player(new randomAI()); //uncomment for AI demo
+            player = new Player(new aggressiveAI()); //uncomment for AI demo
         }
         
         
         players.push_back(player);
-		//delete(player);
     }
 
 	gameMap.selectMap(nbOfPlayers);
 	gameMap.getAllBorders();
+	setTotalTurns(nbOfPlayers);
 }
 
 void PlayGame::addPiecesToWells(){
@@ -230,7 +266,7 @@ void PlayGame::addPiecesToWells(){
 
 	for (int i = 0; i < MAX_NUM_MOUNTAIN_TOKENS; i++) {
 		MountainPiece *mountain = new MountainPiece;
-		tokenWell.addMountainPieces(mountain);
+		tokenWell->addMountainPieces(mountain);
 	}
 
 }
@@ -246,7 +282,7 @@ void PlayGame::decoratorPrompt(Player *player) {
 			std::cin >> decoAnswer;
 			if (decoAnswer == 'y') {
 				std::cout << "You can add: " << std::endl << "1. Domination Observer Decorator" << std::endl << "2. Victory Coins Observer Decorator" << std::endl;
-				std:std::cout << "Enter n to stop adding." << std::endl;
+				std::cout << "Enter n to stop adding." << std::endl;
 
 				while (chosenDeco != '1' && chosenDeco != '2'&& chosenDeco != 'n') {
 					std::cout << "Enter the number of the decorator that you want to add: " << std::endl;
@@ -350,4 +386,38 @@ void PlayGame::decoratorPrompt(Player *player) {
 			}
 		}
 	}
+}
+
+void PlayGame::deleteAll() {
+	delete(decks);
+	delete(turnMarker);
+	delete(tokenWell);
+	delete(coinBank);
+
+	decks = NULL;
+	turnMarker = NULL;
+	tokenWell = NULL;
+	coinBank = NULL;
+
+	for (std::vector<int>::size_type i = 0; i < players.size(); i++) {
+		delete players[i];
+		players[i] = NULL;
+	}
+
+	theWinner = NULL;
+}
+
+void PlayGame::findWinner() {
+	theWinner = players[0];
+	int currentWinnerNb = 0;
+
+	for (std::vector<int>::size_type i = 0; i < players.size(); i++) {
+		Player *pointer = players[i];
+		if (theWinner->getVictoryCoin1s().size() < pointer->getVictoryCoin1s().size()) {
+			setWinner(pointer);
+			currentWinnerNb = i;
+		}
+	}
+	currentWinnerNb += 1;
+	std::cout << "The winner is player " << currentWinnerNb << " with " << theWinner->getVictoryCoin1s().size() << " Victory Coins." << std::endl;
 }

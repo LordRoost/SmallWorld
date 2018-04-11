@@ -149,9 +149,6 @@
     <ClCompile Include="Tokens\Token.cpp">
       <Filter>Source Files\Tokens</Filter>
     </ClCompile>
-    <ClCompile Include="Tokens\TokensDriver.cpp">
-      <Filter>Source Files\Tokens</Filter>
-    </ClCompile>
     <ClCompile Include="Tokens\VictoryCoin.cpp">
       <Filter>Source Files\Tokens</Filter>
     </ClCompile>

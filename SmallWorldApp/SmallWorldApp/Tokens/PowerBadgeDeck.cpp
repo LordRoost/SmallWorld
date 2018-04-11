@@ -11,6 +11,14 @@ PowerBadgeDeck::PowerBadgeDeck() {
 	}
 }
 
+PowerBadgeDeck::~PowerBadgeDeck() {
+
+	for (unsigned i = POWER_ALCHEMIST; i != TOTAL_POWERS; i++) {
+		delete(badges[i]);
+		badges[i] = NULL;
+	}
+}
+
 void PowerBadgeDeck::shuffle() {
 	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 	std::shuffle(std::begin(badges), std::end(badges), std::default_random_engine(seed));

@@ -158,7 +158,6 @@
     <ClCompile Include="Tokens\RaceBannerDeck.cpp" />
     <ClCompile Include="Tokens\RaceToken.cpp" />
     <ClCompile Include="Tokens\Token.cpp" />
-    <ClCompile Include="Tokens\TokensDriver.cpp" />
     <ClCompile Include="Tokens\VictoryCoin.cpp" />
     <ClCompile Include="TurnMarker\TurnMarker.cpp" />
     <ClCompile Include="Views\DominationDecorator.cpp" />

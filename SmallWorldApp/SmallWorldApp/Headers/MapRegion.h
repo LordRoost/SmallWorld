@@ -35,7 +35,6 @@ public:
 	MapRegion();
 	MapRegion(std::string s,int indexOfVertex);
 	MapRegion(regionTypes regionType);
-	//static const char * getTextForEnumRegionTypes(int enumVal);
 	void setOwner(Player *newOwner);
 	void setType(regionTypes regionType);
 	void setName(std::string newName);
@@ -44,7 +43,6 @@ public:
 	void setLostTribeToken(LostTribeToken *tribe);
     void setIsBorder(bool _isBorder);
 	void addRaceTokens(RaceToken race, int amount);
-	//void addRaceToken(RaceToken *race);
 	void addDefensiveStructure(GamePiece piece);
 	void addLostTribeToken();
 	void setMountainPiece(MountainPiece *m);
@@ -73,7 +71,6 @@ private:
 	regionTypes type;
 	bool isOwned;
 	Player *owner;
-	//std::vector <Token> *tokens;
 	RaceToken tokens;
 	races raceOfOccupants;
 	int nbOfTokens;

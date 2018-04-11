@@ -16,7 +16,7 @@ class Player : public Subject{
 public:	
 	Player();
     Player(AI *aiStrategy);
-	~Player() {}
+	~Player();
 
 	//getters
 	DieRoller getDieRoller();

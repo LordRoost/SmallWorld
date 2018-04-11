@@ -17,46 +17,50 @@ static int victoryPointBank=515;
 
 class PlayGame : public Subject {
 public:
-    TurnMarker* getTurnMarker();
-    
+	PlayGame();
+
     //Start game methods
-    Map getMap();
-    std::string getMapFilesPath();
+	Map getMap();
     void startGame();
     void setNumberOfPlayers();
     void addPiecesToWells();
 
+
+	Player* getWinner();
 	int getCurrentPlayerNb();
 	std::string getCurrentPhase();
 	int getCurrentTurn();
+	int getTotalTurns();
+	TurnMarker* getTurnMarker();
 
+	void setWinner(Player* aPlayer);
 	void setCurrentPlayerNb(int nb);
 	void setCurrentPhase(std::string phase);
 	void setCurrentTurn();
+	void setTotalTurns(int nbPlayers);
 
     //First turn methods
     void firstTurn();
     void followingTurns();
 
 	void decoratorPrompt(Player *player);
+	void deleteAll();
+	void findWinner();
+
 
 	std::vector<Player*> players;
-	//GameStatsInterface *gs;
 
     
 private:
 
-    //Map map;
     //vector<Player> players;
 	RacePicker *decks;
-	CoinBank coinBank;
+	CoinBank* coinBank;
 	TurnMarker* turnMarker;
-	TokenWell tokenWell;
-
+	TokenWell* tokenWell;
+	Player* theWinner;
 	int currentPlayerNb;
 	std::string currentPhase;
 	int currentTurn;
-
-    
-    
+	int totalTurns;
 };

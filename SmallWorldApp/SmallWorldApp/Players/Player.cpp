@@ -42,6 +42,14 @@ Player::Player(AI *_aiStrategy) {
 	decoCoinsCheck = false;
 }
 
+Player::~Player() {
+	currentBadge = NULL;
+	currentRaceBanner = NULL;
+	declinedRaceBanner = NULL;
+	delete(dice);
+	dice = NULL;
+}
+
 AI *Player::getAIStrategy(){
     return aiStrategy;
 }
@@ -849,12 +857,6 @@ void Player::sortMapregionVector(std::vector<MapRegion*> *theVector) {
 			}
 		}
 	}
-
-	//std::cout << "Here are the sorted values" << std::endl;
-	//for (size_t i = 0; i < theVector->size(); i++) {
-	//	std::cout << (*theVector)[i]->getIndexOfVertex()  <<" ";
-	//}
-	////std::cout << std::endl;
 
 }
 

@@ -1,5 +1,4 @@
 #include "../Headers/Tokens.h"
-//#include <array> should use arrays like this?
 #include <iterator>
 #include <random>
 #include <chrono>
@@ -9,6 +8,13 @@ RaceBannerDeck::RaceBannerDeck() {
 	
 	for (unsigned i = RACE_AMAZONS; i != TOTAL_RACES; i++) {
 		banners[i] = new RaceBanner(static_cast<races>(i));
+	}
+}
+
+RaceBannerDeck::~RaceBannerDeck() {
+	for (unsigned i = RACE_AMAZONS; i != TOTAL_RACES; i++) {
+		delete(banners[i]);
+		banners[i] = NULL;
 	}
 }
 

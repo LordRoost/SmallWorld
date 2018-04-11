@@ -6,6 +6,13 @@ RacePicker::RacePicker() {
 	powerDeck = new PowerBadgeDeck();
 }
 
+RacePicker::~RacePicker() {
+	delete(bannerDeck);
+	bannerDeck = NULL;
+	delete(powerDeck);
+	powerDeck = NULL;
+}
+
 void RacePicker::setup() {
 	bannerDeck->shuffle();//need to shuffle multiple times for it to actually work. Need to find out why
 	bannerDeck->shuffle();
