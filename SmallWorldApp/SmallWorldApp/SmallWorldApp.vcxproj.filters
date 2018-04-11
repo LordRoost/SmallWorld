@@ -99,12 +99,12 @@
     <ClInclude Include="Headers\GameStats.h">
       <Filter>Header Files\Decorator</Filter>
     </ClInclude>
+    <ClInclude Include="Headers\UserInputException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dice\Dice.cpp">
-      <Filter>Source Files\Dice</Filter>
-    </ClCompile>
-    <ClCompile Include="Dice\DiceRollerDriver.cpp">
       <Filter>Source Files\Dice</Filter>
     </ClCompile>
     <ClCompile Include="Dice\DieRoller.cpp">
@@ -119,16 +119,10 @@
     <ClCompile Include="Map\Map.cpp">
       <Filter>Source Files\Maps</Filter>
     </ClCompile>
-    <ClCompile Include="Map\MapDriver.cpp">
-      <Filter>Source Files\Maps</Filter>
-    </ClCompile>
     <ClCompile Include="Map\MapRegion.cpp">
       <Filter>Source Files\Maps</Filter>
     </ClCompile>
     <ClCompile Include="Players\Player.cpp">
-      <Filter>Source Files\Players</Filter>
-    </ClCompile>
-    <ClCompile Include="Players\PlayerDriver.cpp">
       <Filter>Source Files\Players</Filter>
     </ClCompile>
     <ClCompile Include="Tokens\GamePiece.cpp">
@@ -200,5 +194,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

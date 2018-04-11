@@ -18,14 +18,14 @@ extern Map gameMap;
 class AI{
 public:
 
-    virtual int pickPowerRace(vector <RaceBanner*> races,vector <PowerBadge*> powers)=0;
-    virtual int aiConquers(Player* aiPlayer,vector<MapRegion*> regions)=0;
-    virtual vector<stack<int>> aiRedeploy(Player* aiPlayer,int redeployabeTokens, vector<MapRegion*> regions)=0;
-    virtual string aiDecline(int turnNb)=0;
-    virtual string getName(){return name;}
+    virtual int pickPowerRace(std::vector <RaceBanner*> races, std::vector <PowerBadge*> powers)=0;
+    virtual int aiConquers(Player* aiPlayer, std::vector<MapRegion*> regions)=0;
+    virtual std::vector<std::stack<int>> aiRedeploy(Player* aiPlayer,int redeployabeTokens, std::vector<MapRegion*> regions)=0;
+    virtual std::string aiDecline(int turnNb)=0;
+    virtual std::string getName(){return name;}
 
 private:
-    string name="AI";
+	std::string name="AI";
 };
 
 
@@ -37,7 +37,7 @@ class aggressiveAI:public AI{
 public:
     
     //Picks power and race combo that is has the most aggressivepoints
-    int pickPowerRace(vector <RaceBanner*> races,vector <PowerBadge*> powers)override{
+    int pickPowerRace(std::vector <RaceBanner*> races, std::vector <PowerBadge*> powers)override{
         
         std::array<int,MAX_NUMBER_PICKABLE_RACES> aggressivePoints;
         
@@ -45,7 +45,7 @@ public:
             
             int test=races[i]->getAggressivePoint()+powers[i]->getAggressivePoint();
             aggressivePoints[i]=races[i]->getAggressivePoint()+powers[i]->getAggressivePoint();
-            cout<<races[i]->getName()<<powers[i]->getPowerName()<<" :tot Aggressive Points: " <<test<<endl;
+			std::cout<<races[i]->getName()<<powers[i]->getPowerName()<<" :tot Aggressive Points: " <<test<< std::endl;
         }
         std::array<int,6> tempAggressivePoints=aggressivePoints;
         std::sort(tempAggressivePoints.begin(),tempAggressivePoints.end());
@@ -59,16 +59,16 @@ public:
     }
     
     //Picks region to conquer that has the most enemytokens
-    int aiConquers(Player* aiPlayer, vector<MapRegion*> regions)override{
+    int aiConquers(Player* aiPlayer, std::vector<MapRegion*> regions)override{
         
-        cout<<"aggressive ai picking vertex to attack"<<endl;
+		std::cout<<"aggressive ai picking vertex to attack"<< std::endl;
         std::vector<int> tempVector;
         for (size_t i = 0; i < regions.size(); i++) {
             
             if(aiPlayer!=regions[i]->getOwner()){
                 tempVector.push_back(regions[i]->getNbTokens());
-                cout<<"Index vertex "<<regions[i]->getIndexOfVertex()<<endl;
-                cout<<"Nb enemy tokens"<<regions[i]->getNbTokens()<<endl;
+				std::cout<<"Index vertex "<<regions[i]->getIndexOfVertex()<< std::endl;
+				std::cout<<"Nb enemy tokens"<<regions[i]->getNbTokens()<< std::endl;
             }
         }
         
@@ -79,7 +79,7 @@ public:
         for (size_t i = 0; i < regions.size(); i++) {
             
             if(aiPlayer!=regions[i]->getOwner()&&nbEnemyTokens==regions[i]->getNbTokens()){
-                cout<<"Aggressive Ai chose"<<regions[i]->getIndexOfVertex()<<endl;
+				std::cout<<"Aggressive Ai chose"<<regions[i]->getIndexOfVertex()<< std::endl;
                 return regions[i]->getIndexOfVertex();
             }
         }
@@ -88,11 +88,11 @@ public:
     }
     
     //all in one place: where theres the most enemy tokens
-    vector<stack<int>> aiRedeploy(Player* aiPlayer,int redeployableTokens, vector<MapRegion*> regions)override{
-        stack<int> nbTokens;
-        stack<int> theRegions;
+	std::vector<std::stack<int>> aiRedeploy(Player* aiPlayer,int redeployableTokens, std::vector<MapRegion*> regions)override{
+		std::stack<int> nbTokens;
+		std::stack<int> theRegions;
         
-        vector<int> enemyTokensOfAllRegions;
+		std::vector<int> enemyTokensOfAllRegions;
         
         int mostEnemyTokens=0;
         
@@ -110,7 +110,7 @@ public:
                 }
             }
             
-            cout<<"Index: "<<regions[i]->getIndexOfVertex()<<" has "<<totEnemyTokens<<" enemy tokens around it"<<endl;
+            std::cout<<"Index: "<<regions[i]->getIndexOfVertex()<<" has "<<totEnemyTokens<<" enemy tokens around it"<<std::endl;
             
             if(mostEnemyTokens<=totEnemyTokens){
                 mostEnemyTokens=totEnemyTokens;
@@ -120,7 +120,7 @@ public:
         theRegions.push(answerRegionIndex);
         nbTokens.push(redeployableTokens);
         
-        vector<stack<int>> answers;
+		std::vector<std::stack<int>> answers;
         answers.push_back(theRegions);
         answers.push_back(nbTokens);
         
@@ -128,26 +128,26 @@ public:
         
     }
     
-    string aiDecline(int turnNb)override{
+	std::string aiDecline(int turnNb)override{
         
         if(turnNb%2==1){
-            cout<<getName()<<" about declining"<<endl;
-            cout<<"He wants to decline"<<endl;
-            cout<<endl;
+            std::cout<<getName()<<" about declining"<<std::endl;
+            std::cout<<"He wants to decline"<<std::endl;
+            std::cout<<std::endl;
             return "y";
         }
         else{
-            cout<<endl;
-            cout<<getName()<<" about declining"<<endl;
-            cout<<"He does not want to decline"<<endl;
+            std::cout<<std::endl;
+            std::cout<<getName()<<" about declining"<<std::endl;
+            std::cout<<"He does not want to decline"<<std::endl;
             return "n";
         }
         
     }
     
-    string getName()override{return name;}
+	std::string getName()override{return name;}
 private:
-    string name="aggressive AI is thinking";
+	std::string name="aggressive AI is thinking";
 };
 
 
@@ -159,7 +159,7 @@ private:
 class defensiveAI:public AI{
 public:
     //Picks power and race combo that is has the least aggressivepoints
-    int pickPowerRace(vector <RaceBanner*> races,vector <PowerBadge*> powers)override{
+    int pickPowerRace(std::vector <RaceBanner*> races, std::vector <PowerBadge*> powers)override{
         
         std::array<int,MAX_NUMBER_PICKABLE_RACES> aggressivePoints;
         
@@ -167,7 +167,7 @@ public:
             
             int test=races[i]->getAggressivePoint()+powers[i]->getAggressivePoint();
             aggressivePoints[i]=races[i]->getAggressivePoint()+powers[i]->getAggressivePoint();
-            cout<<races[i]->getName()<<powers[i]->getPowerName()<<" :tot Aggressive Points: " <<test<<endl;
+            std::cout<<races[i]->getName()<<powers[i]->getPowerName()<<" :tot Aggressive Points: " <<test<<std::endl;
         }
         std::array<int,6> tempAggressivePoints=aggressivePoints;
         std::sort(tempAggressivePoints.begin(),tempAggressivePoints.end());
@@ -181,16 +181,16 @@ public:
     }
     
     //Picks region to conquer that has the least enemytokens
-    int aiConquers(Player* aiPlayer, vector<MapRegion*> regions)override{
+    int aiConquers(Player* aiPlayer, std::vector<MapRegion*> regions)override{
         
-        cout<<"defensive ai picking vertex to attack"<<endl;
+        std::cout<<"defensive ai picking vertex to attack"<<std::endl;
         std::vector<int> tempVector;
         for (size_t i = 0; i < regions.size(); i++) {
             
             if(aiPlayer!=regions[i]->getOwner()){
                 tempVector.push_back(regions[i]->getNbTokens());
-                cout<<"Index vertex "<<regions[i]->getIndexOfVertex()<<endl;
-                cout<<"Nb enemy tokens"<<regions[i]->getNbTokens()<<endl;
+                std::cout<<"Index vertex "<<regions[i]->getIndexOfVertex()<<std::endl;
+                std::cout<<"Nb enemy tokens"<<regions[i]->getNbTokens()<<std::endl;
             }
         }
         
@@ -201,7 +201,7 @@ public:
         for (size_t i = 0; i < regions.size(); i++) {
             
             if(aiPlayer!=regions[i]->getOwner()&&nbEnemyTokens==regions[i]->getNbTokens()){
-                cout<<"defensive Ai chose"<<regions[i]->getIndexOfVertex()<<endl;
+                std::cout<<"defensive Ai chose"<<regions[i]->getIndexOfVertex()<<std::endl;
                 return regions[i]->getIndexOfVertex();
             }
         }
@@ -210,9 +210,9 @@ public:
     }
     
     //equal amount of tokens for every owned regions
-    vector<stack<int>> aiRedeploy(Player* aiPlayer,int redeployableTokens, vector<MapRegion*> regions)override{
-        stack<int> nbTokens;
-        stack<int> theRegions;
+	std::vector<std::stack<int>> aiRedeploy(Player* aiPlayer,int redeployableTokens, std::vector<MapRegion*> regions)override{
+		std::stack<int> nbTokens;
+		std::stack<int> theRegions;
         
         int nbRegions=regions.size();
         int equalTokens=redeployableTokens/nbRegions;
@@ -230,7 +230,7 @@ public:
             }
         }
         
-        vector<stack<int>> answers;
+		std::vector<std::stack<int>> answers;
         answers.push_back(theRegions);
         answers.push_back(nbTokens);
         
@@ -238,26 +238,26 @@ public:
         
     }
     
-    string aiDecline(int turnNb)override{
+	std::string aiDecline(int turnNb)override{
         
         if(turnNb%2==1){
-            cout<<getName()<<" about declining"<<endl;
-            cout<<"He wants to decline"<<endl;
-            cout<<endl;
+            std::cout<<getName()<<" about declining"<<std::endl;
+            std::cout<<"He wants to decline"<<std::endl;
+            std::cout<<std::endl;
             return "y";
         }
         else{
-            cout<<endl;
-            cout<<getName()<<" about declining"<<endl;
-            cout<<"He does not want to decline"<<endl;
+            std::cout<<std::endl;
+            std::cout<<getName()<<" about declining"<<std::endl;
+            std::cout<<"He does not want to decline"<<std::endl;
             return "n";
         }
         
     }
     
-    string getName()override{return name;}
+	std::string getName()override{return name;}
 private:
-    string name="defensive AI is thinking";
+	std::string name="defensive AI is thinking";
 };
 
 
@@ -268,7 +268,7 @@ class moderateAI:public AI{
 public:
 
     //Picks power and race combo that is has medium aggressivepoints
-    int pickPowerRace(vector <RaceBanner*> races,vector <PowerBadge*> powers)override{
+    int pickPowerRace(std::vector <RaceBanner*> races, std::vector <PowerBadge*> powers)override{
         
         std::array<int,MAX_NUMBER_PICKABLE_RACES> aggressivePoints;
         
@@ -276,7 +276,7 @@ public:
             
             int test=races[i]->getAggressivePoint()+powers[i]->getAggressivePoint();
             aggressivePoints[i]=races[i]->getAggressivePoint()+powers[i]->getAggressivePoint();
-            cout<<races[i]->getName()<<powers[i]->getPowerName()<<" :tot Aggressive Points: " <<test<<endl;
+            std::cout<<races[i]->getName()<<powers[i]->getPowerName()<<" :tot Aggressive Points: " <<test<<std::endl;
         }
         std::array<int,6> tempAggressivePoints=aggressivePoints;
         std::sort(tempAggressivePoints.begin(),tempAggressivePoints.end());
@@ -289,16 +289,16 @@ public:
         return 1;
     }
     //does the same as defensiveAi
-    int aiConquers(Player* aiPlayer, vector<MapRegion*> regions)override{
+    int aiConquers(Player* aiPlayer, std::vector<MapRegion*> regions)override{
         
-        cout<<"defensive ai picking vertex to attack"<<endl;
+        std::cout<<"defensive ai picking vertex to attack"<<std::endl;
         std::vector<int> tempVector;
         for (size_t i = 0; i < regions.size(); i++) {
             
             if(aiPlayer!=regions[i]->getOwner()){
                 tempVector.push_back(regions[i]->getNbTokens());
-                cout<<"Index vertex "<<regions[i]->getIndexOfVertex()<<endl;
-                cout<<"Nb enemy tokens"<<regions[i]->getNbTokens()<<endl;
+                std::cout<<"Index vertex "<<regions[i]->getIndexOfVertex()<<std::endl;
+                std::cout<<"Nb enemy tokens"<<regions[i]->getNbTokens()<<std::endl;
             }
         }
         
@@ -309,7 +309,7 @@ public:
         for (size_t i = 0; i < regions.size(); i++) {
             
             if(aiPlayer!=regions[i]->getOwner()&&nbEnemyTokens==regions[i]->getNbTokens()){
-                cout<<"defensive Ai chose"<<regions[i]->getIndexOfVertex()<<endl;
+                std::cout<<"defensive Ai chose"<<regions[i]->getIndexOfVertex()<<std::endl;
                 return regions[i]->getIndexOfVertex();
             }
         }
@@ -318,9 +318,9 @@ public:
     }
     
     //does the same as defensive ai because its the best strategy
-    vector<stack<int>> aiRedeploy(Player* aiPlayer,int redeployableTokens, vector<MapRegion*> regions)override{
-        stack<int> nbTokens;
-        stack<int> theRegions;
+	std::vector<std::stack<int>> aiRedeploy(Player* aiPlayer,int redeployableTokens, std::vector<MapRegion*> regions)override{
+		std::stack<int> nbTokens;
+		std::stack<int> theRegions;
         
         int nbRegions=regions.size();
         int equalTokens=redeployableTokens/nbRegions;
@@ -338,7 +338,7 @@ public:
             }
         }
         
-        vector<stack<int>> answers;
+		std::vector<std::stack<int>> answers;
         answers.push_back(theRegions);
         answers.push_back(nbTokens);
         
@@ -346,26 +346,26 @@ public:
         
     }
     
-    string aiDecline(int turnNb)override{
+	std::string aiDecline(int turnNb)override{
         
         if(turnNb%2==1){
-            cout<<getName()<<" about declining"<<endl;
-            cout<<"He wants to decline"<<endl;
-            cout<<endl;
+            std::cout<<getName()<<" about declining"<<std::endl;
+            std::cout<<"He wants to decline"<<std::endl;
+            std::cout<<std::endl;
             return "y";
         }
         else{
-            cout<<endl;
-            cout<<getName()<<" about declining"<<endl;
-            cout<<"He does not want to decline"<<endl;
+            std::cout<<std::endl;
+            std::cout<<getName()<<" about declining"<<std::endl;
+            std::cout<<"He does not want to decline"<<std::endl;
             return "n";
         }
         
     }
     
-    string getName()override{return name;}
+	std::string getName()override{return name;}
 private:
-    string name="moderate AI is thinking";
+	std::string name="moderate AI is thinking";
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -375,21 +375,21 @@ class randomAI:public AI{
 public:
     
     //Picks randomly the power and race combo
-    int pickPowerRace(vector <RaceBanner*> races,vector <PowerBadge*> powers)override{
+    int pickPowerRace(std::vector <RaceBanner*> races, std::vector <PowerBadge*> powers)override{
         int randomPick=(rand() % 6)+1;
         return randomPick;
     }
     
     //Picks region to conquer randomly
-    int aiConquers(Player* aiPlayer, vector<MapRegion*> regions)override{
+    int aiConquers(Player* aiPlayer, std::vector<MapRegion*> regions)override{
         
-        cout<<"random ai picking vertex to attack"<<endl;
+        std::cout<<"random ai picking vertex to attack"<<std::endl;
         std::vector<int> tempVector;
         for (size_t i = 0; i < regions.size(); i++) {
             
             if(aiPlayer!=regions[i]->getOwner()){
                 tempVector.push_back(regions[i]->getIndexOfVertex());
-                cout<<"Index vertex "<<regions[i]->getIndexOfVertex()<<endl;
+                std::cout<<"Index vertex "<<regions[i]->getIndexOfVertex()<<std::endl;
             }
         }
         
@@ -399,16 +399,16 @@ public:
        
         int randomChoice=(rand() % nbChoices);
         
-        cout<<"random ai chose  "<<tempVector[randomChoice]<<endl;
+        std::cout<<"random ai chose  "<<tempVector[randomChoice]<<std::endl;
         
         return tempVector[randomChoice];
        
     }
     
     //Randomly put random amount of tokens on owned regions
-    vector<stack<int>> aiRedeploy(Player* aiPlayer,int redeployableTokens, vector<MapRegion*> regions)override{
-        stack<int> nbTokens;
-        stack<int> theRegions;
+	std::vector<std::stack<int>> aiRedeploy(Player* aiPlayer,int redeployableTokens, std::vector<MapRegion*> regions)override{
+		std::stack<int> nbTokens;
+		std::stack<int> theRegions;
         
         int nbRegions=regions.size();
         int tokensLeft=redeployableTokens;
@@ -429,7 +429,7 @@ public:
             
         }
    
-        vector<stack<int>> answers;
+		std::vector<std::stack<int>> answers;
         answers.push_back(theRegions);
         answers.push_back(nbTokens);
         
@@ -437,26 +437,26 @@ public:
         
     }
     
-    string aiDecline(int turnNb)override{
+	std::string aiDecline(int turnNb)override{
         
         if(turnNb%2==1){
-            cout<<getName()<<" about declining"<<endl;
-            cout<<"He wants to decline"<<endl;
-            cout<<endl;
+            std::cout<<getName()<<" about declining"<<std::endl;
+            std::cout<<"He wants to decline"<<std::endl;
+            std::cout<<std::endl;
             return "y";
         }
         else{
-            cout<<endl;
-            cout<<getName()<<" about declining"<<endl;
-            cout<<"He does not want to decline"<<endl;
+            std::cout<<std::endl;
+            std::cout<<getName()<<" about declining"<<std::endl;
+            std::cout<<"He does not want to decline"<<std::endl;
             return "n";
         }
         
     }
     
-    string getName()override{return name;}
+	std::string getName()override{return name;}
 private:
-    string name="random AI is thinking";
+	std::string name="random AI is thinking";
 };
 
 //#endif __AI_H__

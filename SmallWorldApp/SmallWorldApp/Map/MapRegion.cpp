@@ -1,7 +1,7 @@
 #include <iostream>
 #include "../Headers/MapRegion.h"
 
-using namespace std;
+//using namespace std;
 
 RegionInfo regionInfo[TOTAL_REGION_TYPE] = { {REGION_TYPE_FOREST, "Forest"}, {REGION_TYPE_FARMLAND, "Farmland"}, {REGION_TYPE_MOUNTAIN, "Mountain"}, 
 {REGION_TYPE_HILL, "Hill"}, {REGION_TYPE_SWAMP, "Swamp"} };
@@ -18,7 +18,7 @@ MapRegion::MapRegion() {
 	raceOfOccupants = RACE_NONE;
 }
 
-MapRegion::MapRegion(string s, int _indexOfVertex) {
+MapRegion::MapRegion(std::string s, int _indexOfVertex) {
 
 	int x = std::distance(EnumRegionTypes, std::find(EnumRegionTypes, EnumRegionTypes + 5, s));
 
@@ -51,7 +51,7 @@ MapRegion::MapRegion(string s, int _indexOfVertex) {
 }
 
 MapRegion::MapRegion(regionTypes _type) {
-	cout << "Object is being created, regionType = " << _type << endl;
+	std::cout << "Object is being created, regionType = " << _type << std::endl;
 	type = _type;
 	typeName = regionInfo[type].regionName;
 	lostTribes = NULL;
@@ -71,7 +71,7 @@ bool MapRegion::getIsBorder(){
     return isBorder;
 }
 
-string MapRegion::getName() {
+std::string MapRegion::getName() {
 	return typeName;
 }
 
@@ -100,7 +100,7 @@ LostTribeToken* MapRegion::getLostTribeToken() {
 	return lostTribes;
 }
 
-vector<GamePiece> MapRegion::getDefensiveStructures() {
+std::vector<GamePiece> MapRegion::getDefensiveStructures() {
 	return defensiveStructures;
 }
 int MapRegion::getIndexOfVertex(){
@@ -118,7 +118,7 @@ void MapRegion::setOwner(Player *newOwner) {
 		setOwnershipStatus(true);
 }
 
-void MapRegion::setName(string newName) {
+void MapRegion::setName(std::string newName) {
 	typeName = newName;
 }
 

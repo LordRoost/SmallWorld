@@ -1,14 +1,10 @@
 #include "../Headers/PlayGame.h"
-//#include "../Headers/GameStats.h"
 #include "../Headers/DominationDecorator.h"
 #include "../Headers/VictoryCoinDecorator.h"
 
-//class DominationDecorator;
-//class VictoryCoindecorator;
 
 Map gameMap;
 GameStatsInterface *gs; 
-//extern Map gameMap;
 
 Map PlayGame::getMap(){
     return gameMap;
@@ -17,10 +13,6 @@ Map PlayGame::getMap(){
 TurnMarker* PlayGame::getTurnMarker(){
     return turnMarker;
 }
-
-//Player* PlayGame::getCurrentPlayer() {
-//	return currentPlayer;
-//}
 
 int PlayGame::getCurrentPlayerNb() {
 	return currentPlayerNb;
@@ -33,10 +25,6 @@ std::string PlayGame::getCurrentPhase() {
 int PlayGame::getCurrentTurn() {
 	return currentTurn;
 }
-
-//void PlayGame::setCurrentPlayer(Player* person) {
-//	currentPlayer = person;
-//}
 
 void PlayGame::setCurrentPlayerNb(int nb) {
 	currentPlayerNb = nb;
@@ -75,6 +63,7 @@ void PlayGame::startGame(){
 	turnMarker = new TurnMarker();
 }
 
+
 void PlayGame::firstTurn(){
 	//gs = new GameStats(this); //comment back for decorator demo
 	setCurrentTurn();
@@ -104,7 +93,7 @@ void PlayGame::firstTurn(){
     }
     
     std::cout << "Turn " << currentTurn <<" is ending" << std::endl;
-	turnMarker->nextTurn();
+	++*turnMarker;
 }
 
 void PlayGame::followingTurns(){
@@ -120,16 +109,16 @@ void PlayGame::followingTurns(){
 			setCurrentPhase("Decline");
 			Notify();
             
-            string yorn;
+			std::string yorn;
             
             if(!pointer->getInDecline()){
                 
             
-                cout<<"Do you want to decline your race?(y or n)"<<endl;
+                std::cout<<"Do you want to decline your race?(y or n)"<<std::endl;
                 
                 
                 if(pointer->getAIStrategy()==NULL){
-                    cin>>yorn;
+                    std::cin>>yorn;
                 }
                 else{
                     yorn=pointer->getAIStrategy()->aiDecline(currentTurn);
@@ -155,6 +144,9 @@ void PlayGame::followingTurns(){
 					setCurrentPhase("Conquering");
 					Notify();
                     pointer->conquers();
+					setCurrentPhase("Redeploying");
+					Notify();
+					pointer->redeploy();
                 }
             }
             
@@ -166,8 +158,12 @@ void PlayGame::followingTurns(){
 				setCurrentPhase("Conquering");
 				Notify();
                 pointer->conquers();
+				setCurrentPhase("Redeploying");
+				Notify();
+				pointer->redeploy();
                 
-            }			
+            }
+
 			setCurrentPhase("Scoring");
 			Notify();
             pointer->scores(&coinBank);
@@ -176,10 +172,10 @@ void PlayGame::followingTurns(){
         
 		setCurrentPhase("End");
 		Notify();
-        cout<<"Turn "<< currentTurn <<" has ended"<<endl;
-        cout<<endl;
+        std::cout<<"Turn "<< currentTurn <<" has ended"<<std::endl;
+        std::cout<<std::endl;
         
-        turnMarker->nextTurn();
+        ++*turnMarker;
 
     }
 }
@@ -190,21 +186,21 @@ void PlayGame::setNumberOfPlayers(){
     
     while(true)
     {
-        cout<<"How many players will be playing? (2-5 players)"<<endl;
-        cin>>nbOfPlayers;
+        std::cout<<"How many players will be playing? (2-5 players)"<<std::endl;
+        std::cin>>nbOfPlayers;
         
         if(nbOfPlayers>1&&nbOfPlayers<6){
             break;
         }
-		else if (cin.fail()) {
-			cin.clear();
-			cin.ignore();
+		else if (std::cin.fail()) {
+			std::cin.clear();
+			std::cin.ignore();
 		}
         
-        cout<<"Number of Players you entered is invalid, please try again"<<endl;
+        std::cout<<"Number of Players you entered is invalid, please try again"<<std::endl;
     }
     
-    cout<< "Number of players you entered is " << nbOfPlayers<<endl;
+    std::cout<< "Number of players you entered is " << nbOfPlayers<<std::endl;
     
     for(int i=0; i<nbOfPlayers;i++)
     {
@@ -250,7 +246,7 @@ void PlayGame::decoratorPrompt(Player *player) {
 			std::cin >> decoAnswer;
 			if (decoAnswer == 'y') {
 				std::cout << "You can add: " << std::endl << "1. Domination Observer Decorator" << std::endl << "2. Victory Coins Observer Decorator" << std::endl;
-				std:cout << "Enter n to stop adding." << std::endl;
+				std:std::cout << "Enter n to stop adding." << std::endl;
 
 				while (chosenDeco != '1' && chosenDeco != '2'&& chosenDeco != 'n') {
 					std::cout << "Enter the number of the decorator that you want to add: " << std::endl;

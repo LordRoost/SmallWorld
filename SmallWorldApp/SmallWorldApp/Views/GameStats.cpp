@@ -11,7 +11,7 @@ GameStats::GameStats(PlayGame* game) {
 
 GameStats::~GameStats() {
 	_subject->Detach(this);
-	cout << "hi" << endl;
+	std::cout << "hi" << std::endl;
 }
 
 void GameStats::Update() {

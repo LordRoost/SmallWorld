@@ -1,7 +1,7 @@
 #include "../Headers/MapRegion.h"
 #include "../Headers/Map.h"
 
-using namespace std;
+//using namespace std;
 using namespace boost;
 
 typedef graph_traits<Graph>::vertex_descriptor vertex_t;
@@ -88,7 +88,7 @@ void Map::createMap() {
 	add_edge(tile12, tile14, g);
 	add_edge(tile14, tile15, g);
 
-	//write_graphviz(cout, g);
+	//write_graphviz(std::cout, g);
 }
 
 //load map
@@ -96,12 +96,12 @@ void Map::createMap() {
 //second line is creating edges that connect vertices
 //line 3 is border or not
 //line 4 is lost tribe or not
-void Map::loadMap(string filename) {
-	string line;
-	ifstream file(filename.c_str());
+void Map::loadMap(std::string filename) {
+	std::string line;
+	std::ifstream file(filename.c_str());
 
 	if (!file) {
-		cout << "file not read" << endl;
+		std::cout << "file not read" << std::endl;
 	}
 
 	//0 is first line
@@ -110,12 +110,12 @@ void Map::loadMap(string filename) {
 
 	for (line; getline(file, line);)
 	{
-		string s = line;
-		string delimiter = " ";
+		std::string s = line;
+		std::string delimiter = " ";
 
 		size_t pos = 0;
-		string token;
-		while ((pos = s.find(delimiter)) != string::npos) {
+		std::string token;
+		while ((pos = s.find(delimiter)) != std::string::npos) {
 			token = s.substr(0, pos);
 
 			if (lineNb == 0) {
@@ -136,9 +136,9 @@ void Map::loadMap(string filename) {
 			else if(lineNb == 1) {
 
 				//vector to store both sides of "-"
-				vector<int> edge;
+				std::vector<int> edge;
 
-				string delimiter2 = "-";
+				std::string delimiter2 = "-";
 				size_t pos2 = 0;
 				std::string token2;
 				while ((pos2 = token.find(delimiter2)) != std::string::npos) {
@@ -179,9 +179,9 @@ void Map::loadMap(string filename) {
 		}
 		else if (lineNb == 1){
 
-			vector<int> edge2;
+			std::vector<int> edge2;
 
-			string delimiter2 = "-";
+			std::string delimiter2 = "-";
 			size_t pos2 = 0;
 			std::string token2;
 			while ((pos2 = s.find(delimiter2)) != std::string::npos) {
@@ -207,7 +207,7 @@ void Map::loadMap(string filename) {
 		}
 		lineNb++;
 	}
-	write_graphviz(cout, g);
+	write_graphviz(std::cout, g);
 	setLostTribe();
 	setBorders();
 }
@@ -215,40 +215,40 @@ void Map::loadMap(string filename) {
 
 
 bool Map::graphIsConnected() {
-	vector<int> component(num_vertices(g));
+	std::vector<int> component(num_vertices(g));
 	size_t num_components = connected_components(g, &component[0]);
 
 	int number_of_connected_vertices = 0;
 
-	cout << "Vertices in the first component:" << endl;
+	std::cout << "Vertices in the first component:" << std::endl;
 	for (size_t i = 0; i < num_vertices(g); ++i) {
 		if (component[i] == 0) {
-			cout << i << endl;
+			std::cout << i << std::endl;
 			number_of_connected_vertices++;
 		}
 	}
 
-	cout << "Number of vertices " + lexical_cast<string>(num_vertices(g)) + "\nNumber of connected vertices: " + lexical_cast<string>(number_of_connected_vertices) << endl;
+	std::cout << "Number of vertices " + lexical_cast<std::string>(num_vertices(g)) + "\nNumber of connected vertices: " + lexical_cast<std::string>(number_of_connected_vertices) << std::endl;
 
 	if (num_vertices(g) == number_of_connected_vertices) {
-		cout << "We got ourselves a connected graph" << endl;
+		std::cout << "We got ourselves a connected graph" << std::endl;
 		return true;
 	}
 	else {
-		cout << "Not a connected graph" << endl;
+		std::cout << "Not a connected graph" << std::endl;
 		return false;
 	}
 
 }
 
-void Map::getListOfMaps(const string& path)
+void Map::getListOfMaps(const std::string& path)
 {
 
      //vector <string> m_file_list;
      if (!path.empty())
      {
      
-         cout<< "\n--------------------------"<<endl;
+		 std::cout<< "\n--------------------------"<< std::endl;
          
          namespace fs = boost::filesystem;
          
@@ -259,33 +259,33 @@ void Map::getListOfMaps(const string& path)
          {
              fs::path cp = (*i);
              //m_file_list.push_back(cp.string());
-             cout<<cp.string()<<endl;
+			 std::cout<<cp.string()<< std::endl;
          
          }
-         cout<< "--------------------------\n"<<endl;
+		 std::cout<< "--------------------------\n"<< std::endl;
      }
      
      else{
-     cout<< "Path not found"<<endl;
+		 std::cout<< "Path not found"<< std::endl;
      }
    
 }
 
-void Map::selectMap(string path){
+void Map::selectMap(std::string path){
     bool isNotValidMap=true;
     
     while (isNotValidMap)
     {
         //Display Map files in directory
-        cout<< "Let's start a Smallworld game"<<endl;
+		std::cout<< "Let's start a Smallworld game"<< std::endl;
         getListOfMaps(path);
-        cout<< "Choose the map you want to play on by entering the name of one of the text files above."<<endl;
+		std::cout<< "Choose the map you want to play on by entering the name of one of the text files above."<< std::endl;
         
         //Take input for the map the player wants to play
-        string textFile;
-		string fullPath = "C:/Users/luoja/Documents/Github/SmallWorld/MapFiles/";
+		std::string textFile;
+		std::string fullPath = "C:/Users/luoja/Documents/Github/SmallWorld/MapFiles/";
         //string fullPath="/Users/ericpayettereformed/Documents/Smallworld/MapFiles/";
-        cin>> textFile;
+		std::cin>> textFile;
         fullPath.append(textFile);
         fullPath.append(".txt");
         
@@ -298,7 +298,7 @@ void Map::selectMap(string path){
         }
         
         if(isNotValidMap){
-            cout<<"Map is not valid, choose a valid map"<<endl;
+			std::cout<<"Map is not valid, choose a valid map"<< std::endl;
             g.clear();
         }
     }
@@ -307,9 +307,9 @@ void Map::selectMap(string path){
 void Map::selectMap(int nbOfPlayers) {
 
 	//Display Map files in directory
-	cout << "Let's start a Smallworld game" << endl;
+	std::cout << "Let's start a Smallworld game" << std::endl;
 
-	string fullPath = "C:/Users/luoja/Documents/Github/SmallWorld/MapFiles/map";
+	std::string fullPath = "C:/Users/luoja/Documents/Github/SmallWorld/MapFiles/map";
 	//string fullPath="/Users/ericpayettereformed/Documents/Smallworld/MapFiles/map";
 
 	fullPath.append(std::to_string(nbOfPlayers));
@@ -318,7 +318,7 @@ void Map::selectMap(int nbOfPlayers) {
 	loadMap(fullPath);
 }
 
-bool Map::addMountainorLostTribe(string regionType){
+bool Map::addMountainorLostTribe(std::string regionType){
     if(regionType=="Mountain"){
         //add moutain piece
         return false;

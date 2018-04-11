@@ -23,7 +23,7 @@ int mainer() {
 
 	std::cout << "game ended" << std::endl;
 
-	cin >> word;
+	std::cin >> word;
 	return 0;
 }
 

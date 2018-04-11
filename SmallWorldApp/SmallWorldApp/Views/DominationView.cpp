@@ -29,7 +29,7 @@ void DominationView::display() {
 	std::cout << "--------------------------------------------------------------------------------------------------------------------" << std::endl;
 	for (size_t i = 0; i < theGame->players.size(); i++) {
 		double percentageOfMap = theGame->players[i]->calculateOwnedPercentage(theGame->players.size());
-		std::cout << "         Player " << (i + 1) << " owns " << setprecision(3) << percentageOfMap << " % of the map" << std::endl;
+		std::cout << "         Player " << (i + 1) << " owns " << std::setprecision(3) << percentageOfMap << " % of the map" << std::endl;
 		barDisplay(percentageOfMap);
 	}
 

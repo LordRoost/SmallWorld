@@ -182,13 +182,13 @@ void Player::picks_race(RacePicker *picker) {
     
     if(aiStrategy==NULL){
         std::cin >> answer;
-		if (cin.fail()) {
-			cin.clear();
-			cin.ignore();
+		if (std::cin.fail()) {
+			std::cin.clear();
+			std::cin.ignore();
 		}
     }
     else{
-        cout<< aiStrategy->getName()<<endl;
+        std::cout<< aiStrategy->getName()<<std::endl;
         answer=aiStrategy->pickPowerRace(picker->getAllPickableRaces(),picker->getAllPickablePowers());
     }
 
@@ -197,9 +197,9 @@ void Player::picks_race(RacePicker *picker) {
 		if ((answer > 0) && (answer < 7)) {
 			break;
 		}
-		else if (cin.fail()) {
-			cin.clear();
-			cin.ignore();
+		else if (std::cin.fail()) {
+			std::cin.clear();
+			std::cin.ignore();
 		}
 		std::cout << "Please enter a number from 1 to 6" << std::endl;
 		std::cin >> answer;
@@ -232,18 +232,12 @@ void Player::conquers() {
 	}
 	
 	while (nbOfUseableTokens > 0 && lastAttack == false) {
-		vector<int> tempVector;
+		std::vector<int> tempVector;
 		std::cout << "Choose a territory to attack: " << std::endl;
 
 		findAllAdjacentTerritories();
 
-		//gameMap.getAdgacentTerritories(choiceOfRegion);
-
 		std::cout << std::endl;
-
-		//for (size_t i = 0; i < gameMap.adgacentMapRegions.size(); i++) {
-		//	tempVector.push_back(gameMap.adgacentMapRegions[i]->getIndexOfVertex());
-		//}
 
 		for (size_t i = 0; i < attackableRegions.size(); i++) {
 			tempVector.push_back(attackableRegions[i]->getIndexOfVertex());
@@ -257,9 +251,9 @@ void Player::conquers() {
             
             if(aiStrategy==NULL){
                 std::cin >> theChoice;
-				if (cin.fail()) {
-					cin.clear();
-					cin.ignore();
+				if (std::cin.fail()) {
+					std::cin.clear();
+					std::cin.ignore();
 				}
             }
             else{
@@ -311,9 +305,9 @@ void Player::firstConquest() { //what if firstconquest is also last??
 	while (breakFree == false) {
         if(aiStrategy==NULL){
             std::cin >> playerChoice;
-			if (cin.fail()) {
-				cin.clear();
-				cin.ignore();
+			if (std::cin.fail()) {
+				std::cin.clear();
+				std::cin.ignore();
 			}
         }
         else{
@@ -392,7 +386,7 @@ int Player::attackTerritory(MapRegion *region) { //should have user confirm atta
 	std::cout << "You have placed " << attackingAmount << " tokens." << std::endl;
 	addOwnedRegion(region);
 
-	//cout << "NbOfTokens: " << region->getNbTokens() << endl;
+	//std::cout << "NbOfTokens: " << region->getNbTokens() << std::endl;
 
 	std::cout << "You have " << calculateCurrentNbUsableTokens(attackingAmount) << " " << getRacebanner()->getName() << " tokens left to attack with." << std::endl;	
 	Notify();
@@ -473,15 +467,15 @@ void Player::redeploy() {
 
 		if (aiStrategy == NULL) {
 			std::cin >> userAnswer;
-			if (cin.fail()) {
-				cin.clear();
-				cin.ignore();
+			if (std::cin.fail()) {
+				std::cin.clear();
+				std::cin.ignore();
 			}
 		}
 		else {
 			userAnswer = 'y';
-			cout << aiStrategy->getName() << " that he about redeploying" << endl;
-			cout << "He wants to redeploy" << endl;
+			std::cout << aiStrategy->getName() << " that he about redeploying" << std::endl;
+			std::cout << "He wants to redeploy" << std::endl;
 		}
 
 		if (userAnswer == 'n') {
@@ -552,7 +546,7 @@ void Player::removeOwnedRegion(MapRegion *region) {
 
 void Player::declineRace(RacePicker *picker){
 
-	cout << "Declining " << this->getRacebanner()->getName() <<endl;
+	std::cout << "Declining " << this->getRacebanner()->getName() <<std::endl;
 	picker->discardDeclined(this->getRacebanner(),this->getPowerBadge());
 
 	for (std::vector<int>::size_type i = 0; i < ownedRegions.size(); i++) {
@@ -582,7 +576,7 @@ void Player::declineRace(RacePicker *picker){
     setRaceBanner(NULL);
 
 
-	cout << "Decline end" << endl;
+	std::cout << "Decline end" << std::endl;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -598,7 +592,7 @@ void Player::scores(CoinBank *bank) {
 		switch (getPowerBadge()->getPower()) {
 		case POWER_ALCHEMIST:
 			bank->deal1s(this, ALCHEMIST_NUM_COINS);
-			std::cout << "You have scored " << ALCHEMIST_NUM_COINS << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+			std::cout << "You have scored " << ALCHEMIST_NUM_COINS << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << std::endl;
 			nbScoredCoinsPower = ALCHEMIST_NUM_COINS;
 			break;
 
@@ -610,7 +604,7 @@ void Player::scores(CoinBank *bank) {
 				}
 			}
 			bank->deal1s(this, bonusCoins);
-			std::cout << "You have scored " << bonusCoins << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+			std::cout << "You have scored " << bonusCoins << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << std::endl;
 			nbScoredCoinsPower = bonusCoins;
 			break;
 
@@ -622,19 +616,19 @@ void Player::scores(CoinBank *bank) {
 				}
 			}
 			bank->deal1s(this, bonusCoins);
-			std::cout << "You have scored " << bonusCoins << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+			std::cout << "You have scored " << bonusCoins << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << std::endl;
 			nbScoredCoinsPower = bonusCoins;
 			break;
 
 		case POWER_MERCHANT:
 			bank->deal1s(this, ownedRegions.size());
-			std::cout << "You have scored " << ownedRegions.size() << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+			std::cout << "You have scored " << ownedRegions.size() << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << std::endl;
 			nbScoredCoinsPower = getOwnedRegions().size();
 			break;
 
 		case POWER_PILLAGING:
 			bank->deal1s(this, occupiedRegionCounter);
-			std::cout << "You have scored " << occupiedRegionCounter << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+			std::cout << "You have scored " << occupiedRegionCounter << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << std::endl;
 			nbScoredCoinsPower = occupiedRegionCounter;
 			break;
 
@@ -646,14 +640,14 @@ void Player::scores(CoinBank *bank) {
 				}
 			}
 			bank->deal1s(this, bonusCoins);
-			std::cout << "You have scored " << bonusCoins << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+			std::cout << "You have scored " << bonusCoins << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << std::endl;
 			nbScoredCoinsPower = bonusCoins;
 			break;
 
 		case POWER_WEALTHY:
 			if (wealthyClaimed == false) {
 				bank->deal1s(this, WEALTHY_NUM_COINS);
-				std::cout << "You have scored " << WEALTHY_NUM_COINS << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+				std::cout << "You have scored " << WEALTHY_NUM_COINS << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << std::endl;
 				nbScoredCoinsPower = WEALTHY_NUM_COINS;
 				wealthyClaimed = true; //must set back to false after geting rid of power
 			}
@@ -680,12 +674,12 @@ void Player::placeAllTokensOnMap() {
 
 void Player::deployment(int nbOfTokens) {
 
-	vector<stack<int>> answers;
+	std::vector<std::stack<int>> answers;
 
 	if (aiStrategy != NULL) {
-		cout << endl;
+		std::cout << std::endl;
 		answers = aiStrategy->aiRedeploy(this, redeployableTokens, getOwnedRegions());
-		cout << endl;
+		std::cout << std::endl;
 	}
 
 	while (nbOfTokens > 0) {
@@ -704,14 +698,14 @@ void Player::deployment(int nbOfTokens) {
 
 			if (aiStrategy == NULL) {
 				std::cin >> responseRegion;
-				if (cin.fail()) {
-					cin.clear();
-					cin.ignore();
+				if (std::cin.fail()) {
+					std::cin.clear();
+					std::cin.ignore();
 				}
 			}
 			else {
-				cout << aiStrategy->getName() << " about region to deploy" << endl;
-				cout << "Region with vertex " << answers[0].top() << endl;
+				std::cout << aiStrategy->getName() << " about region to deploy" << std::endl;
+				std::cout << "Region with vertex " << answers[0].top() << std::endl;
 				responseRegion = answers[0].top();
 				answers[0].pop();
 			}
@@ -722,14 +716,14 @@ void Player::deployment(int nbOfTokens) {
 
 					if (aiStrategy == NULL) {
 						std::cin >> responseAdd;
-						if (cin.fail()) {
-							cin.clear();
-							cin.ignore();
+						if (std::cin.fail()) {
+							std::cin.clear();
+							std::cin.ignore();
 						}
 					}
 					else {
-						cout << aiStrategy->getName() << " about number of tokens to deploy" << endl;
-						cout << "This amount of tokens: " << answers[1].top() << endl;
+						std::cout << aiStrategy->getName() << " about number of tokens to deploy" << std::endl;
+						std::cout << "This amount of tokens: " << answers[1].top() << std::endl;
 						responseAdd = answers[1].top();
 						answers[1].pop();
 					}
@@ -738,17 +732,17 @@ void Player::deployment(int nbOfTokens) {
 						if (responseAdd > nbOfTokens) {
 							std::cout << "Please enter a number that isn't bigger than the amount of tokens you have to place!" << std::endl;
 							std::cin >> responseAdd;
-							if (cin.fail()) {
-								cin.clear();
-								cin.ignore();
+							if (std::cin.fail()) {
+								std::cin.clear();
+								std::cin.ignore();
 							}
 						}
 						else if (responseAdd < 0) {
 							std::cout << "Oh no!! What are you doing! Do not enter bogus values!" << std::endl;
 							std::cin >> responseAdd;
-							if (cin.fail()) {
-								cin.clear();
-								cin.ignore();
+							if (std::cin.fail()) {
+								std::cin.clear();
+								std::cin.ignore();
 							}
 						}
 						else
@@ -821,7 +815,7 @@ void Player::findAllAdjacentTerritories() {
 	sortMapregionVector(&attackableRegions);
 
 	for (size_t l = 0; l < attackableRegions.size(); l++) {
-		cout << attackableRegions[l]->getIndexOfVertex() << "\t";
+		std::cout << attackableRegions[l]->getIndexOfVertex() << "\t";
 	}
 
 }
@@ -856,11 +850,11 @@ void Player::sortMapregionVector(std::vector<MapRegion*> *theVector) {
 		}
 	}
 
-	//cout << "Here are the sorted values" << endl;
+	//std::cout << "Here are the sorted values" << std::endl;
 	//for (size_t i = 0; i < theVector->size(); i++) {
-	//	cout << (*theVector)[i]->getIndexOfVertex()  <<" ";
+	//	std::cout << (*theVector)[i]->getIndexOfVertex()  <<" ";
 	//}
-	////cout << endl;
+	////std::cout << std::endl;
 
 }
 

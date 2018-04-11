@@ -11,7 +11,7 @@
 
 class Player;
 
-using namespace std;
+//using namespace std;
 
 
 enum regionTypes {
@@ -33,12 +33,12 @@ enum regionBonus {
 class MapRegion {
 public:
 	MapRegion();
-	MapRegion(string s,int indexOfVertex);
+	MapRegion(std::string s,int indexOfVertex);
 	MapRegion(regionTypes regionType);
 	//static const char * getTextForEnumRegionTypes(int enumVal);
 	void setOwner(Player *newOwner);
 	void setType(regionTypes regionType);
-	void setName(string newName);
+	void setName(std::string newName);
 	void setOwnershipStatus(bool status);
 	void setNbTokens(int amount);
 	void setLostTribeToken(LostTribeToken *tribe);
@@ -52,12 +52,12 @@ public:
 
 	Player* getOwner();
 	regionTypes getType();
-	string getName();
+	std::string getName();
 	bool getOwnershipStatus();
 	RaceToken getRaceToken();
 	int getNbTokens();
 	LostTribeToken* getLostTribeToken();
-	vector<GamePiece> getDefensiveStructures();
+	std::vector<GamePiece> getDefensiveStructures();
     bool getIsBorder();
 	races getRaceOfOccupants();
 
@@ -69,7 +69,7 @@ public:
 	void vacate(); //empties the region and resets it to a clean slate
 
 private:
-	string typeName;
+	std::string typeName;
 	regionTypes type;
 	bool isOwned;
 	Player *owner;

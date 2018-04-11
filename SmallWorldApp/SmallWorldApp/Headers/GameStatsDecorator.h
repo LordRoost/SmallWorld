@@ -3,7 +3,7 @@
 #include <iostream>
 #define NULL 0
 
-using namespace std;
+//using namespace std;
 
 class GameStatsDecorator : public GameStatsInterface {
 public:
