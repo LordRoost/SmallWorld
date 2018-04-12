@@ -68,33 +68,8 @@ PowerBadge* RacePicker::getPickablePowers(int index) {
 void RacePicker::replaceChoices(int index) {
 
 	int maxIndex = MAX_NUMBER_PICKABLE_POWERS - 1;
+	
 	for (int i = index; i < maxIndex; i++) {
-		if (pickableRaces[i] == NULL || pickablePowers[i] == NULL) {
-			if (pickableRaces[i] == NULL) {
-				bannerDeck->shuffleDiscard();
-				bannerDeck->shuffleDiscard();
-				bannerDeck->shuffleDiscard();
-
-				for (size_t j = 0; j < bannerDeck->bannerDiscardPile.size(); j++) {
-					RaceBanner *temp = bannerDeck->bannerDiscardPile[j];
-					temp = bannerDeck->bannerDiscardPile.front();
-					bannerDeck->bannerDiscardPile.pop_front();
-					bannerDeck->addBanner(temp);
-				}
-			}
-			else if (pickablePowers[i] == NULL) {
-				powerDeck->shuffleDiscard();
-				powerDeck->shuffleDiscard();
-				powerDeck->shuffleDiscard();
-
-				for (size_t j = 0; j < powerDeck->badgeDiscardPile.size(); j++) {
-					PowerBadge *temp = powerDeck->badgeDiscardPile[j];
-					temp = powerDeck->badgeDiscardPile.front();
-					powerDeck->badgeDiscardPile.pop_front();
-					powerDeck->addBadge(temp);
-				}
-			}
-		}
 		pickableRaces[i] = pickableRaces[i + 1];
 		pickablePowers[i] = pickablePowers[i + 1];
 	}

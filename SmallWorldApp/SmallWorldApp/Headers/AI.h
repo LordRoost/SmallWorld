@@ -1,5 +1,5 @@
-//#ifndef __AI_H__
-//#define __AI_H__
+#ifndef __AI_H__
+#define __AI_H__
 #pragma once
 
 #include <algorithm>
@@ -22,6 +22,8 @@ public:
     virtual int aiConquers(Player* aiPlayer, std::vector<MapRegion*> regions)=0;
     virtual std::vector<std::stack<int>> aiRedeploy(Player* aiPlayer,int redeployabeTokens, std::vector<MapRegion*> regions)=0;
     virtual std::string aiDecline(int turnNb)=0;
+	virtual char aiDecorator() = 0;
+	virtual char aiAbandon() = 0;
     virtual std::string getName(){return name;}
 
 private:
@@ -144,6 +146,22 @@ public:
         }
         
     }
+
+	char aiDecorator()override {
+
+		std::cout << std::endl;
+		std::cout << getName() << " about decorators" << std::endl;
+		std::cout << "It does not want decorators to bother it" << std::endl;
+		return 'q';
+	}
+
+	char aiAbandon()override {
+
+		std::cout << std::endl;
+		std::cout << getName() << " about abandoning regions" << std::endl;
+		std::cout << "It does not want to abandon regions" << std::endl;
+		return 'n';
+	}
     
 	std::string getName()override{return name;}
 private:
@@ -254,6 +272,22 @@ public:
         }
         
     }
+
+	char aiDecorator()override {
+
+		std::cout << std::endl;
+		std::cout << getName() << " about decorators" << std::endl;
+		std::cout << "It does not want decorators to bother it" << std::endl;
+		return 'q';
+	}
+
+	char aiAbandon()override {
+
+		std::cout << std::endl;
+		std::cout << getName() << " about abandoning regions" << std::endl;
+		std::cout << "It does not want to abandon regions" << std::endl;
+		return 'n';
+	}
     
 	std::string getName()override{return name;}
 private:
@@ -362,6 +396,22 @@ public:
         }
         
     }
+
+	char aiDecorator()override {
+
+		std::cout << std::endl;
+		std::cout << getName() << " about decorators" << std::endl;
+		std::cout << "It does not want decorators to bother it" << std::endl;
+		return 'q';
+	}
+
+	char aiAbandon()override {
+
+		std::cout << std::endl;
+		std::cout << getName() << " about abandoning regions" << std::endl;
+		std::cout << "It does not want to abandon regions" << std::endl;
+		return 'n';
+	}
     
 	std::string getName()override{return name;}
 private:
@@ -453,10 +503,26 @@ public:
         }
         
     }
+
+	char aiDecorator()override {
+
+		std::cout << std::endl;
+		std::cout << getName() << " about decorators" << std::endl;
+		std::cout << "It does not want decorators to bother it" << std::endl;
+		return 'q';
+	}
+
+	char aiAbandon()override {
+
+		std::cout << std::endl;
+		std::cout << getName() << " about abandoning regions" << std::endl;
+		std::cout << "It does not want to abandon regions" << std::endl;
+		return 'n';
+	}
     
 	std::string getName()override{return name;}
 private:
 	std::string name="random AI is thinking";
 };
 
-//#endif __AI_H__
+#endif __AI_H__

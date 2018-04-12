@@ -99,16 +99,42 @@ void PlayGame::startGame(){
 	turnMarker = new TurnMarker();
 }
 
+//The no user input version of startGame, to be used with tournament
+void PlayGame::startGame(int nbOfPlayers) {
+
+	tokenWell = new TokenWell();
+
+	addPiecesToWells();
+
+	gameMap.initialize(tokenWell);
+
+	setNumberOfPlayers(nbOfPlayers);
+
+	std::cout << std::endl;
+
+	//Make victory coins in bank
+	coinBank = new CoinBank();
+
+	//Give players 5 victory coins of value 1
+	for (std::vector<int>::size_type i = 0; i < players.size(); i++) {
+		Player *pointer = players[i];
+		coinBank->startingDeal(pointer);
+
+	}
+	//Turn 1
+	turnMarker = new TurnMarker();
+}
+
 
 void PlayGame::firstTurn(){
-	//gs = new GameStats(this); //comment back for decorator demo
+	gs = new GameStats(this); 
 	setCurrentTurn();
     std::cout << "Turn " << currentTurn <<" is beginning" << std::endl;
     
     for (std::vector<int>::size_type i = 0; i < players.size(); i++) {
 
 		Player *pointer = players[i];
-		//decoratorPrompt(pointer); //comment back for decorator demo
+		decoratorPrompt(pointer); 
 	
 		setCurrentPlayerNb(i+1);
 		setCurrentPhase("Picking Race");
@@ -167,12 +193,22 @@ void PlayGame::followingTurns(){
 
 					char abandonAnswer = '0';
 
-					//std::cout << "Do you wish to abandon some regions? (y/n)" << std::endl;
-					//std::cin >> abandonAnswer;
+					if (pointer->getAIStrategy() == NULL) {
+						std::cin >> abandonAnswer;
+						if (std::cin.fail()) {
+							std::cin.clear();
+							std::cin.ignore();
+						}
+					}
+					else {
+						abandonAnswer = pointer->getAIStrategy()->aiAbandon();
+					}
+
+					std::cout << "Do you wish to abandon some regions? (y/n)" << std::endl;
 					if (abandonAnswer == 'y') {
 						setCurrentPhase("Abandoning Regions");
 						Notify();
-						//pointer->abandonRegion(); //comment out for AI demo
+						pointer->abandonRegion();
 					}
 					setCurrentPhase("Readying Troops");
 					Notify();
@@ -219,7 +255,7 @@ void PlayGame::followingTurns(){
 void PlayGame::setNumberOfPlayers(){
     
     int nbOfPlayers;
-    
+	
     while(true)
     {
         std::cout<<"How many players will be playing? (2-5 players)"<<std::endl;
@@ -259,6 +295,31 @@ void PlayGame::setNumberOfPlayers(){
 	setTotalTurns(nbOfPlayers);
 }
 
+//The no user input version of setNumberOfPlayers
+void PlayGame::setNumberOfPlayers(int nb) {
+
+
+	for (int i = 0; i<nb; i++)
+	{
+		Player *player = new Player();
+		if (i == 0) {
+			player = new Player(new moderateAI()); //uncomment for AI demo
+			player = new Player(new defensiveAI()); //uncomment for AI demo
+		}
+		else {
+			player = new Player(new randomAI()); //uncomment for AI demo
+			player = new Player(new aggressiveAI()); //uncomment for AI demo
+		}
+
+
+		players.push_back(player);
+	}
+
+	gameMap.selectMap(nb);
+	gameMap.getAllBorders();
+	setTotalTurns(nb);
+}
+
 void PlayGame::addPiecesToWells(){
 
 	decks = new RacePicker();
@@ -277,9 +338,19 @@ void PlayGame::decoratorPrompt(Player *player) {
 	char chosenRemoveDeco = '0';
 	int temp,tempRemove;
 	if (player->statusDecorators == true) {
-		while (decoAnswer != 'y' && decoAnswer != 'n' &&decoAnswer != 'q') {
+		while (decoAnswer != 'y' && decoAnswer != 'n' &&decoAnswer != 'q' &&decoAnswer !='r') {
 			std::cout << "Do you want to add decorators to the Game Stats view? Enter q if you do not want to be prompted again in the future. Enter r if you want to remove decorators instead. (y/n/r/q)" << std::endl;
-			std::cin >> decoAnswer;
+			if (player->getAIStrategy() == NULL) {
+				std::cin >> decoAnswer;
+				if (std::cin.fail()) {
+					std::cin.clear();
+					std::cin.ignore();
+				}
+			}
+			else {
+				decoAnswer = player->getAIStrategy()->aiDecorator();
+			}
+			//std::cin >> decoAnswer;
 			if (decoAnswer == 'y') {
 				std::cout << "You can add: " << std::endl << "1. Domination Observer Decorator" << std::endl << "2. Victory Coins Observer Decorator" << std::endl;
 				std::cout << "Enter n to stop adding." << std::endl;
@@ -389,6 +460,9 @@ void PlayGame::decoratorPrompt(Player *player) {
 }
 
 void PlayGame::deleteAll() {
+	
+	gameMap.deleteMap();
+	
 	delete(decks);
 	delete(turnMarker);
 	delete(tokenWell);

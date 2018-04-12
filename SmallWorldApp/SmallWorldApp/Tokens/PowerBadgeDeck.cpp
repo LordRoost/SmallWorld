@@ -37,6 +37,18 @@ void PowerBadgeDeck::buildDeck() {
 }
 
 PowerBadge* PowerBadgeDeck::draw() {
+	if (deck.size() == 0) {
+		shuffleDiscard();
+		shuffleDiscard();
+		shuffleDiscard();
+
+		for (size_t i = 0; i < badgeDiscardPile.size(); i++) {
+			PowerBadge *temp = badgeDiscardPile[i];
+			temp = badgeDiscardPile.front();
+			badgeDiscardPile.pop_front();
+			addBadge(temp);
+		}
+	}
 	PowerBadge *drawnCard = deck.front();
 	deck.pop();
 	return drawnCard;

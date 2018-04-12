@@ -344,61 +344,66 @@ void Player::firstConquest() { //what if firstconquest is also last??
 
 }
 
-int Player::attackTerritory(MapRegion *region) { //should have user confirm attacks or something somewhere
+int Player::attackTerritory(MapRegion *region) { 
 	
-	if (region->getOwner() == this) {
-		std::cout << "You can't attack your own regions! Please enter another region!" << std::endl;
-		return -1;
-	}
+	NoUnitAttackException noUnitException;
 
-	int attackingAmount = calculateAttackThreshold(region);
-
-	if (nbOfUseableTokens == 0) {
-		std::cout << "Something went wrong, you shouldn't be here, you can't attack with no tokens" << std::endl;
-		return -1;
-	}
-	else if (nbOfUseableTokens < attackingAmount) {
-
-		//int leftOverTokens = nbOfUseableTokens;
-
-		if (finalAttack(region) == false) { //if the dice roll failed
-			std::cout << "You have failed your attack on this region." << std::endl;
-			return 0;
+	try {
+		if (region->getOwner() == this) {
+			std::cout << "You can't attack your own regions! Please enter another region!" << std::endl;
+			return -1;
 		}
-		else {
-			std::cout << "You have succeeded in your attack!" << std::endl;
-			if (region->getOwner() != NULL || region->hasLostTribe()) {
-				occupiedRegionCounter++;
+
+		int attackingAmount = calculateAttackThreshold(region);
+
+		if (nbOfUseableTokens == 0) {
+			std::cout << "Something went wrong, you shouldn't be here, you can't attack with no tokens" << std::endl;
+			throw noUnitException;
+		}
+		else if (nbOfUseableTokens < attackingAmount) {
+
+			if (finalAttack(region) == false) { //if the dice roll failed
+				std::cout << "You have failed your attack on this region." << std::endl;
+				return 0;
 			}
-			removeEnemyTokens(region);
-			region->setOwner(this);
-			region->setRaceOfOccupants(this->getCurrentRace());
-			region->addRaceTokens(this->getRaceToken(), nbOfUseableTokens);
-			std::cout << "You have placed " << nbOfUseableTokens << " tokens."<< std::endl;
-			addOwnedRegion(region);
-			std::cout << "You have " << calculateCurrentNbUsableTokens(attackingAmount) << " " << getRacebanner()->getName() << " tokens left to attack with." << std::endl;
-			Notify();
+			else {
+				std::cout << "You have succeeded in your attack!" << std::endl;
+				if (region->getOwner() != NULL || region->hasLostTribe()) {
+					occupiedRegionCounter++;
+				}
+				removeEnemyTokens(region);
+				region->setOwner(this);
+				region->setRaceOfOccupants(this->getCurrentRace());
+				region->addRaceTokens(this->getRaceToken(), nbOfUseableTokens);
+				std::cout << "You have placed " << nbOfUseableTokens << " tokens." << std::endl;
+				addOwnedRegion(region);
+				std::cout << "You have " << calculateCurrentNbUsableTokens(attackingAmount) << " " << getRacebanner()->getName() << " tokens left to attack with." << std::endl;
+				Notify();
 
-			return 1;
+				return 1;
+			}
 		}
+
+		std::cout << "You have succeeded in your attack!" << std::endl;
+		if (region->getOwner() != NULL || region->hasLostTribe()) {
+			occupiedRegionCounter++;
+		}
+		removeEnemyTokens(region);
+		region->setOwner(this);
+		region->setRaceOfOccupants(this->getCurrentRace());
+		region->addRaceTokens(this->getRaceToken(), attackingAmount);
+		std::cout << "You have placed " << attackingAmount << " tokens." << std::endl;
+		addOwnedRegion(region);
+
+		std::cout << "You have " << calculateCurrentNbUsableTokens(attackingAmount) << " " << getRacebanner()->getName() << " tokens left to attack with." << std::endl;
+		Notify();
+		return 1;
 	}
-
-	std::cout << "You have succeeded in your attack!" << std::endl;
-	if (region->getOwner() != NULL || region->hasLostTribe()) {
-		occupiedRegionCounter++;
+	catch (NoUnitAttackException &noUnit) {
+		std::cout << noUnit.what() << std::endl;
+		return -1;
 	}
-	removeEnemyTokens(region);
-	region->setOwner(this);
-	region->setRaceOfOccupants(this->getCurrentRace());
-	region->addRaceTokens(this->getRaceToken(), attackingAmount);
-	std::cout << "You have placed " << attackingAmount << " tokens." << std::endl;
-	addOwnedRegion(region);
-
-	//std::cout << "NbOfTokens: " << region->getNbTokens() << std::endl;
-
-	std::cout << "You have " << calculateCurrentNbUsableTokens(attackingAmount) << " " << getRacebanner()->getName() << " tokens left to attack with." << std::endl;	
-	Notify();
-	return 1;
+	
 }
 
 //method for the dice roll attack of the conquering phase
@@ -683,6 +688,9 @@ void Player::placeAllTokensOnMap() {
 void Player::deployment(int nbOfTokens) {
 
 	std::vector<std::stack<int>> answers;
+	if (this->getOwnedRegions().size() == 0) {
+		return;
+	}
 
 	if (aiStrategy != NULL) {
 		std::cout << std::endl;

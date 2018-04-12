@@ -126,6 +126,7 @@
     <ClInclude Include="Headers\GameStatsInterface.h" />
     <ClInclude Include="Headers\Map.h" />
     <ClInclude Include="Headers\MapRegion.h" />
+    <ClInclude Include="Headers\NoUnitAttackingException.h" />
     <ClInclude Include="Headers\Observer.h" />
     <ClInclude Include="Headers\Players.h" />
     <ClInclude Include="Headers\PlayGame.h" />

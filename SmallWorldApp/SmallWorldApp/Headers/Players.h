@@ -11,6 +11,7 @@
 #include "Map.h"
 #include "PlayGame.h"
 #include "AI.h"
+#include "NoUnitAttackingException.h"
 
 class Player : public Subject{
 public:	

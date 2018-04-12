@@ -22,7 +22,6 @@
 #define NUM_REGIONS_5_PLAYER_MAP 45
 
 using namespace boost;
-//using namespace std;
 
 typedef adjacency_list<listS, vecS, undirectedS, MapRegion*> Graph;
 typedef boost::graph_traits<Graph>::adjacency_iterator AdjacencyIterator;
@@ -31,8 +30,8 @@ typedef boost::graph_traits<Graph>::vertex_iterator VertexIterator;
 class Map {
 public:
 	Map();
+	~Map();
 	Map(TokenWell *aWell);
-	void createMap();
 	void loadMap(std::string file);
 	bool graphIsConnected();
 	Graph* getGraph();
@@ -41,11 +40,11 @@ public:
 	void selectMap(int nbOfPlayers);
     bool addMountainorLostTribe(std::string regionType);
 	void getAdgacentTerritories(MapRegion *region);
-    //vector<MapRegion*> getAllBorders();
 	void getAllBorders();
 	void setBorders();
 	void setLostTribe();
 	void initialize(TokenWell *aWell);
+	void deleteMap();
 
 	std::vector<MapRegion*> borderRegions;
 	std::vector<MapRegion*> adgacentMapRegions;

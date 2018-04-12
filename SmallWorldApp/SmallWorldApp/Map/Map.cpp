@@ -1,12 +1,16 @@
 #include "../Headers/MapRegion.h"
 #include "../Headers/Map.h"
 
-//using namespace std;
 using namespace boost;
 
 typedef graph_traits<Graph>::vertex_descriptor vertex_t;
 
 Map::Map() {
+	well = NULL;
+}
+
+Map::~Map() {
+	delete(well);
 	well = NULL;
 }
 
@@ -18,78 +22,78 @@ Graph* Map::getGraph(){
     return &g;
 }
 
-void Map::createMap() {
-
-	// Create vertices in that graph
-	vertex_t tile1 = add_vertex(g);
-	vertex_t tile2 = add_vertex(g);
-	vertex_t tile3 = add_vertex(g);
-	vertex_t tile4 = add_vertex(g);
-	vertex_t tile5 = add_vertex(g);
-	vertex_t tile6 = add_vertex(g);
-	vertex_t tile7 = add_vertex(g);
-	vertex_t tile8 = add_vertex(g);
-	vertex_t tile9 = add_vertex(g);
-	vertex_t tile10 = add_vertex(g);
-	vertex_t tile11 = add_vertex(g);
-	vertex_t tile12 = add_vertex(g);
-	vertex_t tile13 = add_vertex(g);
-	vertex_t tile14 = add_vertex(g);
-	vertex_t tile15 = add_vertex(g);
-
-	g[tile1] = new MapRegion();
-	g[tile2] = new MapRegion();
-	g[tile3] = new MapRegion();
-	g[tile4] = new MapRegion();
-	g[tile5] = new MapRegion();
-	g[tile6] = new MapRegion();
-	g[tile7] = new MapRegion();
-	g[tile8] = new MapRegion();
-	g[tile9] = new MapRegion();
-	g[tile10] = new MapRegion();
-	g[tile11] = new MapRegion();
-	g[tile12] = new MapRegion();
-	g[tile13] = new MapRegion();
-	g[tile14] = new MapRegion();
-	g[tile15] = new MapRegion();
-
-	// Set regiontype
-	g[tile1]->setType(REGION_TYPE_FARMLAND);
-	g[tile2]->setType(REGION_TYPE_FARMLAND);
-	g[tile3]->setType(REGION_TYPE_FARMLAND);
-	g[tile4]->setType(REGION_TYPE_HILL);
-	g[tile5]->setType(REGION_TYPE_HILL);
-	g[tile6]->setType(REGION_TYPE_HILL);
-	g[tile7]->setType(REGION_TYPE_MOUNTAIN);
-	g[tile8]->setType(REGION_TYPE_MOUNTAIN);
-	g[tile9]->setType(REGION_TYPE_MOUNTAIN);
-	g[tile10]->setType(REGION_TYPE_FOREST);
-	g[tile11]->setType(REGION_TYPE_FOREST);
-	g[tile12]->setType(REGION_TYPE_FOREST);
-	g[tile13]->setType(REGION_TYPE_SWAMP);
-	g[tile14]->setType(REGION_TYPE_SWAMP);
-	g[tile15]->setType(REGION_TYPE_SWAMP);
-
-	// Create edges to vertices
-	add_edge(tile1, tile2, g);
-	add_edge(tile1, tile3, g);
-	add_edge(tile2, tile3, g);
-	add_edge(tile3, tile4, g);
-	add_edge(tile3, tile5, g);
-	add_edge(tile4, tile6, g);
-	add_edge(tile4, tile7, g);
-	add_edge(tile3, tile6, g);
-	add_edge(tile7, tile8, g);
-	add_edge(tile7, tile9, g);
-	add_edge(tile9, tile10, g);
-	add_edge(tile10, tile11, g);
-	add_edge(tile11, tile12, g);
-	add_edge(tile11, tile13, g);
-	add_edge(tile12, tile14, g);
-	add_edge(tile14, tile15, g);
-
-	//write_graphviz(std::cout, g);
-}
+//void Map::createMap() {
+//
+//	// Create vertices in that graph
+//	vertex_t tile1 = add_vertex(g);
+//	vertex_t tile2 = add_vertex(g);
+//	vertex_t tile3 = add_vertex(g);
+//	vertex_t tile4 = add_vertex(g);
+//	vertex_t tile5 = add_vertex(g);
+//	vertex_t tile6 = add_vertex(g);
+//	vertex_t tile7 = add_vertex(g);
+//	vertex_t tile8 = add_vertex(g);
+//	vertex_t tile9 = add_vertex(g);
+//	vertex_t tile10 = add_vertex(g);
+//	vertex_t tile11 = add_vertex(g);
+//	vertex_t tile12 = add_vertex(g);
+//	vertex_t tile13 = add_vertex(g);
+//	vertex_t tile14 = add_vertex(g);
+//	vertex_t tile15 = add_vertex(g);
+//
+//	g[tile1] = new MapRegion();
+//	g[tile2] = new MapRegion();
+//	g[tile3] = new MapRegion();
+//	g[tile4] = new MapRegion();
+//	g[tile5] = new MapRegion();
+//	g[tile6] = new MapRegion();
+//	g[tile7] = new MapRegion();
+//	g[tile8] = new MapRegion();
+//	g[tile9] = new MapRegion();
+//	g[tile10] = new MapRegion();
+//	g[tile11] = new MapRegion();
+//	g[tile12] = new MapRegion();
+//	g[tile13] = new MapRegion();
+//	g[tile14] = new MapRegion();
+//	g[tile15] = new MapRegion();
+//
+//	// Set regiontype
+//	g[tile1]->setType(REGION_TYPE_FARMLAND);
+//	g[tile2]->setType(REGION_TYPE_FARMLAND);
+//	g[tile3]->setType(REGION_TYPE_FARMLAND);
+//	g[tile4]->setType(REGION_TYPE_HILL);
+//	g[tile5]->setType(REGION_TYPE_HILL);
+//	g[tile6]->setType(REGION_TYPE_HILL);
+//	g[tile7]->setType(REGION_TYPE_MOUNTAIN);
+//	g[tile8]->setType(REGION_TYPE_MOUNTAIN);
+//	g[tile9]->setType(REGION_TYPE_MOUNTAIN);
+//	g[tile10]->setType(REGION_TYPE_FOREST);
+//	g[tile11]->setType(REGION_TYPE_FOREST);
+//	g[tile12]->setType(REGION_TYPE_FOREST);
+//	g[tile13]->setType(REGION_TYPE_SWAMP);
+//	g[tile14]->setType(REGION_TYPE_SWAMP);
+//	g[tile15]->setType(REGION_TYPE_SWAMP);
+//
+//	// Create edges to vertices
+//	add_edge(tile1, tile2, g);
+//	add_edge(tile1, tile3, g);
+//	add_edge(tile2, tile3, g);
+//	add_edge(tile3, tile4, g);
+//	add_edge(tile3, tile5, g);
+//	add_edge(tile4, tile6, g);
+//	add_edge(tile4, tile7, g);
+//	add_edge(tile3, tile6, g);
+//	add_edge(tile7, tile8, g);
+//	add_edge(tile7, tile9, g);
+//	add_edge(tile9, tile10, g);
+//	add_edge(tile10, tile11, g);
+//	add_edge(tile11, tile12, g);
+//	add_edge(tile11, tile13, g);
+//	add_edge(tile12, tile14, g);
+//	add_edge(tile14, tile15, g);
+//
+//	//write_graphviz(std::cout, g);
+//}
 
 //load map
 //first line is creating tiles(vertices)
@@ -127,11 +131,6 @@ void Map::loadMap(std::string filename) {
 					g[tile]->setMountainPiece(well->dealMountain());
 				}
 
-                //if(addMountainorLostTribe(token)){
-                //    LostTribeToken LostTribe= LostTribeToken();
-                //    LostTribeToken* pointer=&LostTribe;
-                //    g[tile]->setLostTribeToken(pointer);
-                //}
 			}
 			else if(lineNb == 1) {
 
@@ -171,11 +170,6 @@ void Map::loadMap(std::string filename) {
 			if (g[tile]->getType() == REGION_TYPE_MOUNTAIN) {
 				g[tile]->setMountainPiece(well->dealMountain());
 			}
-            /*if(addMountainorLostTribe(token)){
-                LostTribeToken LostTribe= LostTribeToken();
-                LostTribeToken* pointer=&LostTribe;
-                g[tile]->setLostTribeToken(pointer);
-            }*/
 		}
 		else if (lineNb == 1){
 
@@ -186,8 +180,6 @@ void Map::loadMap(std::string filename) {
 			std::string token2;
 			while ((pos2 = s.find(delimiter2)) != std::string::npos) {
 				token2 = s.substr(0, pos2);
-
-				//std::cout << token2 << std::endl;
 
 				int x = atoi(token2.c_str());
 				edge2.push_back(x);
@@ -244,7 +236,6 @@ bool Map::graphIsConnected() {
 void Map::getListOfMaps(const std::string& path)
 {
 
-     //vector <string> m_file_list;
      if (!path.empty())
      {
      
@@ -258,7 +249,6 @@ void Map::getListOfMaps(const std::string& path)
          for (fs::recursive_directory_iterator i(apk_path); i != end; ++i)
          {
              fs::path cp = (*i);
-             //m_file_list.push_back(cp.string());
 			 std::cout<<cp.string()<< std::endl;
          
          }
@@ -404,4 +394,21 @@ void Map::setLostTribe() {
 
 void Map::initialize(TokenWell *aWell) {
 	well = aWell;
+}
+
+void Map::deleteMap() {
+
+	for (size_t i = 0; i < borderRegions.size(); i++) {
+		borderRegions[i] = NULL;
+	}
+
+	for (size_t i = 0; i < adgacentMapRegions.size(); i++) {
+		adgacentMapRegions[i] = NULL;
+	}
+
+	adgacentMapRegions.resize(0);
+	borderRegions.resize(0);
+
+	g.clear();
+	
 }

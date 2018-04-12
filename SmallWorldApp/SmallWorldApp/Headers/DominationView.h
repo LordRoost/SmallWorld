@@ -7,7 +7,6 @@
 class DominationView : public Observer{
 public:
 
-	//DominationView();
 	DominationView(Player* player, PlayGame *game);
 	~DominationView();
 	void Update();

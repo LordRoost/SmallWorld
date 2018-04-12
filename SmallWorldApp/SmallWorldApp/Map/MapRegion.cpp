@@ -62,6 +62,15 @@ MapRegion::MapRegion(regionTypes _type) {
 	raceOfOccupants = RACE_NONE;
 }
 
+MapRegion::~MapRegion() {
+	owner = NULL;
+	lostTribes = NULL;
+
+	if (mountainPiece != NULL) {
+		delete(mountainPiece);
+	}
+	mountainPiece = NULL;
+}
 
 Player* MapRegion::getOwner() {
 	return owner;
@@ -178,6 +187,7 @@ void MapRegion::addLostTribeToken() {
 
 void MapRegion::vacate() {
 	lostTribes = NULL;
+	hasTribe = false;
 	owner = NULL;
 	isOwned = false;
 	nbOfTokens = 0;

@@ -11,9 +11,6 @@
 
 class Player;
 
-//using namespace std;
-
-
 enum regionTypes {
 	REGION_TYPE_FOREST, REGION_TYPE_FARMLAND, REGION_TYPE_MOUNTAIN, REGION_TYPE_HILL, REGION_TYPE_SWAMP, TOTAL_REGION_TYPE
 };
@@ -35,6 +32,7 @@ public:
 	MapRegion();
 	MapRegion(std::string s,int indexOfVertex);
 	MapRegion(regionTypes regionType);
+	~MapRegion();
 	void setOwner(Player *newOwner);
 	void setType(regionTypes regionType);
 	void setName(std::string newName);

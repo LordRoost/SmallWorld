@@ -6,12 +6,9 @@ using namespace std;
 
 class UserInputException : public runtime_error {
 public:
-	UserInputException();
+	UserInputException() : runtime_error("Error: User input error."){}
 	char * exc_time;
-	const char *what() const;
+	//const char *what() const;
 
 };
 
-class LetterInput : public UserInputException {
-
-};

@@ -36,9 +36,23 @@ void RaceBannerDeck::buildDeck() {
 }
 
 RaceBanner* RaceBannerDeck::draw() {
-	RaceBanner *drawnCard = deck.front(); 
+	if (deck.size() == 0) {
+		shuffleDiscard();
+		shuffleDiscard();
+		shuffleDiscard();
+
+		for (size_t i = 0; i < bannerDiscardPile.size(); i++) {
+			RaceBanner *temp = bannerDiscardPile[i];
+			temp = bannerDiscardPile.front();
+			bannerDiscardPile.pop_front();
+			addBanner(temp);
+		}
+	}
+
+	RaceBanner *drawnCard = deck.front();
 	deck.pop();
 	return drawnCard;
+	
 }
 
 void RaceBannerDeck::discardBanner(RaceBanner *banner) {

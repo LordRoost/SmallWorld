@@ -2,7 +2,7 @@
 #include <iostream>
 #include <stdio.h>
 
-#define TOTAL_NUM_TURNS_2_PLAYERS 9 //10
+#define TOTAL_NUM_TURNS_2_PLAYERS 10 
 #define TOTAL_NUM_TURNS_4_PLAYERS 9
 #define TOTAL_NUM_TURNS_5_PLAYERS 8
 

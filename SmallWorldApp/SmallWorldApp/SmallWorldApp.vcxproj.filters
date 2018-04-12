@@ -102,6 +102,9 @@
     <ClInclude Include="Headers\UserInputException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Headers\NoUnitAttackingException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dice\Dice.cpp">

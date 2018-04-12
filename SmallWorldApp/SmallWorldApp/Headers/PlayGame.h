@@ -7,6 +7,7 @@
 #include "TurnMarker.h"
 #include "Subject.h"
 #include "GameStats.h"
+#include "UserInputException.h"
 
 //static const string mapFilesPath="/Users/ericpayettereformed/Documents/Smallworld/MapFiles/";
 static const std::string mapFilesPath = "C:/Users/luoja/Documents/Github/SmallWorld/MapFiles/";
@@ -22,7 +23,9 @@ public:
     //Start game methods
 	Map getMap();
     void startGame();
+	void startGame(int nbPlayers);
     void setNumberOfPlayers();
+	void setNumberOfPlayers(int nb);
     void addPiecesToWells();
 
 
@@ -53,7 +56,6 @@ public:
     
 private:
 
-    //vector<Player> players;
 	RacePicker *decks;
 	CoinBank* coinBank;
 	TurnMarker* turnMarker;
