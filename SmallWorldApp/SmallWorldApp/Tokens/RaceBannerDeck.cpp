@@ -1,5 +1,4 @@
 #include "../Headers/Tokens.h"
-//#include <array> should use arrays like this?
 #include <iterator>
 #include <random>
 #include <chrono>
@@ -12,9 +11,21 @@ RaceBannerDeck::RaceBannerDeck() {
 	}
 }
 
+RaceBannerDeck::~RaceBannerDeck() {
+	for (unsigned i = RACE_AMAZONS; i != TOTAL_RACES; i++) {
+		delete(banners[i]);
+		banners[i] = NULL;
+	}
+}
+
 void RaceBannerDeck::shuffle() {
 	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 	std::shuffle(std::begin(banners), std::end(banners), std::default_random_engine(seed));
+}
+
+void RaceBannerDeck::shuffleDiscard() {
+	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+	std::shuffle(std::begin(bannerDiscardPile), std::end(bannerDiscardPile), std::default_random_engine(seed));
 }
 
 void RaceBannerDeck::buildDeck() {
@@ -25,13 +36,27 @@ void RaceBannerDeck::buildDeck() {
 }
 
 RaceBanner* RaceBannerDeck::draw() {
-	RaceBanner *drawnCard = deck.front(); //If see this error 'Expression: deque iterator not dereferencable' possible that queue is empty
+	if (deck.size() == 0) {
+		shuffleDiscard();
+		shuffleDiscard();
+		shuffleDiscard();
+
+		for (size_t i = 0; i < bannerDiscardPile.size(); i++) {
+			RaceBanner *temp = bannerDiscardPile[i];
+			temp = bannerDiscardPile.front();
+			bannerDiscardPile.pop_front();
+			addBanner(temp);
+		}
+	}
+
+	RaceBanner *drawnCard = deck.front();
 	deck.pop();
 	return drawnCard;
+	
 }
 
-void RaceBannerDeck::putBannerBack(RaceBanner *banner) {
-	deck.push(banner);
+void RaceBannerDeck::discardBanner(RaceBanner *banner) {
+	bannerDiscardPile.push_back(banner);
 }
 
 void RaceBannerDeck::printDeck() {
@@ -39,4 +64,8 @@ void RaceBannerDeck::printDeck() {
 	for (int i = 0; i < NUM_OF_RACE_BANNERS; i++) {
 		std::cout << banners[i]->getName() << std::endl;
 	}
+}
+
+void RaceBannerDeck::addBanner(RaceBanner *banner) {
+	deck.push(banner);
 }

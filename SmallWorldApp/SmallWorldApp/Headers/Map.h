@@ -1,5 +1,5 @@
-#ifndef Map_H
-#define Map_H
+#ifndef __MAP_H__
+#define __MAP_H__
 
 #include <stdio.h>
 #include "Game.h"
@@ -22,7 +22,6 @@
 #define NUM_REGIONS_5_PLAYER_MAP 45
 
 using namespace boost;
-using namespace std;
 
 typedef adjacency_list<listS, vecS, undirectedS, MapRegion*> Graph;
 typedef boost::graph_traits<Graph>::adjacency_iterator AdjacencyIterator;
@@ -31,32 +30,31 @@ typedef boost::graph_traits<Graph>::vertex_iterator VertexIterator;
 class Map {
 public:
 	Map();
+	~Map();
 	Map(TokenWell *aWell);
-	void createMap();
-	void loadMap(string file);
+	void loadMap(std::string file);
 	bool graphIsConnected();
 	Graph* getGraph();
-    static void getListOfMaps(const string& path);
-    void selectMap(string path);
+    static void getListOfMaps(const std::string& path);
 	void selectMap(int nbOfPlayers);
-    bool addMountainorLostTribe(string regionType);
 	void getAdgacentTerritories(MapRegion *region);
-    //vector<MapRegion*> getAllBorders();
 	void getAllBorders();
 	void setBorders();
 	void setLostTribe();
 	void initialize(TokenWell *aWell);
+	void deleteMap();
 
-	vector<MapRegion*> borderRegions;
-	vector<MapRegion*> adgacentMapRegions;
-	std::deque<std::string> bordersInputs;
-	std::deque<std::string> lostTribesInputs;
+	std::vector<MapRegion*> borderRegions;
+	std::vector<MapRegion*> adgacentMapRegions;
+
 
 private:
 	Graph g;
 	TokenWell *well;
+	std::deque<std::string> bordersInputs;
+	std::deque<std::string> lostTribesInputs;
 
 };
 
-#endif
+#endif //__MAP_H__
 

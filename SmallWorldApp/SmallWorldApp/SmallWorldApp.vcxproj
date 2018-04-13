@@ -118,32 +118,37 @@
   <ItemGroup>
     <ClInclude Include="Headers\AI.h" />
     <ClInclude Include="Headers\Dice.h" />
+    <ClInclude Include="Headers\DominationDecorator.h" />
     <ClInclude Include="Headers\DominationView.h" />
     <ClInclude Include="Headers\Game.h" />
+    <ClInclude Include="Headers\GameStats.h" />
+    <ClInclude Include="Headers\GameStatsDecorator.h" />
+    <ClInclude Include="Headers\GameStatsInterface.h" />
     <ClInclude Include="Headers\Map.h" />
     <ClInclude Include="Headers\MapRegion.h" />
+    <ClInclude Include="Headers\NoUnitAttackingException.h" />
     <ClInclude Include="Headers\Observer.h" />
     <ClInclude Include="Headers\Players.h" />
     <ClInclude Include="Headers\PlayGame.h" />
+    <ClInclude Include="Headers\StepView.h" />
     <ClInclude Include="Headers\Subject.h" />
     <ClInclude Include="Headers\Tokens.h" />
     <ClInclude Include="Headers\TurnMarker.h" />
+    <ClInclude Include="Headers\UserInputException.h" />
+    <ClInclude Include="Headers\VictoryCoinDecorator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dice\Dice.cpp" />
-    <ClCompile Include="Dice\DiceRollerDriver.cpp" />
     <ClCompile Include="Dice\DieRoller.cpp" />
     <ClCompile Include="Gamefield\CoinBank.cpp" />
     <ClCompile Include="Gamefield\RacePicker.cpp" />
     <ClCompile Include="Gamefield\TokenWell.cpp" />
     <ClCompile Include="Map\Map.cpp" />
-    <ClCompile Include="Map\MapDriver.cpp" />
     <ClCompile Include="Map\MapRegion.cpp" />
+    <ClCompile Include="ObserverDriver.cpp" />
     <ClCompile Include="ObserverPattern\Observer.cpp" />
     <ClCompile Include="ObserverPattern\Subject.cpp" />
     <ClCompile Include="Players\Player.cpp" />
-    <ClCompile Include="Players\PlayerDriver.cpp" />
-    <ClCompile Include="Players\ScoringDriver.cpp" />
     <ClCompile Include="PlayGame\PlayGame.cpp" />
     <ClCompile Include="PlayGame\PlayGameDriver.cpp" />
     <ClCompile Include="Tokens\GamePiece.cpp" />
@@ -154,10 +159,18 @@
     <ClCompile Include="Tokens\RaceBannerDeck.cpp" />
     <ClCompile Include="Tokens\RaceToken.cpp" />
     <ClCompile Include="Tokens\Token.cpp" />
-    <ClCompile Include="Tokens\TokensDriver.cpp" />
     <ClCompile Include="Tokens\VictoryCoin.cpp" />
     <ClCompile Include="TurnMarker\TurnMarker.cpp" />
+    <ClCompile Include="Views\DominationDecorator.cpp" />
     <ClCompile Include="Views\DominationView.cpp" />
+    <ClCompile Include="Views\GameStats.cpp" />
+    <ClCompile Include="Views\StepView.cpp" />
+    <ClCompile Include="Views\VictoryCoinDecorator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

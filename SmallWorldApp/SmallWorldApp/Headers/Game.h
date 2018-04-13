@@ -1,3 +1,5 @@
+#ifndef __GAME_H__
+#define __GAME_H__
 #pragma once
 
 #include "Tokens.h"
@@ -10,6 +12,7 @@ class Player;
 class RacePicker {
 public:
 	RacePicker();
+	~RacePicker();
 	void setup();
 	RaceBanner* getPickableRaces();
 	PowerBadge* getPickablePowers();
@@ -20,6 +23,7 @@ public:
 	void printOptions();
 	void replaceChoices(int index);
 	int calculateTotalTokens(int index);
+	void discardDeclined(RaceBanner *discardedBanner, PowerBadge *discardedBadge);
 
 private:
 	RaceBannerDeck *bannerDeck;
@@ -31,6 +35,7 @@ private:
 class CoinBank {
 public:
 	CoinBank();
+	~CoinBank();
 	void deal1s(Player *aPlayer, int amount);
 	int getAmount1s();
 	int getAmount3s();
@@ -40,16 +45,16 @@ public:
 
 	void printContents();
 
-	std::vector <VictoryCoin> get1s();
-	std::vector <VictoryCoin> get3s();
-	std::vector <VictoryCoin> get5s();
-	std::vector <VictoryCoin> get10s();
+	std::vector <VictoryCoin*> get1s();
+	std::vector <VictoryCoin*> get3s();
+	std::vector <VictoryCoin*> get5s();
+	std::vector <VictoryCoin*> get10s();
 
 private:
-	std::vector <VictoryCoin> coinValue1;
-	std::vector <VictoryCoin> coinValue3;
-	std::vector <VictoryCoin> coinValue5;
-	std::vector <VictoryCoin> coinValue10;
+	std::vector <VictoryCoin*> coinValue1;
+	std::vector <VictoryCoin*> coinValue3;
+	std::vector <VictoryCoin*> coinValue5;
+	std::vector <VictoryCoin*> coinValue10;
 };
 
 class TokenWell {
@@ -62,3 +67,5 @@ public:
 private:
 	std::vector<MountainPiece*> mountainPieces;
 };
+
+#endif //__GAME_H__

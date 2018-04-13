@@ -1,8 +1,6 @@
 #include <iostream>
 #include "../Headers/MapRegion.h"
 
-using namespace std;
-
 RegionInfo regionInfo[TOTAL_REGION_TYPE] = { {REGION_TYPE_FOREST, "Forest"}, {REGION_TYPE_FARMLAND, "Farmland"}, {REGION_TYPE_MOUNTAIN, "Mountain"}, 
 {REGION_TYPE_HILL, "Hill"}, {REGION_TYPE_SWAMP, "Swamp"} };
 
@@ -18,7 +16,7 @@ MapRegion::MapRegion() {
 	raceOfOccupants = RACE_NONE;
 }
 
-MapRegion::MapRegion(string s, int _indexOfVertex) {
+MapRegion::MapRegion(std::string s, int _indexOfVertex) {
 
 	int x = std::distance(EnumRegionTypes, std::find(EnumRegionTypes, EnumRegionTypes + 5, s));
 
@@ -51,7 +49,7 @@ MapRegion::MapRegion(string s, int _indexOfVertex) {
 }
 
 MapRegion::MapRegion(regionTypes _type) {
-	cout << "Object is being created, regionType = " << _type << endl;
+	std::cout << "Object is being created, regionType = " << _type << std::endl;
 	type = _type;
 	typeName = regionInfo[type].regionName;
 	lostTribes = NULL;
@@ -62,11 +60,15 @@ MapRegion::MapRegion(regionTypes _type) {
 	raceOfOccupants = RACE_NONE;
 }
 
+MapRegion::~MapRegion() {
+	owner = NULL;
+	lostTribes = NULL;
 
-//const char * MapRegion::getTextForEnumRegionTypes(int enumVal)
-//{
-//	return EnumRegionTypes[enumVal];
-//}
+	if (mountainPiece != NULL) {
+		delete(mountainPiece);
+	}
+	mountainPiece = NULL;
+}
 
 Player* MapRegion::getOwner() {
 	return owner;
@@ -76,7 +78,7 @@ bool MapRegion::getIsBorder(){
     return isBorder;
 }
 
-string MapRegion::getName() {
+std::string MapRegion::getName() {
 	return typeName;
 }
 
@@ -88,13 +90,6 @@ bool MapRegion::getOwnershipStatus() {
 	return isOwned;
 }
 
-//RaceToken MapRegion::getRaceToken() {
-//	return tokens.front();
-//}
-//
-//int MapRegion::getNbTokens() {
-//	return tokens.size();
-//}
 
 RaceToken MapRegion::getRaceToken() {
 	return tokens;
@@ -112,7 +107,7 @@ LostTribeToken* MapRegion::getLostTribeToken() {
 	return lostTribes;
 }
 
-vector<GamePiece> MapRegion::getDefensiveStructures() {
+std::vector<GamePiece> MapRegion::getDefensiveStructures() {
 	return defensiveStructures;
 }
 int MapRegion::getIndexOfVertex(){
@@ -126,10 +121,11 @@ void MapRegion::setMountainPiece(MountainPiece *m) {
 
 void MapRegion::setOwner(Player *newOwner) {
 	owner = newOwner;
-	setOwnershipStatus(true);
+	if(owner != NULL)
+		setOwnershipStatus(true);
 }
 
-void MapRegion::setName(string newName) {
+void MapRegion::setName(std::string newName) {
 	typeName = newName;
 }
 
@@ -168,7 +164,6 @@ void MapRegion::addDefensiveStructure(GamePiece piece) {
 }
 
 bool MapRegion::hasLostTribe() {
-	//if (lostTribes == NULL)
 	if(hasTribe == false)
 		return false;
 	else
@@ -185,4 +180,13 @@ bool MapRegion::getTribe() {
 
 void MapRegion::addLostTribeToken() {
 
+}
+
+void MapRegion::vacate() {
+	lostTribes = NULL;
+	hasTribe = false;
+	owner = NULL;
+	isOwned = false;
+	nbOfTokens = 0;
+	raceOfOccupants = RACE_NONE;
 }

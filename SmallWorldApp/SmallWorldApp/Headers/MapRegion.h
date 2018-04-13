@@ -1,5 +1,5 @@
-#ifndef MapRegion_H
-#define MapRegion_H
+#ifndef __MAPREGION_H__
+#define __MAPREGION_H__
 #pragma once
 #define BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE //this is just to not have the boost outdated message everytime code is run
 
@@ -10,9 +10,6 @@
 
 
 class Player;
-
-using namespace std;
-
 
 enum regionTypes {
 	REGION_TYPE_FOREST, REGION_TYPE_FARMLAND, REGION_TYPE_MOUNTAIN, REGION_TYPE_HILL, REGION_TYPE_SWAMP, TOTAL_REGION_TYPE
@@ -33,18 +30,17 @@ enum regionBonus {
 class MapRegion {
 public:
 	MapRegion();
-	MapRegion(string s,int indexOfVertex);
+	MapRegion(std::string s,int indexOfVertex);
 	MapRegion(regionTypes regionType);
-	//static const char * getTextForEnumRegionTypes(int enumVal);
+	~MapRegion();
 	void setOwner(Player *newOwner);
 	void setType(regionTypes regionType);
-	void setName(string newName);
+	void setName(std::string newName);
 	void setOwnershipStatus(bool status);
 	void setNbTokens(int amount);
 	void setLostTribeToken(LostTribeToken *tribe);
     void setIsBorder(bool _isBorder);
 	void addRaceTokens(RaceToken race, int amount);
-	//void addRaceToken(RaceToken *race);
 	void addDefensiveStructure(GamePiece piece);
 	void addLostTribeToken();
 	void setMountainPiece(MountainPiece *m);
@@ -52,12 +48,12 @@ public:
 
 	Player* getOwner();
 	regionTypes getType();
-	string getName();
+	std::string getName();
 	bool getOwnershipStatus();
 	RaceToken getRaceToken();
 	int getNbTokens();
 	LostTribeToken* getLostTribeToken();
-	vector<GamePiece> getDefensiveStructures();
+	std::vector<GamePiece> getDefensiveStructures();
     bool getIsBorder();
 	races getRaceOfOccupants();
 
@@ -66,12 +62,13 @@ public:
 	void setTribe(bool tribe);
 	bool getTribe();
 
+	void vacate(); //empties the region and resets it to a clean slate
+
 private:
-	string typeName;
+	std::string typeName;
 	regionTypes type;
 	bool isOwned;
 	Player *owner;
-	//std::vector <Token> *tokens;
 	RaceToken tokens;
 	races raceOfOccupants;
 	int nbOfTokens;
@@ -84,4 +81,4 @@ private:
 	MountainPiece *mountainPiece;
 };
 
-#endif
+#endif //__MAPREGION_H__

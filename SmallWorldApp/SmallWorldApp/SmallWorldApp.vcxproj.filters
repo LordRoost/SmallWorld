@@ -40,6 +40,9 @@
     <Filter Include="Source Files\ObserverPattern">
       <UniqueIdentifier>{eda1056c-26ad-4760-b1d3-afa4d9d5eff9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Decorator">
+      <UniqueIdentifier>{424f1700-25af-4ede-be5c-e47ecadfc83b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Dice.h">
@@ -78,12 +81,33 @@
     <ClInclude Include="Headers\AI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Headers\StepView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\DominationDecorator.h">
+      <Filter>Header Files\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\VictoryCoinDecorator.h">
+      <Filter>Header Files\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\GameStatsDecorator.h">
+      <Filter>Header Files\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\GameStatsInterface.h">
+      <Filter>Header Files\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\GameStats.h">
+      <Filter>Header Files\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\UserInputException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\NoUnitAttackingException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dice\Dice.cpp">
-      <Filter>Source Files\Dice</Filter>
-    </ClCompile>
-    <ClCompile Include="Dice\DiceRollerDriver.cpp">
       <Filter>Source Files\Dice</Filter>
     </ClCompile>
     <ClCompile Include="Dice\DieRoller.cpp">
@@ -98,16 +122,10 @@
     <ClCompile Include="Map\Map.cpp">
       <Filter>Source Files\Maps</Filter>
     </ClCompile>
-    <ClCompile Include="Map\MapDriver.cpp">
-      <Filter>Source Files\Maps</Filter>
-    </ClCompile>
     <ClCompile Include="Map\MapRegion.cpp">
       <Filter>Source Files\Maps</Filter>
     </ClCompile>
     <ClCompile Include="Players\Player.cpp">
-      <Filter>Source Files\Players</Filter>
-    </ClCompile>
-    <ClCompile Include="Players\PlayerDriver.cpp">
       <Filter>Source Files\Players</Filter>
     </ClCompile>
     <ClCompile Include="Tokens\GamePiece.cpp">
@@ -134,9 +152,6 @@
     <ClCompile Include="Tokens\Token.cpp">
       <Filter>Source Files\Tokens</Filter>
     </ClCompile>
-    <ClCompile Include="Tokens\TokensDriver.cpp">
-      <Filter>Source Files\Tokens</Filter>
-    </ClCompile>
     <ClCompile Include="Tokens\VictoryCoin.cpp">
       <Filter>Source Files\Tokens</Filter>
     </ClCompile>
@@ -148,9 +163,6 @@
     </ClCompile>
     <ClCompile Include="TurnMarker\TurnMarker.cpp">
       <Filter>Source Files\TurnMarker</Filter>
-    </ClCompile>
-    <ClCompile Include="Players\ScoringDriver.cpp">
-      <Filter>Source Files\Players</Filter>
     </ClCompile>
     <ClCompile Include="Gamefield\TokenWell.cpp">
       <Filter>Source Files\GameField</Filter>
@@ -164,5 +176,25 @@
     <ClCompile Include="ObserverPattern\Subject.cpp">
       <Filter>Source Files\ObserverPattern</Filter>
     </ClCompile>
+    <ClCompile Include="Views\StepView.cpp">
+      <Filter>Source Files\Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\DominationDecorator.cpp">
+      <Filter>Source Files\Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\GameStats.cpp">
+      <Filter>Source Files\Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\VictoryCoinDecorator.cpp">
+      <Filter>Source Files\Views</Filter>
+    </ClCompile>
+    <ClCompile Include="ObserverDriver.cpp">
+      <Filter>Source Files\PlayGame</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
   </ItemGroup>
 </Project>

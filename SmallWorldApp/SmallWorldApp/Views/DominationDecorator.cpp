@@ -1,29 +1,26 @@
-#include "../Headers/DominationView.h"
+#include "../Headers/DominationDecorator.h"
 
-DominationView::DominationView(Player* player, PlayGame *game) {
-	_subjectPlayer = player;
-	_subjectPlayer->Attach(this);
-	theGame = game;
+DominationDecorator::~DominationDecorator() {
+	_subject->Detach(this);
+	
 }
 
+void DominationDecorator::Update() {
 
-DominationView::~DominationView() {
-	_subjectPlayer->Detach(this);
+	if (theGame->getCurrentPhase() == "Conquering")
+		display();
 }
 
-void DominationView::Update() {
-	display();
-}
+void DominationDecorator::barDisplay(int nb) {
 
-void DominationView::barDisplay(int nb) {
-
-	for(int i = 0; i < nb; i++)
+	for (int i = 0; i < nb; i++)
 		std::cout << "|";
 	std::cout << std::endl;
 }
 
-void DominationView::display() {
+void DominationDecorator::display() {
 
+	std::cout << "-------------------------------------DOMINATION-DECORATOR-----------------------------------------------------------" << std::endl;
 	std::cout << "--------------------------------------------------------------------------------------------------------------------" << std::endl;
 	barDisplay(100);
 	std::cout << "--------------------------------------------------------------------------------------------------------------------" << std::endl;

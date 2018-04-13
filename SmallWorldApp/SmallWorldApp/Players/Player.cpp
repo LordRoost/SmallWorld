@@ -16,6 +16,10 @@ Player::Player() {
 	currentRace = RACE_NONE;
 	choiceOfRegion = NULL;
     aiStrategy=NULL;
+	nbScoredCoinsPower = 0;
+	statusDecorators = true;
+	decoDominationCheck = false;
+	decoCoinsCheck = false;
 }
 
 //Player constructor
@@ -32,6 +36,18 @@ Player::Player(AI *_aiStrategy) {
     currentRace = RACE_NONE;
     choiceOfRegion = NULL;
     aiStrategy=_aiStrategy;
+	nbScoredCoinsPower = 0;
+	statusDecorators = true;
+	decoDominationCheck = false;
+	decoCoinsCheck = false;
+}
+
+Player::~Player() {
+	currentBadge = NULL;
+	currentRaceBanner = NULL;
+	declinedRaceBanner = NULL;
+	delete(dice);
+	dice = NULL;
 }
 
 AI *Player::getAIStrategy(){
@@ -87,11 +103,11 @@ int Player::getNbOfUsableTokens() {
 	return nbOfUseableTokens;
 }
 
-std::vector<MapRegion*> Player::getOwnedRegions() { // ?????
+std::vector<MapRegion*> Player::getOwnedRegions() { 
 	return ownedRegions;
 }
 
-std::vector<MapRegion*> Player::getAttackableRegions() { // ?????
+std::vector<MapRegion*> Player::getAttackableRegions() { 
 	return attackableRegions;
 }
 
@@ -157,11 +173,11 @@ void Player::addVictoryCoin1s(VictoryCoin ones) {
 	owned1s.push_back(ones);
 }
 
-void Player::addOwnedRegion(MapRegion *region) { //????
+void Player::addOwnedRegion(MapRegion *region) { 
 	ownedRegions.push_back(region);
 }
 
-void Player::addAttackableRegion(MapRegion *region) { //????
+void Player::addAttackableRegion(MapRegion *region) { 
 	attackableRegions.push_back(region);
 }
 
@@ -174,16 +190,30 @@ void Player::picks_race(RacePicker *picker) {
     
     if(aiStrategy==NULL){
         std::cin >> answer;
+		if (std::cin.fail()) {
+			std::cin.clear();
+			std::cin.ignore();
+		}
     }
     else{
-        cout<< aiStrategy->getName()<<endl;
+        std::cout<< aiStrategy->getName()<<std::endl;
         answer=aiStrategy->pickPowerRace(picker->getAllPickableRaces(),picker->getAllPickablePowers());
     }
 
-	if ((answer != 1) && (answer != 2) && (answer != 3) && (answer != 4) && (answer != 5) && (answer != 6)) {
-		std::cout << "Please enter a number from 1 to 6" <<std::endl;
+	while (true) {
+
+		if ((answer > 0) && (answer < 7)) {
+			break;
+		}
+		else if (std::cin.fail()) {
+			std::cin.clear();
+			std::cin.ignore();
+		}
+		std::cout << "Please enter a number from 1 to 6" << std::endl;
 		std::cin >> answer;
 	}
+
+
 
 	setPowerBadge(picker->getPickablePowers(answer - 1));
 	setRaceBanner(picker->getPickableRaces(answer - 1));
@@ -210,18 +240,12 @@ void Player::conquers() {
 	}
 	
 	while (nbOfUseableTokens > 0 && lastAttack == false) {
-		vector<int> tempVector;
+		std::vector<int> tempVector;
 		std::cout << "Choose a territory to attack: " << std::endl;
 
 		findAllAdjacentTerritories();
 
-		//gameMap.getAdgacentTerritories(choiceOfRegion);
-
 		std::cout << std::endl;
-
-		//for (size_t i = 0; i < gameMap.adgacentMapRegions.size(); i++) {
-		//	tempVector.push_back(gameMap.adgacentMapRegions[i]->getIndexOfVertex());
-		//}
 
 		for (size_t i = 0; i < attackableRegions.size(); i++) {
 			tempVector.push_back(attackableRegions[i]->getIndexOfVertex());
@@ -235,6 +259,10 @@ void Player::conquers() {
             
             if(aiStrategy==NULL){
                 std::cin >> theChoice;
+				if (std::cin.fail()) {
+					std::cin.clear();
+					std::cin.ignore();
+				}
             }
             else{
                 theChoice=aiStrategy->aiConquers(this, attackableRegions);
@@ -261,7 +289,6 @@ void Player::conquers() {
 		}
 	}
 	lastAttack = false;
-	redeploy();
 }
 
 //First attack of the user, which must be on a border region
@@ -286,6 +313,10 @@ void Player::firstConquest() { //what if firstconquest is also last??
 	while (breakFree == false) {
         if(aiStrategy==NULL){
             std::cin >> playerChoice;
+			if (std::cin.fail()) {
+				std::cin.clear();
+				std::cin.ignore();
+			}
         }
         else{
             playerChoice=aiStrategy->aiConquers(this, gameMap.borderRegions);
@@ -313,61 +344,66 @@ void Player::firstConquest() { //what if firstconquest is also last??
 
 }
 
-int Player::attackTerritory(MapRegion *region) { //should have user confirm attacks or something somewhere
+int Player::attackTerritory(MapRegion *region) { 
 	
-	if (region->getOwner() == this) {
-		std::cout << "You can't attack your own regions! Please enter another region!" << std::endl;
-		return -1;
-	}
+	NoUnitAttackException noUnitException;
 
-	int attackingAmount = calculateAttackThreshold(region);
-
-	if (nbOfUseableTokens == 0) {
-		std::cout << "Something went wrong, you shouldn't be here, you can't attack with no tokens" << std::endl;
-		return -1;
-	}
-	else if (nbOfUseableTokens < attackingAmount) {
-
-		//int leftOverTokens = nbOfUseableTokens;
-
-		if (finalAttack(region) == false) { //if the dice roll failed
-			std::cout << "You have failed your attack on this region." << std::endl;
-			return 0;
+	try {
+		if (region->getOwner() == this) {
+			std::cout << "You can't attack your own regions! Please enter another region!" << std::endl;
+			return -1;
 		}
-		else {
-			std::cout << "You have succeeded in your attack!" << std::endl;
-			if (region->getOwner() != NULL || region->hasLostTribe()) {
-				occupiedRegionCounter++;
+
+		int attackingAmount = calculateAttackThreshold(region);
+
+		if (nbOfUseableTokens == 0) {
+			std::cout << "Something went wrong, you shouldn't be here, you can't attack with no tokens" << std::endl;
+			throw noUnitException;
+		}
+		else if (nbOfUseableTokens < attackingAmount) {
+
+			if (finalAttack(region) == false) { //if the dice roll failed
+				std::cout << "You have failed your attack on this region." << std::endl;
+				return 0;
 			}
-			removeEnemyTokens(region);
-			region->setOwner(this);
-			region->setRaceOfOccupants(this->getCurrentRace());
-			region->addRaceTokens(this->getRaceToken(), nbOfUseableTokens);
-			std::cout << "You have placed " << nbOfUseableTokens << " tokens."<< std::endl;
-			addOwnedRegion(region);
-			std::cout << "You have " << calculateCurrentNbUsableTokens(attackingAmount) << " " << getRacebanner()->getName() << " tokens left to attack with." << std::endl;
-			Notify();
+			else {
+				std::cout << "You have succeeded in your attack!" << std::endl;
+				if (region->getOwner() != NULL || region->hasLostTribe()) {
+					occupiedRegionCounter++;
+				}
+				removeEnemyTokens(region);
+				region->setOwner(this);
+				region->setRaceOfOccupants(this->getCurrentRace());
+				region->addRaceTokens(this->getRaceToken(), nbOfUseableTokens);
+				std::cout << "You have placed " << nbOfUseableTokens << " tokens." << std::endl;
+				addOwnedRegion(region);
+				std::cout << "You have " << calculateCurrentNbUsableTokens(attackingAmount) << " " << getRacebanner()->getName() << " tokens left to attack with." << std::endl;
+				Notify();
 
-			return 1;
+				return 1;
+			}
 		}
+
+		std::cout << "You have succeeded in your attack!" << std::endl;
+		if (region->getOwner() != NULL || region->hasLostTribe()) {
+			occupiedRegionCounter++;
+		}
+		removeEnemyTokens(region);
+		region->setOwner(this);
+		region->setRaceOfOccupants(this->getCurrentRace());
+		region->addRaceTokens(this->getRaceToken(), attackingAmount);
+		std::cout << "You have placed " << attackingAmount << " tokens." << std::endl;
+		addOwnedRegion(region);
+
+		std::cout << "You have " << calculateCurrentNbUsableTokens(attackingAmount) << " " << getRacebanner()->getName() << " tokens left to attack with." << std::endl;
+		Notify();
+		return 1;
 	}
-
-	std::cout << "You have succeeded in your attack!" << std::endl;
-	if (region->getOwner() != NULL || region->hasLostTribe()) {
-		occupiedRegionCounter++;
+	catch (NoUnitAttackException &noUnit) {
+		std::cout << noUnit.what() << std::endl;
+		return -1;
 	}
-	removeEnemyTokens(region);
-	region->setOwner(this);
-	region->setRaceOfOccupants(this->getCurrentRace());
-	region->addRaceTokens(this->getRaceToken(), attackingAmount);
-	std::cout << "You have placed " << attackingAmount << " tokens." << std::endl;
-	addOwnedRegion(region);
-
-	//cout << "NbOfTokens: " << region->getNbTokens() << endl;
-
-	std::cout << "You have " << calculateCurrentNbUsableTokens(attackingAmount) << " " << getRacebanner()->getName() << " tokens left to attack with." << std::endl;	
-	Notify();
-	return 1;
+	
 }
 
 //method for the dice roll attack of the conquering phase
@@ -400,44 +436,84 @@ void Player::readyTroops() {
 	std::cout << "You have " << nbOfUseableTokens << " tokens to attack with." << std::endl;
 }
 
+//This code works, it just needs to be commented out when demo-ing AI.
+void Player::abandonRegion() {
+	std::cout << "Abandoning regions" << std::endl;
+
+	if (getOwnedRegions().size() == 0) {
+		std::cout << "You have no regions!" << std::endl;
+		return;
+	}
+
+	std::cout << "Which regions to you wish to abandon? (Enter q to stop abandoning regions)" << std::endl;
+
+	char answer = '0';
+
+	while (answer != 'q' && getOwnedRegions().size() > 0) {
+		for (size_t i = 0; i < getOwnedRegions().size(); i++) {
+			std::cout << getOwnedRegions()[i]->getIndexOfVertex() << "\t";
+		}
+		std::cout << std::endl;
+		std::cin >> answer;
+		for (size_t i = 0; i < getOwnedRegions().size(); i++) {
+			int temp = answer-'0';
+			if (temp == getOwnedRegions()[i]->getIndexOfVertex()) {
+				this->returnTokensToHand(getOwnedRegions()[i]->getNbTokens());
+				getOwnedRegions()[i]->vacate();
+				this->removeOwnedRegion(getOwnedRegions()[i]);
+
+				std::cout << "You have abandoned region " << answer << std::endl;
+			}
+		}
+
+	}
+
+}
+
 //Lets a player redeploy their tokens
 void Player::redeploy() {
 	std::cout << "Redeployment phase" << std::endl;
+	char userAnswer = '0';
 
-	std::cout << "Do you wish to redeploy your units? (y or n)" << std::endl;
-	char userAnswer;
+	while (userAnswer != 'y' && userAnswer != 'n') {
+		std::cout << "Do you wish to redeploy your units? (y or n)" << std::endl;
 
-    if(aiStrategy==NULL){
-        std::cin >> userAnswer;
-    }
-    else{
-        userAnswer='y';
-        cout<<aiStrategy->getName()<<" that he about redeploying"<<endl;
-        cout<<"He wants to redeploy"<<endl;
-    }
-	
-	if (userAnswer == 'n') {
-		placeAllTokensOnMap();
-		return;
-	}
-	else if (userAnswer == 'y') {
-		int temp = 0;
-		//int responseRegion, responseAdd;
-		setRedeployableTokens(0);
-
-		for (size_t i = 0; i < getOwnedRegions().size(); i++) {
-			temp = (getOwnedRegions()[i]->getNbTokens()) - 1;
-			getOwnedRegions()[i]->setNbTokens(1);
-			redeployableTokens += temp;
+		if (aiStrategy == NULL) {
+			std::cin >> userAnswer;
+			if (std::cin.fail()) {
+				std::cin.clear();
+				std::cin.ignore();
+			}
 		}
-		redeployableTokens += getNbOfUsableTokens();
-		setNbOfUsableTokens(0);
+		else {
+			userAnswer = 'y';
+			std::cout << aiStrategy->getName() << " that he about redeploying" << std::endl;
+			std::cout << "He wants to redeploy" << std::endl;
+		}
 
-		deployment(redeployableTokens);
-		
-	}
-	else {
-		std::cout << "please enter y or n!" << std::endl;
+		if (userAnswer == 'n') {
+			placeAllTokensOnMap();
+			return;
+		}
+		else if (userAnswer == 'y') {
+			int temp = 0;
+			//int responseRegion, responseAdd;
+			setRedeployableTokens(0);
+
+			for (size_t i = 0; i < getOwnedRegions().size(); i++) {
+				temp = (getOwnedRegions()[i]->getNbTokens()) - 1;
+				getOwnedRegions()[i]->setNbTokens(1);
+				redeployableTokens += temp;
+			}
+			redeployableTokens += getNbOfUsableTokens();
+			setNbOfUsableTokens(0);
+
+			deployment(redeployableTokens);
+
+		}
+		else {
+			std::cout << "please enter y or n!" << std::endl;
+		}
 	}
 }
 
@@ -477,14 +553,14 @@ void Player::removeOwnedRegion(MapRegion *region) {
 		if (region == ownedRegions[i]) {
 
 			ownedRegions.erase(ownedRegions.begin() + i); //remove the region from former owner's owned
-			//cout << "I am erasing at " << i << endl;
 		}
 	}
 }
 
-void Player::declineRace(){
+void Player::declineRace(RacePicker *picker){
 
-	cout << "Declining " << this->getRacebanner()->getName() <<endl;
+	std::cout << "Declining " << this->getRacebanner()->getName() <<std::endl;
+	picker->discardDeclined(this->getRacebanner(),this->getPowerBadge());
 
 	for (std::vector<int>::size_type i = 0; i < ownedRegions.size(); i++) {
 		MapRegion* tempRegion = ownedRegions[i];
@@ -512,13 +588,15 @@ void Player::declineRace(){
     setPowerBadge(NULL);
     setRaceBanner(NULL);
 
-	cout << "Decline end" << endl;
+
+	std::cout << "Decline end" << std::endl;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 void Player::scores(CoinBank *bank) { 
 	bank->deal1s(this, ownedRegions.size());
+	nbScoredCoinsPower = 0;
 	std::cout << "You have scored " << ownedRegions.size() << " points from your regions this turn." << std::endl;
 
 	int bonusCoins;
@@ -527,7 +605,8 @@ void Player::scores(CoinBank *bank) {
 		switch (getPowerBadge()->getPower()) {
 		case POWER_ALCHEMIST:
 			bank->deal1s(this, ALCHEMIST_NUM_COINS);
-			std::cout << "You have scored " << ALCHEMIST_NUM_COINS << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+			std::cout << "You have scored " << ALCHEMIST_NUM_COINS << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << std::endl;
+			nbScoredCoinsPower = ALCHEMIST_NUM_COINS;
 			break;
 
 		case POWER_FOREST:
@@ -538,7 +617,8 @@ void Player::scores(CoinBank *bank) {
 				}
 			}
 			bank->deal1s(this, bonusCoins);
-			std::cout << "You have scored " << bonusCoins << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+			std::cout << "You have scored " << bonusCoins << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << std::endl;
+			nbScoredCoinsPower = bonusCoins;
 			break;
 
 		case POWER_HILL:
@@ -549,17 +629,20 @@ void Player::scores(CoinBank *bank) {
 				}
 			}
 			bank->deal1s(this, bonusCoins);
-			std::cout << "You have scored " << bonusCoins << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+			std::cout << "You have scored " << bonusCoins << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << std::endl;
+			nbScoredCoinsPower = bonusCoins;
 			break;
 
 		case POWER_MERCHANT:
 			bank->deal1s(this, ownedRegions.size());
-			std::cout << "You have scored " << ownedRegions.size() << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+			std::cout << "You have scored " << ownedRegions.size() << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << std::endl;
+			nbScoredCoinsPower = getOwnedRegions().size();
 			break;
 
 		case POWER_PILLAGING:
 			bank->deal1s(this, occupiedRegionCounter);
-			std::cout << "You have scored " << occupiedRegionCounter << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+			std::cout << "You have scored " << occupiedRegionCounter << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << std::endl;
+			nbScoredCoinsPower = occupiedRegionCounter;
 			break;
 
 		case POWER_SWAMP:
@@ -570,13 +653,15 @@ void Player::scores(CoinBank *bank) {
 				}
 			}
 			bank->deal1s(this, bonusCoins);
-			std::cout << "You have scored " << bonusCoins << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+			std::cout << "You have scored " << bonusCoins << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << std::endl;
+			nbScoredCoinsPower = bonusCoins;
 			break;
 
 		case POWER_WEALTHY:
 			if (wealthyClaimed == false) {
 				bank->deal1s(this, WEALTHY_NUM_COINS);
-				std::cout << "You have scored " << WEALTHY_NUM_COINS << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << endl;
+				std::cout << "You have scored " << WEALTHY_NUM_COINS << " extra coins from your " << getPowerBadge()->getPowerName() << " power!" << std::endl;
+				nbScoredCoinsPower = WEALTHY_NUM_COINS;
 				wealthyClaimed = true; //must set back to false after geting rid of power
 			}
 			break;
@@ -585,6 +670,7 @@ void Player::scores(CoinBank *bank) {
 		}
 	}
 	std::cout << "You have " << this->getVictoryCoin1s().size() << " total coins" << std::endl;
+	Notify();
 }
 
 
@@ -601,12 +687,15 @@ void Player::placeAllTokensOnMap() {
 
 void Player::deployment(int nbOfTokens) {
 
-	vector<stack<int>> answers;
+	std::vector<std::stack<int>> answers;
+	if (this->getOwnedRegions().size() == 0) {
+		return;
+	}
 
 	if (aiStrategy != NULL) {
-		cout << endl;
+		std::cout << std::endl;
 		answers = aiStrategy->aiRedeploy(this, redeployableTokens, getOwnedRegions());
-		cout << endl;
+		std::cout << std::endl;
 	}
 
 	while (nbOfTokens > 0) {
@@ -625,10 +714,14 @@ void Player::deployment(int nbOfTokens) {
 
 			if (aiStrategy == NULL) {
 				std::cin >> responseRegion;
+				if (std::cin.fail()) {
+					std::cin.clear();
+					std::cin.ignore();
+				}
 			}
 			else {
-				cout << aiStrategy->getName() << " about region to deploy" << endl;
-				cout << "Region with vertex " << answers[0].top() << endl;
+				std::cout << aiStrategy->getName() << " about region to deploy" << std::endl;
+				std::cout << "Region with vertex " << answers[0].top() << std::endl;
 				responseRegion = answers[0].top();
 				answers[0].pop();
 			}
@@ -639,10 +732,14 @@ void Player::deployment(int nbOfTokens) {
 
 					if (aiStrategy == NULL) {
 						std::cin >> responseAdd;
+						if (std::cin.fail()) {
+							std::cin.clear();
+							std::cin.ignore();
+						}
 					}
 					else {
-						cout << aiStrategy->getName() << " about number of tokens to deploy" << endl;
-						cout << "This amount of tokens: " << answers[1].top() << endl;
+						std::cout << aiStrategy->getName() << " about number of tokens to deploy" << std::endl;
+						std::cout << "This amount of tokens: " << answers[1].top() << std::endl;
 						responseAdd = answers[1].top();
 						answers[1].pop();
 					}
@@ -651,10 +748,18 @@ void Player::deployment(int nbOfTokens) {
 						if (responseAdd > nbOfTokens) {
 							std::cout << "Please enter a number that isn't bigger than the amount of tokens you have to place!" << std::endl;
 							std::cin >> responseAdd;
+							if (std::cin.fail()) {
+								std::cin.clear();
+								std::cin.ignore();
+							}
 						}
 						else if (responseAdd < 0) {
-							std::cout << "Oh no!! What is you doing! Do not enter negative numbers!" << std::endl;
+							std::cout << "Oh no!! What are you doing! Do not enter bogus values!" << std::endl;
 							std::cin >> responseAdd;
+							if (std::cin.fail()) {
+								std::cin.clear();
+								std::cin.ignore();
+							}
 						}
 						else
 							bogusInputs = false;
@@ -698,14 +803,9 @@ void Player::findAllAdjacentTerritories() {
 	
 	bool notHasRegion = true;
 
-	//cout << "Number of owned regions: " << ownedRegions.size() << endl;
-
 	for (size_t i = 0; i < ownedRegions.size(); i++) {
 
 		gameMap.getAdgacentTerritories(ownedRegions[i]);
-
-		//cout << "Number of adj regions: " << gameMap.adgacentMapRegions.size() << endl; //works fine
-
 
 		for (size_t j = 0; j < gameMap.adgacentMapRegions.size(); j++) {
 			
@@ -718,7 +818,7 @@ void Player::findAllAdjacentTerritories() {
 					}
 
 				}
-				//std::cout << gameMap.adgacentMapRegions[j]->getIndexOfVertex() << "\t";
+
 				if (notHasRegion == false)
 					break;
 				attackableRegions.push_back(gameMap.adgacentMapRegions[j]);
@@ -727,24 +827,14 @@ void Player::findAllAdjacentTerritories() {
 
 		}
 	}
-	//cout << "Number of Attackable regions: "<< attackableRegions.size() << endl;
 
 	sortMapregionVector(&attackableRegions);
 
 	for (size_t l = 0; l < attackableRegions.size(); l++) {
-		cout << attackableRegions[l]->getIndexOfVertex() << "\t";
+		std::cout << attackableRegions[l]->getIndexOfVertex() << "\t";
 	}
 
 }
-
-//void Player::calculateUsableTokens(PowerBadge power, RaceBanner banner) {
-//
-//	int amountFromPower, amountFromRace;
-//	amountFromPower = power.getAmountTokensReceived();
-//	amountFromRace = banner.getAmountTokensReceived();
-//
-//	setNbOfUsableTokens(amountFromPower + amountFromRace);
-//}
 
 void Player::printAmountTokens() {
 	std::cout << "Tokens in hand: " << getNbOfUsableTokens() << std::endl;
@@ -776,14 +866,27 @@ void Player::sortMapregionVector(std::vector<MapRegion*> *theVector) {
 		}
 	}
 
-	//cout << "Here are the sorted values" << endl;
-	//for (size_t i = 0; i < theVector->size(); i++) {
-	//	cout << (*theVector)[i]->getIndexOfVertex()  <<" ";
-	//}
-	////cout << endl;
-
 }
 
-double Player::calculateOwnedPercentage() {
-	return ((double)this->ownedRegions.size() / (double)NUM_REGIONS_2_PLAYER_MAP * 100); //change to proper number depending on number of players
+double Player::calculateOwnedPercentage(int nbPlayers) { 
+	int totalMapRegions;
+
+	switch (nbPlayers) {
+	case 2: 
+		totalMapRegions = NUM_REGIONS_2_PLAYER_MAP;
+		break;   
+	case 3:
+		totalMapRegions = NUM_REGIONS_3_PLAYER_MAP;
+		break;
+	case 4: 
+		totalMapRegions = NUM_REGIONS_4_PLAYER_MAP;
+		break;
+	case 5: 
+		totalMapRegions = NUM_REGIONS_5_PLAYER_MAP;
+		break;
+	default:
+		std::cout << "Something is wrong" << std::endl;
+	}
+	
+	return ((double)this->ownedRegions.size() / (double)totalMapRegions * 100); 
 }

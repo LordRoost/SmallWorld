@@ -11,12 +11,13 @@
 #include "Map.h"
 #include "PlayGame.h"
 #include "AI.h"
+#include "NoUnitAttackingException.h"
 
 class Player : public Subject{
 public:	
 	Player();
     Player(AI *aiStrategy);
-	~Player() {}
+	~Player();
 
 	//getters
 	DieRoller getDieRoller();
@@ -60,15 +61,16 @@ public:
 	void conquers(); //allows a player to conquer regions until they do not have any tokens in hand
 	void scores(CoinBank *bank); //allows a player to get points for their turn
 
-	void firstConquest();
-	int attackTerritory(MapRegion *region);
-	bool finalAttack(MapRegion *region);
-	void redeploy();
-	void readyTroops();
+	void firstConquest(); //The first attack, where the player must attack a border region
+	int attackTerritory(MapRegion *region); //the method that actually attacks a region
+	bool finalAttack(MapRegion *region); //the last attack of a turn, it involves the dice. Gets called if the number of tokens a user has in hand is less than the number of tokens in the region they are attacking
+	void redeploy(); //calls the deployment function
+	void readyTroops(); //also calls the deployment function. Allows a user to leave 1 token in all of their regions and take the rest in hand.
+	void abandonRegion(); //allows a user to remove all their tokens from a region and relinquish ownership of it
 	int calculateAttackThreshold(MapRegion *region);
 	void removeEnemyTokens(MapRegion *region);
 	void removeOwnedRegion(MapRegion *region);
-    void declineRace();
+    void declineRace(RacePicker *picker);
 
 	//various utility methods
 	void placeAllTokensOnMap();//Places all tokens that users have in hand in one of their owned territories.
@@ -77,16 +79,19 @@ public:
 	int calculateCurrentNbUsableTokens(int subtracted);
 	void calculateUsableTokens();
 	void findAllAdjacentTerritories();
-	//void calculateUsableTokens(PowerBadge power, RaceBanner banner);
 	void printAmountTokens();
 	void printCurrentMoney();
 	void printCurrentBanner();
 	void printCurrentPower();
 	void sortMapregionVector(std::vector<MapRegion*>*); //sorts a vector of mapregions so that the display is in order
-	double calculateOwnedPercentage(); //gives the % of territory that the player owns
+	double calculateOwnedPercentage(int nbPlayers); //gives the % of territory that the player owns
 
 	MapRegion *choiceOfRegion;
 	int occupiedRegionCounter;
+	int nbScoredCoinsPower;
+	bool statusDecorators;
+	bool decoDominationCheck;
+	bool decoCoinsCheck;
 
 private:
 	std::vector<MapRegion*> ownedRegions;

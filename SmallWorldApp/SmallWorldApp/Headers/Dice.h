@@ -1,3 +1,5 @@
+#ifndef __DICE_H__
+#define __DICE_H__
 #pragma once
 #include <iostream>
 #include <random>
@@ -19,8 +21,6 @@ class DieRoller {
 public:
 	DieRoller();
 	int rollDice();
-	//void rollDice();
-	//bool determineResult();
 	void printDistribution();
 
 private: 
@@ -29,3 +29,5 @@ private:
 	unsigned int valueCount[MAX_DIFF_VALUE];
 
 };
+
+#endif //__DICE_H__

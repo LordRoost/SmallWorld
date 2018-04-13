@@ -1,6 +1,5 @@
 #include "../Headers/Tokens.h"
 
-//RaceToken::RaceToken()
 
 RaceToken::RaceToken(races newRace) {
 	race = newRace;
