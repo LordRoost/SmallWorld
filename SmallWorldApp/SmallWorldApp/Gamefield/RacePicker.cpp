@@ -14,7 +14,7 @@ RacePicker::~RacePicker() {
 }
 
 void RacePicker::setup() {
-	bannerDeck->shuffle();//need to shuffle multiple times for it to actually work. Need to find out why
+	bannerDeck->shuffle();//need to shuffle multiple times for it to actually work. Not sure why
 	bannerDeck->shuffle();
 	bannerDeck->shuffle();
 	bannerDeck->buildDeck();
@@ -25,9 +25,7 @@ void RacePicker::setup() {
 
 	for (int i = 0; i < MAX_NUMBER_PICKABLE_RACES; i++) {
 		pickableRaces[i] = bannerDeck->draw();
-		//std::cout << pickableRaces[i]->getName() << std::endl;
 		pickablePowers[i] = powerDeck->draw();
-		//std::cout << pickablePowers[i]->getPowerName() << std::endl;
 	}
 
 }

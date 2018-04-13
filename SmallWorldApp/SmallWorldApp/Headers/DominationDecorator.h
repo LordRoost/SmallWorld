@@ -13,9 +13,9 @@ public:
 	void display();
 	void Update();
 
-	void barDisplay(int nb);
+	void barDisplay(int nb); 
 
 private:
-	Player * _subject;
+	Player * _subject; //the observable
 	PlayGame * theGame;
 };

@@ -2,6 +2,7 @@
 #include "GameStatsDecorator.h"
 #include "PlayGame.h"
 
+//Decorator for victory coins, adds onto GameStats
 class VictoryCoinDecorator : public GameStatsDecorator {
 public:
 	VictoryCoinDecorator(GameStatsInterface *decoratedGameStats, PlayGame* game, Player* aPlayer) : GameStatsDecorator(decoratedGameStats) {
@@ -14,7 +15,7 @@ public:
 	void Update();
 
 private:
-	Player * _subject;
+	Player * _subject; //the observable
 	PlayGame *theGame;
 
 };

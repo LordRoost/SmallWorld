@@ -10,18 +10,6 @@ DieRoller::DieRoller() {
 
 }
 
-//void DieRoller::rollDice() {
-//
-//	int result = dice.roll();
-//	rollCount++;
-//	valueCount[result]++;
-//
-//	std::cout << result << std::endl;
-//}
-
-//bool DieRoller::determineResult() {
-//	return false;
-//}
 
 int DieRoller::rollDice() {
 

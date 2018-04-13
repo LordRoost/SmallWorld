@@ -1,0 +1,348 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AI">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAQAAABABAAAACAAEAAAAAAAEAAAAABA=</HashCode>
+      <FileName>Headers\AI.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="aggressiveAI">
+    <Position X="0.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAQAAABABAAAACAAEAAAAAAAEAAAAABA=</HashCode>
+      <FileName>Headers\AI.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="defensiveAI">
+    <Position X="3" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAQAAABABAAAACAAEAAAAAAAEAAAAABA=</HashCode>
+      <FileName>Headers\AI.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="moderateAI">
+    <Position X="5.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAQAAABABAAAACAAEAAAAAAAEAAAAABA=</HashCode>
+      <FileName>Headers\AI.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="randomAI">
+    <Position X="7.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAQAAABABAAAACAAEAAAAAAAEAAAAABA=</HashCode>
+      <FileName>Headers\AI.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dice">
+    <Position X="15.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAggAAAAAAAAABAAAAEAAAA=</HashCode>
+      <FileName>Headers\Dice.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DieRoller">
+    <Position X="15.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAACgAAAACAAAAAAAAAAAACCAAA=</HashCode>
+      <FileName>Headers\Dice.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DominationView">
+    <Position X="1" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAACAAAAAAAAAAAAAAgEQAAAAAKAAAAAAAAA=</HashCode>
+      <FileName>Headers\DominationView.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RacePicker">
+    <Position X="14" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAIAAAAAEAgEAAAAAAAAgABEAAEAAAgAYAAAKAA=</HashCode>
+      <FileName>Headers\Game.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CoinBank">
+    <Position X="15.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAEAAAAAAAgAADAAAAEKgAEAABFQBSAAAA=</HashCode>
+      <FileName>Headers\Game.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TokenWell">
+    <Position X="17.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAgAAAAAACAAAAAAAAAAAAAAAAAgBAAAAAAAAA=</HashCode>
+      <FileName>Headers\Game.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Map">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gEAABAAAIBAQAIAAEAkAABAAEAABAAAIBCEMAAAAAAA=</HashCode>
+      <FileName>Headers\Map.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapRegion">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>oVkIhAICAASEgAAAARAAYEAAGxEFAAREAAAUAAEACJA=</HashCode>
+      <FileName>Headers\MapRegion.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NoUnitAttackException">
+    <Position X="10.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Headers\NoUnitAttackingException.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Observer">
+    <Position X="4.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Headers\Observer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player">
+    <Position X="21" Y="3.5" Width="2" />
+    <InheritanceLine Type="Subject" FixedToPoint="true">
+      <Path>
+        <Point X="23" Y="2.824" />
+        <Point X="23" Y="3.125" />
+        <Point X="22" Y="3.125" />
+        <Point X="22" Y="3.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>haQIU0AAQCFQFBGEDQANxEtDRQCgpEYIAR1BCdWIgNk=</HashCode>
+      <FileName>Headers\Players.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayGame">
+    <Position X="23.75" Y="3.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ACAAIAAaCgAAACAFWCqAQAAAAAAAAgAAICAAAsCACCo=</HashCode>
+      <FileName>Headers\PlayGame.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StepView">
+    <Position X="3.25" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAACAAAAAAACEAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Headers\StepView.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Subject">
+    <Position X="22.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAIAAIAAAAAAAIAAAABAAAAAAAQAAAA=</HashCode>
+      <FileName>Headers\Subject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Token">
+    <Position X="2" Y="13.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAgAAAAAAgAAAAARAAA=</HashCode>
+      <FileName>Headers\Tokens.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RaceToken">
+    <Position X="0.5" Y="16.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAEAAAABAAAAEAAAAABAAAAAABEAABAAAAAAAAAA=</HashCode>
+      <FileName>Headers\Tokens.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LostTribeToken">
+    <Position X="3.25" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Headers\Tokens.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VictoryCoin">
+    <Position X="14" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAACAAAAIAAAAAQAAAASAAAAAAAAAAAAA=</HashCode>
+      <FileName>Headers\Tokens.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RaceBanner">
+    <Position X="19.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAkAAAAFABAhEAAAAAhAAAAAEBEBAAACEAAAAAAA=</HashCode>
+      <FileName>Headers\Tokens.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RaceBannerDeck">
+    <Position X="19.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgARAAAAAAQAAACAAgIAAAAAAAAEQEAAAAAAgBAAAAA=</HashCode>
+      <FileName>Headers\Tokens.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PowerBadge">
+    <Position X="17.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgBAAAAAAAgAAAAAIgAAAAUAABAEACGAAAEAAAA=</HashCode>
+      <FileName>Headers\Tokens.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PowerBadgeDeck">
+    <Position X="17.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQQAAIEAAgAAACAAAIAAAAAAAAEAEAAAABAABAAAAQ=</HashCode>
+      <FileName>Headers\Tokens.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GamePiece">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Headers\Tokens.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MountainPiece">
+    <Position X="8" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Headers\Tokens.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MoveablePiece">
+    <Position X="10.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Headers\Tokens.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TurnMarker">
+    <Position X="15.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAQAAAAAAAAAAQAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Headers\TurnMarker.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UserInputException">
+    <Position X="10.25" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Headers\UserInputException.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DominationDecorator">
+    <Position X="6.75" Y="16.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAiEABAAAEIAAAAAAAAA=</HashCode>
+      <FileName>Headers\DominationDecorator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameStats">
+    <Position X="5" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAiEAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Headers\GameStats.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameStatsDecorator">
+    <Position X="8.25" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAEEBAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Headers\GameStatsDecorator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameStatsInterface">
+    <Position X="6.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAIAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Headers\GameStatsInterface.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VictoryCoinDecorator">
+    <Position X="10" Y="16.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAACEAAAAAIIAAAAAAAAg=</HashCode>
+      <FileName>Headers\VictoryCoinDecorator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="RegionInfo">
+    <Position X="16.5" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Headers\MapRegion.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="RaceInfo">
+    <Position X="14.75" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAEAAAAAAAAAAEAAAIgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Headers\Tokens.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="PowerInfo">
+    <Position X="13" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIgAAAAEAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Headers\Tokens.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="vertex_t" Collapsed="true">
+    <Position X="18.25" Y="17" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Map\Map.cpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="Graph" Collapsed="true">
+    <Position X="18.25" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Headers\Map.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="AdjacencyIterator" Collapsed="true">
+    <Position X="12.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Headers\Map.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="VertexIterator" Collapsed="true">
+    <Position X="18.25" Y="16.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Headers\Map.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Enum Name="regionTypes">
+    <Position X="16.5" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAUAIAAAAAAACABAAAAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Headers\MapRegion.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="regionBonus">
+    <Position X="18.25" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEgAAAAAAAAAAAAAAAAAAAAEAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Headers\MapRegion.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="races">
+    <Position X="14.75" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAgRAGAAACGAAABACAAAAAAAAAACRIAAA=</HashCode>
+      <FileName>Headers\Tokens.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="powers">
+    <Position X="13" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QEEAAoICAAgAABAAQAAAAABIAABAAiAAAgCAAKQAQAA=</HashCode>
+      <FileName>Headers\Tokens.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

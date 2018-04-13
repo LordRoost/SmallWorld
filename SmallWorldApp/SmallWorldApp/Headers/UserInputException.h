@@ -1,14 +1,14 @@
+#ifndef __USERINPUTEXCEPTION_H__
+#define __USERINPUTEXCEPTION_H__
 #pragma once
 #include <iostream>
 #include <exception>
 #include <stdexcept>
-using namespace std;
 
-class UserInputException : public runtime_error {
+class UserInputException : public std::runtime_error {
 public:
-	UserInputException() : runtime_error("Error: User input error."){}
-	char * exc_time;
-	//const char *what() const;
+	UserInputException() : std::runtime_error("Error: User input error."){}
 
 };
 
+#endif //__USERINPUTEXCEPTION_H__

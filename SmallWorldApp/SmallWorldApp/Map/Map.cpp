@@ -22,79 +22,6 @@ Graph* Map::getGraph(){
     return &g;
 }
 
-//void Map::createMap() {
-//
-//	// Create vertices in that graph
-//	vertex_t tile1 = add_vertex(g);
-//	vertex_t tile2 = add_vertex(g);
-//	vertex_t tile3 = add_vertex(g);
-//	vertex_t tile4 = add_vertex(g);
-//	vertex_t tile5 = add_vertex(g);
-//	vertex_t tile6 = add_vertex(g);
-//	vertex_t tile7 = add_vertex(g);
-//	vertex_t tile8 = add_vertex(g);
-//	vertex_t tile9 = add_vertex(g);
-//	vertex_t tile10 = add_vertex(g);
-//	vertex_t tile11 = add_vertex(g);
-//	vertex_t tile12 = add_vertex(g);
-//	vertex_t tile13 = add_vertex(g);
-//	vertex_t tile14 = add_vertex(g);
-//	vertex_t tile15 = add_vertex(g);
-//
-//	g[tile1] = new MapRegion();
-//	g[tile2] = new MapRegion();
-//	g[tile3] = new MapRegion();
-//	g[tile4] = new MapRegion();
-//	g[tile5] = new MapRegion();
-//	g[tile6] = new MapRegion();
-//	g[tile7] = new MapRegion();
-//	g[tile8] = new MapRegion();
-//	g[tile9] = new MapRegion();
-//	g[tile10] = new MapRegion();
-//	g[tile11] = new MapRegion();
-//	g[tile12] = new MapRegion();
-//	g[tile13] = new MapRegion();
-//	g[tile14] = new MapRegion();
-//	g[tile15] = new MapRegion();
-//
-//	// Set regiontype
-//	g[tile1]->setType(REGION_TYPE_FARMLAND);
-//	g[tile2]->setType(REGION_TYPE_FARMLAND);
-//	g[tile3]->setType(REGION_TYPE_FARMLAND);
-//	g[tile4]->setType(REGION_TYPE_HILL);
-//	g[tile5]->setType(REGION_TYPE_HILL);
-//	g[tile6]->setType(REGION_TYPE_HILL);
-//	g[tile7]->setType(REGION_TYPE_MOUNTAIN);
-//	g[tile8]->setType(REGION_TYPE_MOUNTAIN);
-//	g[tile9]->setType(REGION_TYPE_MOUNTAIN);
-//	g[tile10]->setType(REGION_TYPE_FOREST);
-//	g[tile11]->setType(REGION_TYPE_FOREST);
-//	g[tile12]->setType(REGION_TYPE_FOREST);
-//	g[tile13]->setType(REGION_TYPE_SWAMP);
-//	g[tile14]->setType(REGION_TYPE_SWAMP);
-//	g[tile15]->setType(REGION_TYPE_SWAMP);
-//
-//	// Create edges to vertices
-//	add_edge(tile1, tile2, g);
-//	add_edge(tile1, tile3, g);
-//	add_edge(tile2, tile3, g);
-//	add_edge(tile3, tile4, g);
-//	add_edge(tile3, tile5, g);
-//	add_edge(tile4, tile6, g);
-//	add_edge(tile4, tile7, g);
-//	add_edge(tile3, tile6, g);
-//	add_edge(tile7, tile8, g);
-//	add_edge(tile7, tile9, g);
-//	add_edge(tile9, tile10, g);
-//	add_edge(tile10, tile11, g);
-//	add_edge(tile11, tile12, g);
-//	add_edge(tile11, tile13, g);
-//	add_edge(tile12, tile14, g);
-//	add_edge(tile14, tile15, g);
-//
-//	//write_graphviz(std::cout, g);
-//}
-
 //load map
 //first line is creating tiles(vertices)
 //second line is creating edges that connect vertices
@@ -261,38 +188,6 @@ void Map::getListOfMaps(const std::string& path)
    
 }
 
-void Map::selectMap(std::string path){
-    bool isNotValidMap=true;
-    
-    while (isNotValidMap)
-    {
-        //Display Map files in directory
-		std::cout<< "Let's start a Smallworld game"<< std::endl;
-        getListOfMaps(path);
-		std::cout<< "Choose the map you want to play on by entering the name of one of the text files above."<< std::endl;
-        
-        //Take input for the map the player wants to play
-		std::string textFile;
-		std::string fullPath = "C:/Users/luoja/Documents/Github/SmallWorld/MapFiles/";
-        //string fullPath="/Users/ericpayettereformed/Documents/Smallworld/MapFiles/";
-		std::cin>> textFile;
-        fullPath.append(textFile);
-        fullPath.append(".txt");
-        
-        loadMap(fullPath);
-        
-        isNotValidMap=!graphIsConnected();
-        
-        if(num_vertices(g)==0){
-            isNotValidMap=true;
-        }
-        
-        if(isNotValidMap){
-			std::cout<<"Map is not valid, choose a valid map"<< std::endl;
-            g.clear();
-        }
-    }
-}
 
 void Map::selectMap(int nbOfPlayers) {
 
@@ -308,18 +203,6 @@ void Map::selectMap(int nbOfPlayers) {
 	loadMap(fullPath);
 }
 
-bool Map::addMountainorLostTribe(std::string regionType){
-    if(regionType=="Mountain"){
-        //add moutain piece
-        return false;
-    }
-    else{
-        //75% chance to put a lost tribe token
-        return (rand() % 100) < 75;
-    }
-    
-    
-}
 
 void Map::getAdgacentTerritories(MapRegion *region){
     

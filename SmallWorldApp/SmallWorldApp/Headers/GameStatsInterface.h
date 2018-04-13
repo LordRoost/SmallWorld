@@ -2,16 +2,11 @@
 #include <iostream>
 
 #include "Observer.h"
-//#include "PlayGame.h"
 
-
+//Interface for decorators
 class GameStatsInterface : public Observer {
 public:
-	//GameStatsInterface();
-	//GameStatsInterface(PlayGame* game);
-	~GameStatsInterface() {
-		//std::cout << "hiInter" << std::endl;
-	}
+	~GameStatsInterface() {}
 
 	virtual void Update() = 0;
 	virtual void display() = 0;

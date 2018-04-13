@@ -1,8 +1,6 @@
 #include <iostream>
 #include "../Headers/MapRegion.h"
 
-//using namespace std;
-
 RegionInfo regionInfo[TOTAL_REGION_TYPE] = { {REGION_TYPE_FOREST, "Forest"}, {REGION_TYPE_FARMLAND, "Farmland"}, {REGION_TYPE_MOUNTAIN, "Mountain"}, 
 {REGION_TYPE_HILL, "Hill"}, {REGION_TYPE_SWAMP, "Swamp"} };
 
@@ -166,7 +164,6 @@ void MapRegion::addDefensiveStructure(GamePiece piece) {
 }
 
 bool MapRegion::hasLostTribe() {
-	//if (lostTribes == NULL)
 	if(hasTribe == false)
 		return false;
 	else

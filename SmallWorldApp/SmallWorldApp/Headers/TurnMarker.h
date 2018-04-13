@@ -1,3 +1,6 @@
+#ifndef __TURNMARKER_H__
+#define __TURNMARKER_H__
+
 #pragma once
 #include <iostream>
 #include <stdio.h>
@@ -9,12 +12,12 @@
 class TurnMarker {
 public:
 	TurnMarker() : turnNumber(1) {}
-    void nextTurn();
     int getTurnNumber();
-	void operator++() { ++turnNumber; }
+	void operator++() { ++turnNumber; } //overloaded prefix increment operator. Essentially moves the turn forward by 1.
     
 private:
     int turnNumber;
    
 };
 
+#endif //__TURNMARKER_H__

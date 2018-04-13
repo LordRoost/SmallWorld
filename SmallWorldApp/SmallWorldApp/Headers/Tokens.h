@@ -16,7 +16,7 @@
 #define NUM_OF_POWERS 20
 #define ALCHEMIST_NUM_COINS 2
 #define WEALTHY_NUM_COINS 7 //number of coins given by wealthy special power
-#define MAX_NUM_MOUNTAIN_TOKENS 10
+#define MAX_NUM_MOUNTAIN_TOKENS 10 //9
 #define MAX_NUM_FORTRESS_TOKENS 6
 #define MAX_NUM_TROLL_LAIR_TOKENS 10
 #define MAX_NUM_ENCAMPMENT_TOKENS 5
@@ -34,15 +34,13 @@ enum powers {
 	POWER_HILL, POWER_MERCHANT, POWER_MOUNTED, POWER_PILLAGING, POWER_SEAFARING, POWER_SPIRIT, POWER_STOUT, POWER_SWAMP, POWER_UNDERWORLD, POWER_WEALTHY, TOTAL_POWERS
 };
 
-
 struct RaceInfo {
 	races race;
 	std::string raceName;
 	int amountTokensReceived;
 	int totalAmount;
-    int aggressivePoint;
+    int aggressivePoint; //used to calculate stuff for AIs
 };
-
 
 struct PowerInfo {
 	powers power;
@@ -51,6 +49,7 @@ struct PowerInfo {
     int aggressivePoint;
 };
 
+//A piece to be placed on the map
 class Token {
 public:
 	Token();
@@ -63,6 +62,7 @@ private:
 	int maxAmount;
 };
 
+//The piece that players use to attack and defend regions with
 class RaceToken : public Token {
 public:
 	RaceToken() {}
@@ -75,16 +75,14 @@ public:
 
 private:
 	races race;
-	//Player owner;
 	bool isActive;
 
 };
-
+//The piece to represent a lost tribe unit
 class LostTribeToken : public Token {
 public:
 	LostTribeToken();
 
-private:
 };
 
 //coins with which to determind the winner of the game. Can also be spent during picking of races and powers
@@ -125,24 +123,25 @@ private:
 	races race;
     int aggressivePoint;
 };
-
+//the deck of race banners
 class RaceBannerDeck {
 public:
 	RaceBannerDeck();
 	~RaceBannerDeck();
 	void shuffle();
-	void shuffleDiscard();
+	void shuffleDiscard(); //shuffles the discard pile
 	void buildDeck();
-	RaceBanner* draw();
-	void discardBanner(RaceBanner *banner);
+	RaceBanner* draw(); //returns the top banner of the deck
+	void discardBanner(RaceBanner *banner); //put a banner in the discard pile
 	void printDeck();
-	void addBanner(RaceBanner *banner);
+	void addBanner(RaceBanner *banner); //add a banner to the deck
 
-	std::deque<RaceBanner*> bannerDiscardPile;
+
 
 private:
 	RaceBanner *banners[NUM_OF_RACE_BANNERS]; //for initial array
-	std::queue<RaceBanner*> deck;
+	std::queue<RaceBanner*> deck; //the deck of banners
+	std::deque<RaceBanner*> bannerDiscardPile; //the pile of discarded banners
 
 };
 
@@ -169,7 +168,6 @@ private:
 
 class PowerBadgeDeck {
 public:
-	std::deque<PowerBadge*> badgeDiscardPile; //should later be made private
 	PowerBadgeDeck();
 	~PowerBadgeDeck();
 	void shuffle();
@@ -183,20 +181,19 @@ public:
 private:
 	PowerBadge *badges[NUM_OF_POWERS]; //for initial array
 	std::queue<PowerBadge*> deck; //actual deck which the players draw from
+	std::deque<PowerBadge*> badgeDiscardPile; //discard pile of badges
 
 };
 
-//The pieces that go on the map, such as mountains, dragons, structures, etc
+//The pieces that arent tokens that go on the map, such as mountains, dragons, structures, etc
 class GamePiece {
 public:
 	GamePiece();
 	~GamePiece() {}
 
-private:
-
-
 };
 
+//The piece representing a mountain, granting +1 to defense
 class MountainPiece :public GamePiece {
 public:
 	MountainPiece();
@@ -206,8 +203,7 @@ public:
 
 class MoveablePiece: public GamePiece{ //encampment, hero, dragon
 public:
-
-private:
+	MoveablePiece();
 
 };
 

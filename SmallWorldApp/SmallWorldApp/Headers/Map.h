@@ -36,9 +36,7 @@ public:
 	bool graphIsConnected();
 	Graph* getGraph();
     static void getListOfMaps(const std::string& path);
-    void selectMap(std::string path);
 	void selectMap(int nbOfPlayers);
-    bool addMountainorLostTribe(std::string regionType);
 	void getAdgacentTerritories(MapRegion *region);
 	void getAllBorders();
 	void setBorders();
@@ -48,12 +46,13 @@ public:
 
 	std::vector<MapRegion*> borderRegions;
 	std::vector<MapRegion*> adgacentMapRegions;
-	std::deque<std::string> bordersInputs;
-	std::deque<std::string> lostTribesInputs;
+
 
 private:
 	Graph g;
 	TokenWell *well;
+	std::deque<std::string> bordersInputs;
+	std::deque<std::string> lostTribesInputs;
 
 };
 

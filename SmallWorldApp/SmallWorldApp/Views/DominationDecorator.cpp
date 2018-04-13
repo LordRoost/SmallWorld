@@ -6,7 +6,6 @@ DominationDecorator::~DominationDecorator() {
 }
 
 void DominationDecorator::Update() {
-	//GameStatsDecorator::Update();
 
 	if (theGame->getCurrentPhase() == "Conquering")
 		display();

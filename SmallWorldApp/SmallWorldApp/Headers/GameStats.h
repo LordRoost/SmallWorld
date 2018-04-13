@@ -2,10 +2,10 @@
 #define __GAMESTATS_H__
 #pragma once
 #include "GameStatsInterface.h"
-//#include "PlayGame.h"
 
 class PlayGame;
 
+//Concrete simple implementation of GameStatsInterface, it is the base which will get decorated.
 class GameStats : public GameStatsInterface {
 public:
 

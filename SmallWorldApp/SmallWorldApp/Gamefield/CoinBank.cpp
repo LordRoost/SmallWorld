@@ -52,7 +52,6 @@ void CoinBank::deal1s(Player *aPlayer, int amount){
 		aPlayer->addVictoryCoin1s(*coinValue1.back());
 		coinValue1.pop_back();
 	}
-	//printContents();
 }
 
 void CoinBank::startingDeal(Player *aPlayer) {
